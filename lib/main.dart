@@ -3,71 +3,121 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: Login(),
+    home: DGEST(),
+    debugShowCheckedModeBanner: false,
   ));
 }
 
-class Login extends StatefulWidget {
+class DGEST extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _Login();
   }
 }
 
-class _Login extends State<Login> {
+class _Login extends State<DGEST> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.purple[100],
-        body: Column(
-          children: [
-            SizedBox(
-              height: 50.0,
-            ),
-            Text(
-              'DGEST',
-              style: TextStyle(
-                fontSize: 30.0,
-                color: Colors.blue,
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/pexels-philippe-donn-1257860.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: ListView(
+            children: [
+              Column(
+                children: [
+                  SizedBox(
+                    height: 50.0,
+                  ),
+                  Text(
+                    'DGEST',
+                    style: TextStyle(
+                      fontFamily: 'PressStart2P',
+                      fontSize: 70.0,
+                      color: Colors.red[700],
+                    ),
+                  ),
+                  Text(
+                    'Welcome ツ',
+                    style: TextStyle(
+                        fontFamily: 'Lobster',
+                        fontSize: 50.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[300]),
+                  ),
+                  SizedBox(
+                    height: 50.0,
+                  ),
+                  TextFiledsLogIn(
+                    hintText: 'Username',
+                    hideText: false,
+                  ),
+                  TextFiledsLogIn(
+                    hintText: 'Password',
+                    hideText: true,
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  ButtonLogIn.loginScreenButtons(
+                    buttonText: 'Sign In',
+                    buttonPadding: EdgeInsets.symmetric(horizontal: 120.0),
+                  ),
+                  Text(
+                    'Forget Password ?',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    height: 100.0,
+                  ),
+                  Text(
+                    'Don\'t have an account ?',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  ButtonLogIn.loginScreenButtons(
+                    buttonText: 'Sign Up',
+                    buttonPadding: EdgeInsets.symmetric(horizontal: 60.0),
+                  ),
+                ],
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TextFiledsLogIn extends StatelessWidget {
+  TextFiledsLogIn({@required this.hintText, this.hideText});
+
+  final String hintText;
+  final bool hideText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
+      child: TextField(
+        obscureText: hideText,
+        onChanged: (value) {
+          print(value);
+        },
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
             ),
-            Text(
-              'Welcome!',
-              style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.purple),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Username',
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                ),
-              ),
-            ),
-            ButtonLogIn.loginScreenButtons(
-              buttonText: 'Log In',
-              buttonPadding: EdgeInsets.symmetric(horizontal: 120.0),
-            ),
-            Text('Forget Password ?'),
-            Text('Don\'t have an account ?'),
-            ButtonLogIn.loginScreenButtons(
-              buttonText: 'Sign Up',
-              buttonPadding: EdgeInsets.symmetric(horizontal: 70.0),
-            ),
-          ],
+          ),
+          hintText: hintText,
+          filled: true,
+          fillColor: Colors.white,
         ),
       ),
     );
@@ -75,16 +125,17 @@ class _Login extends State<Login> {
 }
 
 class ButtonLogIn extends StatelessWidget {
+  ButtonLogIn.loginScreenButtons(
+      {@required this.buttonText, this.buttonPadding});
+
   final String buttonText;
   final EdgeInsetsGeometry buttonPadding;
-
-  ButtonLogIn.loginScreenButtons({this.buttonText, this.buttonPadding});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: RaisedButton(
-        color: Colors.purple[800],
+        color: Colors.grey[700],
         shape: StadiumBorder(),
         padding: buttonPadding,
         onPressed: () {},
