@@ -1,21 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:DGEST/First_Screen.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: DGEST(),
-    debugShowCheckedModeBanner: false,
-  ));
+  runApp(DGEST());
 }
 
-class DGEST extends StatefulWidget {
+class DGEST extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => DGESTLogIn(),
+        '/first': (context) => MainStudentScreen(),
+      },
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class DGESTLogIn extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _Login();
   }
 }
 
-class _Login extends State<DGEST> {
+class _Login extends State<DGESTLogIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,9 +76,12 @@ class _Login extends State<DGEST> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  ButtonLogIn.loginScreenButtons(
+                  ButtonLogIn(
                     buttonText: 'Sign In',
                     buttonPadding: EdgeInsets.symmetric(horizontal: 120.0),
+                    onPress: () {
+                      Navigator.pushNamed(context, '/first');
+                    },
                   ),
                   Text(
                     'Forget Password ?',
@@ -79,7 +94,7 @@ class _Login extends State<DGEST> {
                     'Don\'t have an account ?',
                     style: TextStyle(color: Colors.white),
                   ),
-                  ButtonLogIn.loginScreenButtons(
+                  ButtonLogIn(
                     buttonText: 'Sign Up',
                     buttonPadding: EdgeInsets.symmetric(horizontal: 60.0),
                   ),
@@ -107,6 +122,7 @@ class TextFiledsLogIn extends StatelessWidget {
         obscureText: hideText,
         onChanged: (value) {
           print(value);
+          //TODO: hena lazem n3mel insert f al data base al username w al password.
         },
         decoration: InputDecoration(
           border: OutlineInputBorder(
@@ -125,11 +141,11 @@ class TextFiledsLogIn extends StatelessWidget {
 }
 
 class ButtonLogIn extends StatelessWidget {
-  ButtonLogIn.loginScreenButtons(
-      {@required this.buttonText, this.buttonPadding});
+  ButtonLogIn({@required this.buttonText, this.buttonPadding, this.onPress});
 
   final String buttonText;
   final EdgeInsetsGeometry buttonPadding;
+  final Function onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +154,7 @@ class ButtonLogIn extends StatelessWidget {
         color: Colors.grey[700],
         shape: StadiumBorder(),
         padding: buttonPadding,
-        onPressed: () {},
+        onPressed: onPress,
         child: Text(
           buttonText,
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -176,4 +192,5 @@ CircleAvatar(
                 backgroundImage: AssetImage('images/logo_transparent.png'),
                 backgroundColor: Colors.purple[100],
               ),
+
 */
