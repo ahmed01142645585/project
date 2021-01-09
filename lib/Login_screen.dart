@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:DGEST/Student_screens/Home_student_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,11 +10,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen extends State<LoginScreen> {
+  //TODO:Da al mfrod sign up w lasa h3melha sign in w nshof hn3mel asln sign up wala l2.
+  final _auth = FirebaseAuth.instance;
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundImage(
-        image: 'images/pexels-philippe-donn-1257860.jpg',
+        image: 'images/sora5.jpeg',
         child: SafeArea(
           child: ListView(
             children: [
@@ -27,7 +33,7 @@ class _LoginScreen extends State<LoginScreen> {
                     style: TextStyle(
                       fontFamily: 'PressStart2P',
                       fontSize: 70.0,
-                      color: Colors.red[700],
+                      color: Color(0xFFecf8f8),
                     ),
                   ),
                   Text(
@@ -36,7 +42,7 @@ class _LoginScreen extends State<LoginScreen> {
                         fontFamily: 'Lobster',
                         fontSize: 50.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey[300]),
+                        color: Colors.white),
                   ),
                   SizedBox(
                     height: 50.0,
@@ -44,10 +50,16 @@ class _LoginScreen extends State<LoginScreen> {
                   TextFiledLogIn(
                     hintText: 'Username',
                     hideText: false,
+                    onChange: (value) {
+                      email = value;
+                    },
                   ),
                   TextFiledLogIn(
                     hintText: 'Password',
                     hideText: true,
+                    onChange: (value) {
+                      password = value;
+                    },
                   ),
                   SizedBox(
                     height: 20.0,
@@ -55,8 +67,17 @@ class _LoginScreen extends State<LoginScreen> {
                   ButtonLogIn(
                     buttonText: 'Sign In',
                     buttonPadding: EdgeInsets.symmetric(horizontal: 120.0),
-                    onPress: () {
-                      Navigator.pushNamed(context, '/first');
+                    onPress: () async {
+                      try {
+                        final newUser =
+                            await _auth.createUserWithEmailAndPassword(
+                                email: email, password: password);
+                        if (newUser != null) {
+                          Navigator.pushNamed(context, '/home');
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
                     },
                   ),
                   Text(
@@ -88,9 +109,10 @@ class _LoginScreen extends State<LoginScreen> {
 }
 
 class TextFiledLogIn extends StatelessWidget {
-  TextFiledLogIn({@required this.hintText, this.hideText});
+  TextFiledLogIn({@required this.hintText, this.hideText, this.onChange});
   final String hintText;
   final bool hideText;
+  final Function onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +121,7 @@ class TextFiledLogIn extends StatelessWidget {
       child: TextField(
         obscureText: hideText,
         style: TextStyle(color: Colors.black),
-        onChanged: (value) {
-          print(value);
-          //TODO: hena lazem n3mel insert f al database al username w al password.
-        },
+        onChanged: onChange,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
@@ -131,13 +150,13 @@ class ButtonLogIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: RaisedButton(
-        color: Colors.grey[700],
+        color: Color(0xFF06D6A0),
         shape: StadiumBorder(),
         padding: buttonPadding,
         onPressed: onPress,
         child: Text(
           buttonText,
-          style: TextStyle(fontSize: 20, color: Colors.white),
+          style: TextStyle(fontSize: 20, color: Colors.black54),
         ),
       ),
     );
