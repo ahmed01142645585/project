@@ -1,8 +1,8 @@
-//TODO: hn3mel hena desgin 2 screen f desgin gehad. TB3N sarmad bs ale hy3melha !
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:DGEST/Student_screens/Home_student_screen.dart';
-import 'package:DGEST/Constins.dart';
+import 'package:DGEST/Student_screens/Student_screen.dart';
+
+//import 'package:DGEST/Constins.dart';
+var selectedCard = '1';
 
 class TaskStudentScreen extends StatefulWidget {
   @override
@@ -10,72 +10,83 @@ class TaskStudentScreen extends StatefulWidget {
 }
 
 class _TaskStudentScreenState extends State<TaskStudentScreen> {
-  var selectedCard = 'WEIGHT';
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        elevation: 0.0,
-      ),
-      body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
-        child: SafeArea(
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(45.0),
-                      bottomRight: Radius.circular(45.0)),
-                  color: Color(0xFF06D6A0),
-                ),
-                height: MediaQuery.of(context).size.height / 3,
-                width: MediaQuery.of(context).size.width,
+    return BackgroundImage(
+      image: 'images/sora5a.jpeg',
+      child: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: WidgetContainers(
+                //width: MediaQuery.of(context).size.width,
                 child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Oct,2020',
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                      child: Text(
+                        'Oct,2020',
+                        style: TextStyle(
+                          fontSize: 25.0,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                     Expanded(
                       child: Container(
                         child: Padding(
                           padding: EdgeInsets.only(
-                              top: 40, bottom: 70, right: 7, left: 7),
+                              top: 30.0, bottom: 60.0, right: 7.0, left: 7.0),
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: <Widget>[
-                              _light_and_of_week('1', 'week'),
-                              SizedBox(
-                                width: 10,
+                              TasksWeekList(
+                                weekNumber: '1',
+                                onTap: () {
+                                  setState(() {
+                                    selectedCard = '1';
+                                  });
+                                },
                               ),
-                              _light_and_of_week('2', 'week'),
-                              SizedBox(
-                                width: 10,
+                              TasksWeekList(
+                                weekNumber: '2',
+                                onTap: () {
+                                  setState(() {
+                                    selectedCard = '2';
+                                  });
+                                },
                               ),
-                              _light_and_of_week('3', 'week'),
-                              SizedBox(
-                                width: 10,
+                              TasksWeekList(
+                                weekNumber: '3',
+                                onTap: () {
+                                  setState(() {
+                                    selectedCard = '3';
+                                  });
+                                },
                               ),
-                              _light_and_of_week('4', 'week'),
-                              SizedBox(
-                                width: 10,
+                              TasksWeekList(
+                                weekNumber: '4',
+                                onTap: () {
+                                  setState(() {
+                                    selectedCard = '4';
+                                  });
+                                },
                               ),
-                              _light_and_of_week('5', 'week'),
-                              SizedBox(
-                                width: 10,
+                              TasksWeekList(
+                                weekNumber: '5',
+                                onTap: () {
+                                  setState(() {
+                                    selectedCard = '5';
+                                  });
+                                },
                               ),
-                              _light_and_of_week('6', 'week'),
-                              SizedBox(
-                                width: 10,
+                              TasksWeekList(
+                                weekNumber: '6',
+                                onTap: () {
+                                  setState(() {
+                                    selectedCard = '6';
+                                  });
+                                },
                               ),
                             ],
                           ),
@@ -85,89 +96,32 @@ class _TaskStudentScreenState extends State<TaskStudentScreen> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 15,
+            ),
+            Text(
+              'Compiler',
+              style: TextStyle(
+                fontSize: 25.0,
+                color: Colors.black,
               ),
-              Text(
-                'Compiler',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.black,
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: MediaQuery.of(context).size.height - 180,
+            ),
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
                   child: ListView(
                     children: <Widget>[
-                      _tasks("sheet 1"),
-                      _tasks("sheet 2"),
-                      _tasks("sheet 3"),
-                      _tasks("sheet 4"),
-                      _tasks("sheet 5"),
-                      _tasks("sheet 6"),
-                      _tasks("sheet 7"),
-                      _tasks("sheet 8"),
+                      Tasks(task: 'sheet 1'),
+                      Tasks(task: 'sheet 2'),
+                      Tasks(task: 'sheet 3'),
+                      Tasks(task: 'sheet 4'),
+                      Tasks(task: 'sheet 5'),
+                      Tasks(task: 'sheet 6'),
+                      Tasks(task: 'sheet 7'),
+                      Tasks(task: 'sheet 8'),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _light_and_of_week(String cardTitle, String info) {
-    return InkWell(
-      onTap: () {
-        SelectCard(cardTitle);
-      },
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeIn,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: cardTitle == selectedCard ? Color(0xFF06D6A0) : Colors.white,
-          border: Border.all(
-              color: cardTitle == selectedCard
-                  ? Colors.transparent
-                  : Colors.grey.withOpacity(0.3),
-              style: BorderStyle.solid,
-              width: 5),
-        ),
-        width: 100,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 40, top: 20),
-              child: Text(
-                cardTitle,
-                style: TextStyle(
-                    fontSize: 20,
-                    color:
-                        cardTitle == selectedCard ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    info,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: cardTitle == selectedCard
-                          ? Colors.white
-                          : Colors.black,
-                    ),
-                  ),
-                ],
               ),
             ),
           ],
@@ -176,40 +130,111 @@ class _TaskStudentScreenState extends State<TaskStudentScreen> {
     );
   }
 
-  SelectCard(cardTitle) {
-    setState(() {
-      selectedCard = cardTitle;
-    });
-  }
+//   Widget _light_and_of_week(String cardTitle) {
+//     return InkWell(
+//       onTap: () {
+//         setState(() {
+//           selectedCard = cardTitle;
+//         });
+//       },
+//       child: AnimatedContainer(
+//         margin: EdgeInsets.symmetric(horizontal: 5.0),
+//         width: 100,
+//         duration: Duration(milliseconds: 100),
+//         //curve: Curves.easeIn,
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(15.0),
+//           color: cardTitle == selectedCard ? Color(0xFF06D6A0) : Colors.white,
+//           border: Border.all(
+//               color: Colors.black54, style: BorderStyle.solid, width: 4.0),
+//         ),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             Text(
+//               'Week',
+//               style: TextStyle(
+//                 fontSize: 20,
+//                 color: cardTitle == selectedCard ? Colors.white : Colors.black,
+//               ),
+//             ),
+//             Text(
+//               cardTitle,
+//               style: TextStyle(
+//                   fontSize: 20,
+//                   color:
+//                       cardTitle == selectedCard ? Colors.white : Colors.black,
+//                   fontWeight: FontWeight.bold),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+}
 
-  Widget _tasks(String task) {
+class TasksWeekList extends StatelessWidget {
+  TasksWeekList({this.weekNumber, this.onTap});
+  final String weekNumber;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: AnimatedContainer(
+        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        width: 100,
+        duration: Duration(milliseconds: 100),
+        //curve: Curves.easeIn,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: weekNumber == selectedCard ? Color(0xFF06D6A0) : Colors.white,
+          border: Border.all(
+              color: Colors.black54, style: BorderStyle.solid, width: 4.0),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Week',
+              style: TextStyle(
+                fontSize: 20,
+                color: weekNumber == selectedCard ? Colors.white : Colors.black,
+              ),
+            ),
+            Text(
+              weekNumber,
+              style: TextStyle(
+                  fontSize: 20,
+                  color:
+                      weekNumber == selectedCard ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Tasks extends StatelessWidget {
+  Tasks({@required this.task, this.onTap});
+  final String task;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+      padding: EdgeInsets.all(10.0),
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              child: Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        task,
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 20,
-                            color: Colors.black),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+            Text(
+              task,
+              style: TextStyle(fontSize: 20, color: Colors.black),
             ),
             IconButton(
               icon: Icon(Icons.dehaze),

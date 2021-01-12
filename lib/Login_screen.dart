@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:DGEST/Student_screens/Home_student_screen.dart';
+import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -29,8 +29,14 @@ class _LoginScreen extends State<LoginScreen> {
                   SizedBox(
                     height: 50.0,
                   ),
-                  TyperAnimatedTextKit(
-                    //speed: Duration(milliseconds: 2000),
+                  ColorizeAnimatedTextKit(
+                    colors: [
+                      Colors.green,
+                      Colors.yellow,
+                      Colors.orange,
+                      Colors.red,
+                    ],
+                    speed: Duration(milliseconds: 300),
                     text: ['DGEST'],
                     textStyle: TextStyle(
                       fontFamily: 'PressStart2P',

@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:DGEST/Login_screen.dart';
-import 'package:DGEST/Student_screens/Home_student_screen.dart';
+import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:DGEST/Student_screens/Notes_student_screen.dart';
-
 import 'Student_screens/Tasks_student_screen.dart';
 
 void main() async {
@@ -17,18 +16,20 @@ class DGEST extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: '/Tasks',
+        initialRoute: '/home',
         routes: {
           '/login': (context) => LoginScreen(),
-          '/home': (context) => HomeStudentScreen(),
+          '/home': (context) => StudentScreen(),
           '/note': (context) => NotesStudentScreen(),
-          '/Tasks': (context) => TaskStudentScreen(),
+          '/tasks': (context) => TaskStudentScreen(),
           //TODO: hnzwd al screens f al application.
         },
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           //TODO: hn3mel al theme bt3 al application hena.
-          primaryColor: Color(0xFF06D6A0), //8yrt lon al appbar
+          primaryColor: Color(0xFF06D6A0),
+          canvasColor: Colors.black,
+          //8yrt lon al appbar
         ));
   }
 }

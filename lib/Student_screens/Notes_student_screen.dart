@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:DGEST/Student_screens/Home_student_screen.dart';
+import 'package:DGEST/Student_screens/Student_screen.dart';
+import 'package:DGEST/Login_screen.dart';
 import 'package:DGEST/Constins.dart';
 
 class NotesStudentScreen extends StatefulWidget {
@@ -9,14 +10,19 @@ class NotesStudentScreen extends StatefulWidget {
 }
 
 class _NotesStudentScreenState extends State<NotesStudentScreen> {
-  int selectedIndex = 0;
-  //TODO: al mfrod da gy mn home screen mesh yt create gded.
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notes'),
+        title: Text('Student Notes'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        elevation: 0.0,
       ),
       body: BackgroundImage(
         image: 'images/sora5a.jpeg',
@@ -40,6 +46,13 @@ class _NotesStudentScreenState extends State<NotesStudentScreen> {
                     ),
                   ),
                 ],
+              ),
+              ButtonLogIn(
+                buttonText: 'Add New Note',
+                onPress: () {
+                  print('button is pressed!');
+                },
+                buttonPadding: EdgeInsets.symmetric(horizontal: 50.0),
               ),
               Expanded(
                 child: WidgetContainers(
@@ -70,38 +83,6 @@ class _NotesStudentScreenState extends State<NotesStudentScreen> {
                   ),
                 ),
               ),
-              //TODO: da al mfrod f 7ta w7da bs w ysm3 f aktr mn screen. lo hnndhh aktr mn mra f hn7to f class.
-              BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                backgroundColor: Colors.transparent,
-                selectedItemColor: Color(0xFF06D6A0),
-                unselectedItemColor: Colors.white,
-                iconSize: 30.0,
-                currentIndex: selectedIndex,
-                onTap: (index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    title: Text('Home'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.assignment),
-                    title: Text('Tasks'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.notifications),
-                    title: Text('Notifications'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
-                    title: Text('Settings'),
-                  ),
-                ],
-              )
             ],
           ),
         ),
