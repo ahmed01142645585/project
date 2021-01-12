@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:DGEST/Login_screen.dart';
 import 'package:DGEST/Student_screens/Home_student_screen.dart';
 import 'package:DGEST/Student_screens/Notes_student_screen.dart';
+
+import 'Student_screens/Tasks_student_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,11 +17,12 @@ class DGEST extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: '/login',
+        initialRoute: '/Tasks',
         routes: {
           '/login': (context) => LoginScreen(),
           '/home': (context) => HomeStudentScreen(),
           '/note': (context) => NotesStudentScreen(),
+          '/Tasks': (context) => TaskStudentScreen(),
           //TODO: hnzwd al screens f al application.
         },
         debugShowCheckedModeBanner: false,

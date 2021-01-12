@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:DGEST/Student_screens/Home_student_screen.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -28,17 +29,18 @@ class _LoginScreen extends State<LoginScreen> {
                   SizedBox(
                     height: 50.0,
                   ),
-                  Text(
-                    'DGEST',
-                    style: TextStyle(
+                  TyperAnimatedTextKit(
+                    //speed: Duration(milliseconds: 2000),
+                    text: ['DGEST'],
+                    textStyle: TextStyle(
                       fontFamily: 'PressStart2P',
                       fontSize: 70.0,
                       color: Color(0xFFecf8f8),
                     ),
                   ),
-                  Text(
-                    'Welcome ツ',
-                    style: TextStyle(
+                  FadeAnimatedTextKit(
+                    text: ['Welcome ツ'],
+                    textStyle: TextStyle(
                         fontFamily: 'Lobster',
                         fontSize: 50.0,
                         fontWeight: FontWeight.bold,
