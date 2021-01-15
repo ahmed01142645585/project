@@ -26,8 +26,9 @@ class _StudentScreenState extends State<StudentScreen> {
   void initState() {
     Widget home = HomeStudentScreen();
     Widget task = TaskStudentScreen();
+    Widget setting = SettingScreen();
     //TODO: hnzwd al 2 screens hena al notification w al setting 3shan al bar.
-    pages = [home, task];
+    pages = [home, task, setting];
     currentPage = home;
     super.initState();
     getUser();

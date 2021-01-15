@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:DGEST/Login_screen.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:DGEST/Student_screens/Notes_student_screen.dart';
+import 'Student_screens/Setting_student_screen.dart';
 import 'Student_screens/Tasks_student_screen.dart';
 
 void main() async {
@@ -22,6 +23,7 @@ class DGEST extends StatelessWidget {
           '/home': (context) => StudentScreen(),
           '/note': (context) => NotesStudentScreen(),
           '/tasks': (context) => TaskStudentScreen(),
+          '/setting': (context) => SettingScreen(),
           //TODO: hnzwd al screens f al application.
         },
         debugShowCheckedModeBanner: false,
