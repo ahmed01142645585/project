@@ -17,113 +17,93 @@ class _TaskStudentScreenState extends State<TaskStudentScreen> {
       child: SafeArea(
         child: Column(
           children: [
-            Expanded(
-              child: WidgetContainers(
-                //width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: Text(
-                        'Oct,2020',
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              top: 30.0, bottom: 60.0, right: 7.0, left: 7.0),
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: <Widget>[
-                              TasksWeekList(
-                                weekNumber: '1',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '1';
-                                  });
-                                },
-                              ),
-                              TasksWeekList(
-                                weekNumber: '2',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '2';
-                                  });
-                                },
-                              ),
-                              TasksWeekList(
-                                weekNumber: '3',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '3';
-                                  });
-                                },
-                              ),
-                              TasksWeekList(
-                                weekNumber: '4',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '4';
-                                  });
-                                },
-                              ),
-                              TasksWeekList(
-                                weekNumber: '5',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '5';
-                                  });
-                                },
-                              ),
-                              TasksWeekList(
-                                weekNumber: '6',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '6';
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+            Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Center(
+                child: Text(
+                  '1st Dec,2020',
+                  style: TextStyle(color: Colors.black, fontSize: 50.0),
                 ),
               ),
             ),
-            Text(
-              'Compiler',
-              style: TextStyle(
-                fontSize: 25.0,
-                color: Colors.black,
-              ),
+            Divider(
+              height: 10,
+              thickness: 3.0,
+              color: Colors.black45,
             ),
             Expanded(
               child: Container(
-                height: MediaQuery.of(context).size.height,
-                child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: ListView(
-                    children: <Widget>[
-                      Tasks(task: 'sheet 1'),
-                      Tasks(task: 'sheet 2'),
-                      Tasks(task: 'sheet 3'),
-                      Tasks(task: 'sheet 4'),
-                      Tasks(task: 'sheet 5'),
-                      Tasks(task: 'sheet 6'),
-                      Tasks(task: 'sheet 7'),
-                      Tasks(task: 'sheet 8'),
-                    ],
-                  ),
+                child: ListView(
+                  children: [
+                    // Container(
+                    //   height: 100,
+                    //   margin: EdgeInsets.all(10.0),
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(15.0),
+                    //     color: Colors.white,
+                    //   ),
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         'Compiler - sheet 1 - lec',
+                    //         style:
+                    //             TextStyle(fontSize: 20.0, color: Colors.black),
+                    //       ),
+                    //       Text(
+                    //         '5 days left.',
+                    //         style:
+                    //             TextStyle(fontSize: 17.0, color: Colors.black),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                    WidgetContainers(
+                      height: 100,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Compiler - Sheet 1 - Lecture',
+                            style:
+                                TextStyle(fontSize: 20.0, color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text(
+                            '5 days left.',
+                            style:
+                                TextStyle(fontSize: 17.0, color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                    WidgetContainers(
+                      height: 100,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Image Processing - Report - Section',
+                            style:
+                                TextStyle(fontSize: 20.0, color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text(
+                            '2 days left.',
+                            style:
+                                TextStyle(fontSize: 17.0, color: Colors.white),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),

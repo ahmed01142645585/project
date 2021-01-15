@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
-import 'package:DGEST/Login_screen.dart';
 import 'package:DGEST/Constins.dart';
 
 class NotesStudentScreen extends StatefulWidget {
@@ -29,31 +28,13 @@ class _NotesStudentScreenState extends State<NotesStudentScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Add new Note.',
-                    style: kHSSMainListTextStyle,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: FloatingActionButton(
-                      child: Icon(Icons.add),
-                      onPressed: () {
-                        print('Button is pressed!');
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              ButtonLogIn(
-                buttonText: 'Add New Note',
-                onPress: () {
-                  print('button is pressed!');
-                },
-                buttonPadding: EdgeInsets.symmetric(horizontal: 50.0),
-              ),
+              // ButtonLogIn(
+              //   buttonText: 'Add New Note',
+              //   onPress: () {
+              //     print('button is pressed!');
+              //   },
+              //   buttonPadding: EdgeInsets.symmetric(horizontal: 50.0),
+              // ),
               Expanded(
                 child: WidgetContainers(
                   child: Padding(
@@ -82,6 +63,27 @@ class _NotesStudentScreenState extends State<NotesStudentScreen> {
                     ),
                   ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Add new Note',
+                    style: kHSSMainListTextStyle,
+                  ),
+                  SizedBox(
+                    width: 15.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10.0),
+                    child: FloatingActionButton(
+                      child: Icon(Icons.add),
+                      onPressed: () {
+                        print('Button is pressed!');
+                      },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

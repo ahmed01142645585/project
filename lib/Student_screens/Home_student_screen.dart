@@ -99,7 +99,9 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                 children: [
                   //TODO: al mfrod hena de tsht8l firebase w backend 3shan t3mel al widget de. (Feh t2rebn for loop f 7ta de).
                   WidgetContainers(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/subject');
+                    },
                     width: 220,
                     child: ListDesign(
                       drText: 'Lamiaa Hassan',

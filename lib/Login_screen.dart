@@ -33,9 +33,9 @@ class _LoginScreen extends State<LoginScreen> {
                     colors: [
                       Colors.green,
                       Colors.yellow,
-                      Colors.orange,
                       Colors.red,
                     ],
+                    repeatForever: true,
                     speed: Duration(milliseconds: 300),
                     text: ['DGEST'],
                     textStyle: TextStyle(
@@ -45,6 +45,7 @@ class _LoginScreen extends State<LoginScreen> {
                     ),
                   ),
                   FadeAnimatedTextKit(
+                    repeatForever: true,
                     text: ['Welcome ツ'],
                     textStyle: TextStyle(
                         fontFamily: 'Lobster',
@@ -100,8 +101,8 @@ class _LoginScreen extends State<LoginScreen> {
                     style: TextStyle(color: Colors.white),
                   ),
                   ButtonLogIn(
-                    buttonText: 'Sign Up',
-                    buttonPadding: EdgeInsets.symmetric(horizontal: 60.0),
+                    buttonText: 'Contact Us',
+                    buttonPadding: EdgeInsets.symmetric(horizontal: 50.0),
                     onPress: () {
                       print('Sign Up Buttons is Pressed !');
                     },

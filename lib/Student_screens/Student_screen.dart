@@ -26,9 +26,10 @@ class _StudentScreenState extends State<StudentScreen> {
   void initState() {
     Widget home = HomeStudentScreen();
     Widget task = TaskStudentScreen();
+    Widget notification = NotificationStudentScreen();
     Widget setting = SettingScreen();
     //TODO: hnzwd al 2 screens hena al notification w al setting 3shan al bar.
-    pages = [home, task, setting];
+    pages = [home, task, notification, setting];
     currentPage = home;
     super.initState();
     getUser();
@@ -132,10 +133,11 @@ class ListDesign extends StatelessWidget {
 
 //TODO: lazem nshof trea2a nzbt feha al classes ale bst3melha f aktr mn screen w a5le feh fr2 ben al frontend w al backend.
 class WidgetContainers extends StatelessWidget {
-  WidgetContainers({this.width, this.onTap, this.child});
+  WidgetContainers({this.width, this.onTap, this.child, this.height});
   final double width;
   final Function onTap;
   final Widget child;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +147,7 @@ class WidgetContainers extends StatelessWidget {
         child: child,
         margin: EdgeInsets.all(13.0),
         width: width,
+        height: height,
         decoration: BoxDecoration(
           color: Color(0xFF06D6A0),
           borderRadius: BorderRadius.circular(50.0),

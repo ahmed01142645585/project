@@ -1,4 +1,3 @@
-//TODO: hn3mel hena screen al settings w hnndha f student screen 3shan de mwgoda f al bar ale t7t.
 import 'package:flutter/material.dart';
 import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
@@ -84,17 +83,17 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: WidgetContainers(
-                onTap: () {},
-                child: Center(
-                  child: Text(
-                    'help',
-                    style: kHSSMainButtonsTextStyle,
-                  ),
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: WidgetContainers(
+            //     onTap: () {},
+            //     child: Center(
+            //       child: Text(
+            //         'help',
+            //         style: kHSSMainButtonsTextStyle,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Expanded(
               child: WidgetContainers(
                 onTap: () {},
