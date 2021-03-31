@@ -7,7 +7,6 @@ import 'Notification_student_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class StudentScreen extends StatefulWidget {
-  // static const String id = '';
   @override
   _StudentScreenState createState() => _StudentScreenState();
 }
@@ -19,8 +18,7 @@ class _StudentScreenState extends State<StudentScreen> {
   final PageStorageBucket bucket = PageStorageBucket();
 
   final _auth = FirebaseAuth.instance;
-  //@deprecated
-  FirebaseUser loggedInUSer;
+  User loggedInUSer;
 
   @override
   void initState() {
@@ -28,7 +26,6 @@ class _StudentScreenState extends State<StudentScreen> {
     Widget task = TaskStudentScreen();
     Widget notification = NotificationStudentScreen();
     Widget setting = SettingScreen();
-    //TODO: hnzwd al 2 screens hena al notification w al setting 3shan al bar.
     pages = [home, task, notification, setting];
     currentPage = home;
     super.initState();
@@ -37,7 +34,7 @@ class _StudentScreenState extends State<StudentScreen> {
 
   void getUser() async {
     try {
-      final user = await _auth.currentUser;
+      final user = _auth.currentUser;
       if (user != null) {
         loggedInUSer = user;
         print(loggedInUSer.email);
