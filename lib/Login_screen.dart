@@ -17,9 +17,22 @@ class _LoginScreen extends State<LoginScreen> {
   String password;
   bool spinner = false;
 
-  void contactUsButton() {
-    //TODO:ht3mel hena ya tarek al zorar bt3 contact us ale hytl3 ll user al m3lomat 3n al gm3a.
+  void contactUsButton(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Center(child: Text("Contact Us")),
+              content: Text(
+                  "phone number : 01142645585\naddress : ring road katamiya"),
+              contentTextStyle: TextStyle(
+                fontSize: 20,
+              ),
+              backgroundColor: Color(0xFF06D6A0),
+              actions: []);
+        });
   }
+  //TODO:ht3mel hena ya tarek al zorar bt3 contact us ale hytl3 ll user al m3lomat 3n al gm3a.
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +130,7 @@ class _LoginScreen extends State<LoginScreen> {
                       buttonText: 'Contact Us',
                       buttonPadding: EdgeInsets.symmetric(horizontal: 50.0),
                       onPress: () {
+                        contactUsButton(context);
                         //TODO: htndh al function hena ya tarek.
                       },
                     ),

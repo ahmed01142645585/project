@@ -12,6 +12,32 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final _auth = FirebaseAuth.instance;
   bool spineer = false;
+  void shareAppButton(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Center(child: Text("Share App")),
+            content: Text("https://stackoverflow.com/"),
+            contentTextStyle: TextStyle(
+              fontSize: 20,
+            ),
+            backgroundColor: Color(0xFF06D6A0),
+            actions: [
+              RaisedButton(
+                color: Colors.green,
+                onPressed: () {},
+                child: Text("copy"),
+              ),
+              RaisedButton(
+                color: Colors.red,
+                onPressed: () {},
+                child: Text("CANCEL"),
+              ),
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +108,7 @@ class _SettingScreenState extends State<SettingScreen> {
               Expanded(
                 child: WidgetContainers(
                   onTap: () {
+                    shareAppButton(context);
                     //TODO:ht3mel al zorar ale bytl3 al link.
                   },
                   child: Center(
