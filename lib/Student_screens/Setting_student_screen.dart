@@ -12,6 +12,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final _auth = FirebaseAuth.instance;
   bool spineer = false;
+
   void shareAppButton(BuildContext context) {
     showDialog(
         context: context,
@@ -24,13 +25,18 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             backgroundColor: Color(0xFF06D6A0),
             actions: [
-              RaisedButton(
-                color: Colors.green,
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                ),
                 onPressed: () {},
                 child: Text("copy"),
               ),
-              RaisedButton(
-                color: Colors.red,
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                ),
                 onPressed: () {},
                 child: Text("CANCEL"),
               ),

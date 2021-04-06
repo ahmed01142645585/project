@@ -186,10 +186,13 @@ class ButtonLogIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: RaisedButton(
-        color: Color(0xFF06D6A0),
-        shape: StadiumBorder(),
-        padding: buttonPadding,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Color(0xFF06D6A0)),
+            shape: MaterialStateProperty.all<OutlinedBorder>(StadiumBorder()),
+            padding:
+                MaterialStateProperty.all<EdgeInsetsGeometry>(buttonPadding)),
         onPressed: onPress,
         child: Text(
           buttonText,

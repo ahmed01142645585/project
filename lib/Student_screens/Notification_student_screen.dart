@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class NotificationStudentScreen extends StatefulWidget {
   @override
@@ -9,6 +10,27 @@ class NotificationStudentScreen extends StatefulWidget {
 }
 
 class _NotificationStudentScreenState extends State<NotificationStudentScreen> {
+  String messageTitle = "Empty";
+  String notificationAlert = "alert";
+
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   RemoteNotification notification = message.notification;
+    //   AndroidNotification android = message.notification?.android;
+    //
+    //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    //     if (message.data['type'] == 'chat') {
+    //       Navigator.pushNamed(context, '/notification',
+    //           arguments: ChatArguments(message));
+    //     }
+    //   });
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BackgroundImage(
@@ -47,7 +69,7 @@ class _NotificationStudentScreenState extends State<NotificationStudentScreen> {
                       color: Colors.black45,
                     ),
                     NotificationsStyle(
-                      notfText: 'Dr.Lamiaa have been added a new task',
+                      notfText: messageTitle,
                       timeAgo: '5 min ago',
                     ),
                     Divider(

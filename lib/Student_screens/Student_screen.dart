@@ -64,19 +64,17 @@ class _StudentScreenState extends State<StudentScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            title: Text('Tasks'),
-          ),
+              icon: Icon(Icons.assignment), label: 'Tasks,'),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
-            title: Text('Notifications'),
+            label: 'Notifications',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            title: Text('Settings'),
+            label: 'Settings',
           ),
         ],
       ),
