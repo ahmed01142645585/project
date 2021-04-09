@@ -19,7 +19,7 @@ class DGEST extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: '/login',
+        initialRoute: '/home',
         routes: {
           '/login': (context) => LoginScreen(),
           '/home': (context) => StudentScreen(),
@@ -34,7 +34,7 @@ class DGEST extends StatelessWidget {
         theme: ThemeData.dark().copyWith(
           //TODO: hn3mel al theme bt3 al application hena.
           primaryColor: Color(0xFF06D6A0),
-          canvasColor: Colors.black, 
+          canvasColor: Colors.black,
           //8yrt lon al appbar
         ));
   }
