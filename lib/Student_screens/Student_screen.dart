@@ -4,7 +4,6 @@ import 'package:DGEST/Student_screens/Tasks_student_screen.dart';
 import 'package:DGEST/Student_screens/Home_student_screen.dart';
 import 'Setting_student_screen.dart';
 import 'Notification_student_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class StudentScreen extends StatefulWidget {
   @override
@@ -17,9 +16,6 @@ class _StudentScreenState extends State<StudentScreen> {
   Widget currentPage;
   final PageStorageBucket bucket = PageStorageBucket();
 
-  final _auth = FirebaseAuth.instance;
-  User loggedInUSer;
-
   @override
   void initState() {
     Widget home = HomeStudentScreen();
@@ -29,19 +25,6 @@ class _StudentScreenState extends State<StudentScreen> {
     pages = [home, task, notification, setting];
     currentPage = home;
     super.initState();
-    getUser();
-  }
-
-  void getUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUSer = user;
-        print(loggedInUSer.email);
-      }
-    } catch (e) {
-      print(e);
-    }
   }
 
   @override
@@ -67,7 +50,9 @@ class _StudentScreenState extends State<StudentScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.assignment), label: 'Tasks,'),
+            icon: Icon(Icons.assignment),
+            label: 'Tasks',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
             label: 'Notifications',

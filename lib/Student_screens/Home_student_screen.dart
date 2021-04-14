@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeStudentScreen extends StatefulWidget {
   @override
@@ -12,6 +14,26 @@ class HomeStudentScreen extends StatefulWidget {
 class _HomeStudentScreenState extends State<HomeStudentScreen> {
   PickedFile _imageFile;
   final ImagePicker _picker = ImagePicker();
+  final _auth = FirebaseAuth.instance;
+  User loggedInUSer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
+
+  void getUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUSer = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void takePhoto(ImageSource source) async {
     final pickedFile = await _picker.getImage(
@@ -38,13 +60,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                   imageProfile(),
                   Column(
                     children: [
-                      Text(
-                        'Hello,Gehad!',
-                        style: TextStyle(
-                          fontSize: 27.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      GetUserName('${loggedInUSer.email}'),
                       Text(
                         'Have a nice day !',
                         style: TextStyle(
@@ -54,14 +70,15 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                     ],
                   ),
                   IconButton(
-                      icon: Icon(
-                        Icons.search,
-                        size: 37,
-                        color: Colors.black54,
-                      ),
-                      onPressed: () {
-                        print('search icon is pressed!');
-                      }),
+                    icon: Icon(
+                      Icons.search,
+                      size: 37,
+                      color: Colors.black54,
+                    ),
+                    onPressed: () {
+                      print('search icon is pressed!');
+                    },
+                  ),
                 ],
               ),
             ),
@@ -179,7 +196,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
       child: Stack(
         children: [
           CircleAvatar(
-            radius: 50,
+            radius: 40,
             backgroundImage: _imageFile == null
                 ? AssetImage("images/sora5a.jpeg")
                 : FileImage(File(_imageFile.path)),
@@ -261,6 +278,75 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  // Widget getUserName() {
+  //   CollectionReference users =
+  //       FirebaseFirestore.instance.collection('Students');
+  //
+  //   return FutureBuilder<DocumentSnapshot>(
+  //     future: users.doc('${loggedInUSer.email}').get(),
+  //     builder:
+  //         (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+  //       if (snapshot.hasError) {
+  //         return Text("Something went wrong");
+  //       }
+  //
+  //       if (snapshot.connectionState == ConnectionState.done) {
+  //         Map<String, dynamic> data = snapshot.data.data();
+  //         return Text(
+  //           "Hello, ${data['name']}",
+  //           style: TextStyle(
+  //             fontSize: 25,
+  //           ),
+  //         );
+  //       }
+  //
+  //       return Text(
+  //         "loading",
+  //         style: TextStyle(
+  //           fontSize: 25,
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+}
+
+class GetUserName extends StatelessWidget {
+  GetUserName(this.documentId);
+  final String documentId;
+
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('Students');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(documentId).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data.data();
+          return Text(
+            'Hello, ${data['name']}',
+            style: TextStyle(
+              fontSize: 25,
+            ),
+          );
+        }
+
+        return Text(
+          'loading',
+          style: TextStyle(
+            fontSize: 25,
+          ),
+        );
+      },
     );
   }
 }

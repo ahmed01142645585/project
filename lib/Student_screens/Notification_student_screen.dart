@@ -14,6 +14,7 @@ class _NotificationStudentScreenState extends State<NotificationStudentScreen> {
   String notificationAlert = "alert";
 
   //FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  // FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   @override
   void initState() {
     // TODO: implement initState

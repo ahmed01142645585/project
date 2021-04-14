@@ -19,7 +19,7 @@ class DGEST extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: '/home',
+        initialRoute: '/login',
         routes: {
           '/login': (context) => LoginScreen(),
           '/home': (context) => StudentScreen(),
