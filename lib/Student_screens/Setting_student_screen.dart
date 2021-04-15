@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,11 +19,17 @@ class _SettingScreenState extends State<SettingScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Center(child: Text("Share App")),
-            content: Text("https://stackoverflow.com/"),
-            contentTextStyle: TextStyle(
-              fontSize: 20,
+            title: Center(
+              child: Text(
+                "Share App",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
             ),
+            content: Text("https://stackoverflow.com/"),
+            contentTextStyle: TextStyle(color: Colors.black, fontSize: 20),
             backgroundColor: Color(0xFF06D6A0),
             actions: [
               ElevatedButton(
@@ -30,18 +37,70 @@ class _SettingScreenState extends State<SettingScreen> {
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.green),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Clipboard.setData(
+                      new ClipboardData(text: "https://stackoverflow.com/"));
+                },
                 child: Text("copy"),
               ),
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                 ),
-                onPressed: () {},
+                onPressed: () => Navigator.pop(context, true),
                 child: Text("CANCEL"),
               ),
             ],
           );
+        });
+  }
+
+  void support(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Center(
+                child: Text(
+                  "Support",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+              ),
+              content: RichText(
+                text: TextSpan(
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: "Hot Line :-\n",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "16049\n",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                    TextSpan(
+                      text: "Facebook Page:-\n",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "modern academy official page\n",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+              backgroundColor: Color(0xFF06D6A0),
+              actions: []);
         });
   }
 
@@ -139,6 +198,7 @@ class _SettingScreenState extends State<SettingScreen> {
               Expanded(
                 child: WidgetContainers(
                   onTap: () {
+                    support(context);
                     //TODO:ht3mel al zorar da ya tarek.
                   },
                   child: Center(

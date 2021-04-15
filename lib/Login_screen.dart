@@ -22,12 +22,80 @@ class _LoginScreen extends State<LoginScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              title: Center(child: Text("Contact Us")),
-              content: Text(
-                  "phone number : 01142645585\naddress : ring road katamiya"),
-              contentTextStyle: TextStyle(
-                fontSize: 20,
+              title: Center(
+                child: Text(
+                  "Contact Us",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
               ),
+              content: RichText(
+                text: TextSpan(
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: "Phone Number :-\n",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "01142645585\n",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                    TextSpan(
+                      text: "Hot Line :-\n",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "16049\n",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                    TextSpan(
+                      text: "Address :-\n",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "ring road katamiya - Cairo\n",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                    TextSpan(
+                      text: "Facebook Page:-\n",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "modern academy official page\n",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+              // Text("phone number :-"
+              //     "\n01142645585"
+              //     "\nhot line :-"
+              //     "\n16049"
+              //     "\naddress :-"
+              //     "\nring road katamiya-cairo"
+              //     "\nfacebook page:-"
+              //     "\nmodern academy official page"),
+              // contentTextStyle: TextStyle(
+              //   fontSize: 20,
+              // ),
               backgroundColor: Color(0xFF06D6A0),
               actions: []);
         });
