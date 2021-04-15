@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
@@ -128,7 +129,7 @@ class _LoginScreen extends State<LoginScreen> {
                       text: ['DGEST'],
                       textStyle: TextStyle(
                         fontFamily: 'PressStart2P',
-                        fontSize: 70.0,
+                        fontSize: 60.0,
                         color: Color(0xFFecf8f8),
                       ),
                     ),
@@ -137,7 +138,7 @@ class _LoginScreen extends State<LoginScreen> {
                       text: ['Welcome ツ'],
                       textStyle: TextStyle(
                           fontFamily: 'Lobster',
-                          fontSize: 50.0,
+                          fontSize: 40.0,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
@@ -163,7 +164,7 @@ class _LoginScreen extends State<LoginScreen> {
                     ),
                     ButtonLogIn(
                       buttonText: 'Sign In',
-                      buttonPadding: EdgeInsets.symmetric(horizontal: 120.0),
+                      buttonPadding: EdgeInsets.symmetric(horizontal: 100.0),
                       onPress: () async {
                         setState(() {
                           spinner = true;
@@ -188,7 +189,7 @@ class _LoginScreen extends State<LoginScreen> {
                     //   style: TextStyle(color: Colors.white),
                     // ),
                     SizedBox(
-                      height: 120.0,
+                      height: 140.0,
                     ),
                     Text(
                       'Don\'t have an account ?',
@@ -225,6 +226,7 @@ class TextFiledLogIn extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
       child: TextField(
         obscureText: hideText,
+        keyboardType: TextInputType.emailAddress,
         style: TextStyle(color: Colors.black),
         onChanged: onChange,
         decoration: InputDecoration(

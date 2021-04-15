@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
+import 'package:intl/intl.dart';
 
 //import 'package:DGEST/Constins.dart';
 var selectedCard = '1';
@@ -8,6 +9,9 @@ class TaskStudentScreen extends StatefulWidget {
   @override
   _TaskStudentScreenState createState() => _TaskStudentScreenState();
 }
+
+DateTime now = DateTime.now();
+var formatter = new DateFormat.yMMMMEEEEd().format(now);
 
 class _TaskStudentScreenState extends State<TaskStudentScreen> {
   @override
@@ -21,8 +25,11 @@ class _TaskStudentScreenState extends State<TaskStudentScreen> {
               height: MediaQuery.of(context).size.height / 6,
               child: Center(
                 child: Text(
-                  '1st Dec,2020',
-                  style: TextStyle(color: Colors.black, fontSize: 50.0),
+                  '$formatter',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),

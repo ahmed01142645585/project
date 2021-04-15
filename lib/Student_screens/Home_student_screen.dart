@@ -42,6 +42,15 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
     setState(() {
       _imageFile = pickedFile;
     });
+    writePhoto();
+  }
+
+  void writePhoto() {
+    final _fireStore = FirebaseFirestore.instance;
+    _fireStore
+        .collection('Students')
+        .doc('${loggedInUSer.email}')
+        .update({'profile': '$_imageFile'});
   }
 
   @override
@@ -72,7 +81,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                   IconButton(
                     icon: Icon(
                       Icons.search,
-                      size: 37,
+                      size: 45.0,
                       color: Colors.black54,
                     ),
                     onPressed: () {
@@ -82,18 +91,18 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                 ],
               ),
             ),
-            Expanded(
-              child: WidgetContainers(
-                width: 200,
-                onTap: () {},
-                child: Center(
-                  child: Text(
-                    'Attendance',
-                    style: kHSSMainButtonsTextStyle,
-                  ),
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: WidgetContainers(
+            //     width: 200,
+            //     onTap: () {},
+            //     child: Center(
+            //       child: Text(
+            //         'Attendance',
+            //         style: kHSSMainButtonsTextStyle,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             // Expanded(
             //   child: WidgetContainers(
             //     width: 200,
@@ -198,7 +207,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
           CircleAvatar(
             radius: 40,
             backgroundImage: _imageFile == null
-                ? AssetImage("images/sora5a.jpeg")
+                ? AssetImage("images/default_profile.jpg")
                 : FileImage(File(_imageFile.path)),
           ),
           Positioned(
@@ -333,7 +342,7 @@ class GetUserName extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data = snapshot.data.data();
           return Text(
-            'Hello, ${data['name']}',
+            '${data['name']}',
             style: TextStyle(
               fontSize: 25,
             ),

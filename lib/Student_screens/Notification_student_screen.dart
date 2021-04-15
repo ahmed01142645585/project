@@ -54,7 +54,7 @@ class _NotificationStudentScreenState extends State<NotificationStudentScreen> {
                   text: ['DGEST'],
                   textStyle: TextStyle(
                     fontFamily: 'PressStart2P',
-                    fontSize: 70.0,
+                    fontSize: 60.0,
                     color: Color(0xFFecf8f8),
                   ),
                 ),

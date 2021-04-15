@@ -4,6 +4,7 @@ import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:DGEST/Student_screens/Home_student_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -13,6 +14,24 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final _auth = FirebaseAuth.instance;
   bool spineer = false;
+  User loggedInUSer;
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  void getUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUSer = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void shareAppButton(BuildContext context) {
     showDialog(
@@ -114,57 +133,51 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                children: [
-                  IconButton(
-                      icon: Icon(
-                        Icons.account_box,
-                        size: 70,
-                        color: Colors.black54,
-                      ),
-                      onPressed: () {}),
-                  SizedBox(
-                    width: 60.0,
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: Text(
-                          'ahmed tarek',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'ahmed.tarek@gmail.com',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              Expanded(
-                child: WidgetContainers(
-                  onTap: () {},
-                  child: Center(
-                    child: Text(
-                      'information',
-                      style: kHSSMainButtonsTextStyle,
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: AssetImage('images/default_profile.jpg'),
+                      radius: 35.0,
                     ),
-                  ),
+                    SizedBox(
+                      width: 30.0,
+                    ),
+                    Column(
+                      children: [
+                        GetUserName('${loggedInUSer.email}'),
+                        Text(
+                          '${loggedInUSer.email}',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
+              SizedBox(
+                height: 100.0,
+              ),
+              // Expanded(
+              //   child: WidgetContainers(
+              //     onTap: () {},
+              //     child: Center(
+              //       child: Text(
+              //         'information',
+              //         style: kHSSMainButtonsTextStyle,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Expanded(
                 child: WidgetContainers(
                   onTap: () {},
                   child: Center(
                     child: Text(
-                      'language',
+                      'Languages',
                       style: kHSSMainButtonsTextStyle,
                     ),
                   ),
@@ -178,7 +191,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   },
                   child: Center(
                     child: Text(
-                      'share app',
+                      'Share App',
                       style: kHSSMainButtonsTextStyle,
                     ),
                   ),
@@ -203,7 +216,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   },
                   child: Center(
                     child: Text(
-                      'support',
+                      'Support',
                       style: kHSSMainButtonsTextStyle,
                     ),
                   ),
