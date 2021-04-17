@@ -5,6 +5,9 @@ import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:DGEST/Student_screens/Home_student_screen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -12,9 +15,11 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  final _picker = ImagePicker();
   final _auth = FirebaseAuth.instance;
   bool spineer = false;
   User loggedInUSer;
+  String imageUrl;
 
   @override
   void initState() {
@@ -31,6 +36,28 @@ class _SettingScreenState extends State<SettingScreen> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await _picker.getImage(
+      source: source,
+    );
+    // setState(() {
+    //   _imageFile = pickedFile;
+    // });
+
+    var file = File(pickedFile.path);
+    final _storage = FirebaseStorage.instance;
+    var snapshot = await _storage
+        .ref()
+        .child('folderName/imageName')
+        .putFile(file)
+        .whenComplete(() => null);
+    //men awel hena
+    var downloadUrl = await snapshot.ref.getDownloadURL();
+    setState(() {
+      imageUrl = downloadUrl;
+    });
   }
 
   void shareAppButton(BuildContext context) {
@@ -59,6 +86,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 onPressed: () {
                   Clipboard.setData(
                       new ClipboardData(text: "https://stackoverflow.com/"));
+                  Navigator.pop(context, true);
                 },
                 child: Text("copy"),
               ),
@@ -134,15 +162,12 @@ class _SettingScreenState extends State<SettingScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('images/default_profile.jpg'),
-                      radius: 35.0,
-                    ),
+                    imageProfile(),
                     SizedBox(
-                      width: 30.0,
+                      width: 10.0,
                     ),
                     Column(
                       children: [
@@ -249,6 +274,98 @@ class _SettingScreenState extends State<SettingScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget imageProfile() {
+    return Center(
+      child: Stack(
+        children: [
+          CircleAvatar(
+            radius: 40,
+            backgroundImage: imageUrl != null
+                ? Image.network(imageUrl)
+                : AssetImage("images/default_profile.jpg"),
+          ),
+          Positioned(
+            bottom: 1,
+            right: 1,
+            child: InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: ((builder) => bottomSheet()),
+                );
+              },
+              child: Icon(
+                Icons.camera_alt,
+                color: Colors.teal,
+                size: 30,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children: [
+          Text(
+            "Choose Profile Photo",
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton.icon(
+                icon: Icon(
+                  Icons.camera,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  takePhoto(ImageSource.camera);
+                  Navigator.pop(context, true);
+                },
+                label: Text(
+                  "Camera",
+                  style: TextStyle(color: Colors.teal),
+                ),
+              ),
+              SizedBox(
+                width: 50.0,
+              ),
+              TextButton.icon(
+                icon: Icon(
+                  Icons.image,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  takePhoto(ImageSource.gallery);
+                  Navigator.pop(context, true);
+                },
+                label: Text(
+                  "Gallery",
+                  style: TextStyle(color: Colors.teal),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

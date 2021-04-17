@@ -12,8 +12,6 @@ class HomeStudentScreen extends StatefulWidget {
 }
 
 class _HomeStudentScreenState extends State<HomeStudentScreen> {
-  PickedFile _imageFile;
-  final ImagePicker _picker = ImagePicker();
   final _auth = FirebaseAuth.instance;
   User loggedInUSer;
 
@@ -35,24 +33,6 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
     }
   }
 
-  void takePhoto(ImageSource source) async {
-    final pickedFile = await _picker.getImage(
-      source: source,
-    );
-    setState(() {
-      _imageFile = pickedFile;
-    });
-    writePhoto();
-  }
-
-  void writePhoto() {
-    final _fireStore = FirebaseFirestore.instance;
-    _fireStore
-        .collection('Students')
-        .doc('${loggedInUSer.email}')
-        .update({'profile': '$_imageFile'});
-  }
-
   @override
   Widget build(BuildContext context) {
     return BackgroundImage(
@@ -66,7 +46,10 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  imageProfile(),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage("images/default_profile.jpg"),
+                  ),
                   Column(
                     children: [
                       GetUserName('${loggedInUSer.email}'),
@@ -196,96 +179,6 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget imageProfile() {
-    return Center(
-      child: Stack(
-        children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundImage: _imageFile == null
-                ? AssetImage("images/default_profile.jpg")
-                : FileImage(File(_imageFile.path)),
-          ),
-          Positioned(
-            bottom: 1,
-            right: 1,
-            child: InkWell(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: ((builder) => bottomSheet()),
-                );
-              },
-              child: Icon(
-                Icons.camera_alt,
-                color: Colors.teal,
-                size: 30,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget bottomSheet() {
-    return Container(
-      height: 100,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 20,
-      ),
-      child: Column(
-        children: [
-          Text(
-            "Choose Profile Photo",
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton.icon(
-                icon: Icon(
-                  Icons.camera,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  takePhoto(ImageSource.camera);
-                },
-                label: Text(
-                  "Camera",
-                  style: TextStyle(color: Colors.teal),
-                ),
-              ),
-              SizedBox(
-                width: 50.0,
-              ),
-              TextButton.icon(
-                icon: Icon(
-                  Icons.image,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  takePhoto(ImageSource.gallery);
-                },
-                label: Text(
-                  "Gallery",
-                  style: TextStyle(color: Colors.teal),
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
