@@ -69,15 +69,15 @@ class _NotificationStudentScreenState extends State<NotificationStudentScreen> {
                       thickness: 3.0,
                       color: Colors.black45,
                     ),
-                    NotificationsStyle(
-                      notfText: messageTitle,
-                      timeAgo: '5 min ago',
-                    ),
-                    Divider(
-                      height: 10,
-                      thickness: 3.0,
-                      color: Colors.black45,
-                    ),
+                    // NotificationsStyle(
+                    //   notfText: messageTitle,
+                    //   timeAgo: '5 min ago',
+                    // ),
+                    // Divider(
+                    //   height: 10,
+                    //   thickness: 3.0,
+                    //   color: Colors.black45,
+                    // ),
                     NotificationsStyle(
                       notfText: 'New assignment in Compiler is added',
                       timeAgo: '7 hours ago',

@@ -1,22 +1,46 @@
 import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:flutter/material.dart';
 import 'Tasks_student_screen.dart';
+import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SubjectStudentScreen extends StatefulWidget {
   @override
   _SubjectStudentScreenState createState() => _SubjectStudentScreenState();
 }
 
+DateTime now = DateTime.now();
+var formatter = new DateFormat.MMMMd().format(now);
+
 class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
+  final _auth = FirebaseAuth.instance;
+  User loggedInUSer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
+
+  void getUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUSer = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Compiler',
-          style: TextStyle(fontSize: 30.0),
-        ),
-        centerTitle: true,
+        //title: GetUserName('${loggedInUSer.email}'),
+        //centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.white,
@@ -38,7 +62,7 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
                     Padding(
                       padding: EdgeInsets.only(top: 25.0),
                       child: Text(
-                        'Oct,2020',
+                        '$formatter',
                         style: TextStyle(
                           fontSize: 25.0,
                           color: Colors.black,
@@ -214,6 +238,46 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class GetUserName extends StatelessWidget {
+  GetUserName(this.documentId);
+  final String documentId;
+
+  final _fireStore = FirebaseFirestore.instance;
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _fireStore
+          .collection('Students')
+          .doc(documentId)
+          .collection('Courses')
+          .doc('O0SwAYY5hqe1jUItPR4t')
+          .get(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+        if (snapshot.hasData) {
+          final data = snapshot.data.data();
+          List field = data['subject'];
+          return Text(
+            '${field.elementAt(1)}',
+            style: TextStyle(
+              fontSize: 25,
+            ),
+          );
+        }
+
+        return Text(
+          'loading',
+          style: TextStyle(
+            fontSize: 25,
+          ),
+        );
+      },
     );
   }
 }

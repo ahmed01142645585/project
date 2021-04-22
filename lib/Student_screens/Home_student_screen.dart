@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -98,85 +96,21 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
             //     ),
             //   ),
             // ),
-            Expanded(
-              child: WidgetContainers(
-                width: 200,
-                onTap: () {
-                  Navigator.pushNamed(context, '/note');
-                },
-                child: Center(
-                  child: Text(
-                    'Notes',
-                    style: kHSSMainButtonsTextStyle,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  //TODO: al mfrod hena de tsht8l firebase w backend 3shan t3mel al widget de. (Feh t2rebn for loop f 7ta de).
-                  WidgetContainers(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/subject');
-                    },
-                    width: 220,
-                    child: ListDesign(
-                      drText: 'Lamiaa Hassan',
-                      courseText: 'Compiler',
-                      yearSemster: 'Forth Year,\nFirst semster.',
-                    ),
-                  ),
-                  WidgetContainers(
-                    onTap: () {},
-                    width: 220,
-                    child: ListDesign(
-                      drText: 'Abo El-ela',
-                      courseText: 'Expert System',
-                      yearSemster: 'Forth Year,\nFirst semster.',
-                    ),
-                  ),
-                  WidgetContainers(
-                    onTap: () {},
-                    width: 220,
-                    child: ListDesign(
-                      drText: 'Abbas Rostm',
-                      courseText: 'Image Prossesing',
-                      yearSemster: 'Forth Year,\nFirst semster.',
-                    ),
-                  ),
-                  WidgetContainers(
-                    onTap: () {},
-                    width: 220,
-                    child: ListDesign(
-                      drText: 'Sherif Mohram',
-                      courseText: 'Computer Network',
-                      yearSemster: 'Forth Year,\nFirst semster.',
-                    ),
-                  ),
-                  WidgetContainers(
-                    onTap: () {},
-                    width: 220,
-                    child: ListDesign(
-                      drText: 'AbdelFatah',
-                      courseText: 'Modeling & Simulation',
-                      yearSemster: 'Forth Year,\nFirst semster.',
-                    ),
-                  ),
-                  WidgetContainers(
-                    onTap: () {},
-                    width: 220,
-                    child: ListDesign(
-                      drText: 'Lamiaa Hassan',
-                      courseText: 'Compiler',
-                      yearSemster: 'Forth Year,\nFirst semster.',
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Expanded(
+            //   child: WidgetContainers(
+            //     width: 200,
+            //     onTap: () {
+            //       Navigator.pushNamed(context, '/note');
+            //     },
+            //     child: Center(
+            //       child: Text(
+            //         'Notes',
+            //         style: kHSSMainButtonsTextStyle,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            Expanded(flex: 3, child: StudentCourses('${loggedInUSer.email}')),
           ],
         ),
       ),
@@ -246,6 +180,61 @@ class GetUserName extends StatelessWidget {
           'loading',
           style: TextStyle(
             fontSize: 25,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class StudentCourses extends StatelessWidget {
+  StudentCourses(this.documentId);
+  final String documentId;
+  final _fireStore = FirebaseFirestore.instance;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: _fireStore
+          .collection('Students')
+          .doc(documentId)
+          .collection('Courses')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+        if (snapshot.hasData) {
+          final documents = snapshot.data.docs;
+          List<WidgetContainers> courseWidgets = [];
+          for (var field in documents) {
+            List fieldDataArray = field.get('subject');
+
+            final courseWidget = WidgetContainers(
+              width: 250,
+              onTap: () {
+                Navigator.pushNamed(context, '/subject');
+              },
+              child: ListDesign(
+                drText: '${fieldDataArray.elementAt(0)}',
+                courseText: '${fieldDataArray.elementAt(1)}',
+                yearSemster: '${fieldDataArray.elementAt(2)}',
+              ),
+            );
+            courseWidgets.add(courseWidget);
+          }
+          return ListView(
+            scrollDirection: Axis.horizontal,
+            children: courseWidgets,
+          );
+        }
+        return WidgetContainers(
+          width: 250,
+          onTap: () {},
+          child: ListDesign(
+            drText: 'LOADING',
+            courseText: 'LOADING',
+            yearSemster: 'LOADING',
           ),
         );
       },

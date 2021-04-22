@@ -48,15 +48,16 @@ class _SettingScreenState extends State<SettingScreen> {
 
     var file = File(pickedFile.path);
     final _storage = FirebaseStorage.instance;
-    var snapshot = await _storage
-        .ref()
-        .child('folderName/imageName')
-        .putFile(file)
-        .whenComplete(() => null);
-    //men awel hena
-    var downloadUrl = await snapshot.ref.getDownloadURL();
+    await _storage.ref().child('folderName/imageName').putFile(file);
+    // //men awel hena
+    // // var downloadUrl =
+    // //     await _storage.ref('folderName/imageName').getDownloadURL();
+    String downloadURL = await FirebaseStorage.instance
+        .ref('folderName/imageName')
+        .getDownloadURL();
+    print(downloadURL);
     setState(() {
-      imageUrl = downloadUrl;
+      imageUrl = downloadURL;
     });
   }
 
@@ -74,7 +75,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ),
             ),
-            content: Text("https://stackoverflow.com/"),
+            content: Text("https://console.firebase.google.com/"),
             contentTextStyle: TextStyle(color: Colors.black, fontSize: 20),
             backgroundColor: Color(0xFF06D6A0),
             actions: [
@@ -84,8 +85,8 @@ class _SettingScreenState extends State<SettingScreen> {
                       MaterialStateProperty.all<Color>(Colors.green),
                 ),
                 onPressed: () {
-                  Clipboard.setData(
-                      new ClipboardData(text: "https://stackoverflow.com/"));
+                  Clipboard.setData(new ClipboardData(
+                      text: "https://console.firebase.google.com/"));
                   Navigator.pop(context, true);
                 },
                 child: Text("copy"),
@@ -162,7 +163,7 @@ class _SettingScreenState extends State<SettingScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Row(
                   children: [
                     imageProfile(),
@@ -282,12 +283,25 @@ class _SettingScreenState extends State<SettingScreen> {
     return Center(
       child: Stack(
         children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundImage: imageUrl != null
-                ? Image.network(imageUrl)
-                : AssetImage("images/default_profile.jpg"),
+          Container(
+            height: 65.0,
+            width: 65.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50.0),
+              image: DecorationImage(
+                image: imageUrl != null
+                    ? NetworkImage(imageUrl)
+                    : AssetImage("images/default_profile.jpg"),
+                fit: BoxFit.fill,
+              ),
+            ),
           ),
+          // CircleAvatar(
+          //   radius: 40,
+          //   backgroundImage: imageUrl != null
+          //       ? Image.network(imageUrl)
+          //       : AssetImage("images/default_profile.jpg"),
+          // ),
           Positioned(
             bottom: 1,
             right: 1,

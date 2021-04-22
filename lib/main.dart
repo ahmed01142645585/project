@@ -8,6 +8,7 @@ import 'Student_screens/Setting_student_screen.dart';
 import 'Student_screens/Tasks_student_screen.dart';
 import 'package:DGEST/Student_screens/Notification_student_screen.dart';
 import 'package:DGEST/Student_screens/Subject_student-screen.dart';
+import 'Doctor_screens/Doctor_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,8 @@ class DGEST extends StatelessWidget {
           '/notification': (context) => NotificationStudentScreen(),
           '/subject': (context) => SubjectStudentScreen(),
           '/setting': (context) => SettingScreen(),
+          //doc
+          '/homedoc': (context) => DoctorScreen(),
           //TODO: hnzwd al screens f al application.
         },
         debugShowCheckedModeBanner: false,
