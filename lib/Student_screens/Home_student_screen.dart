@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:DGEST/Constins.dart';
+import 'package:DGEST/Desgin_classes/Desgin.dart';
 
 class HomeStudentScreen extends StatefulWidget {
   @override
@@ -10,25 +10,83 @@ class HomeStudentScreen extends StatefulWidget {
 }
 
 class _HomeStudentScreenState extends State<HomeStudentScreen> {
-  final _auth = FirebaseAuth.instance;
-  User loggedInUSer;
-
+  final _fireStore = FirebaseFirestore.instance;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getUser();
   }
 
-  void getUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUSer = user;
+  //TODO:hn8yr mkan de 3shan m3mola f 2 screens bzbt.
+  void checkUserRoleFromFirebase() {
+    _fireStore
+        .collection('UserRoles')
+        .doc('${loggedInUSer.email}')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        //print('${documentSnapshot.data()['role']}');
+        var fieldRoleData = documentSnapshot.data()['role'];
+        if (fieldRoleData == 'student') {
+          Navigator.pushNamed(context, '/subject');
+        } else if (fieldRoleData == 'doctor') {
+          Navigator.pushNamed(context, '/subjectdoc');
+        } else {
+          print('Error');
+        }
+      } else {
+        print('Document does not exist on the database');
       }
-    } catch (e) {
-      print(e);
-    }
+    });
+  }
+
+  Widget getStudentCoursesFromFirebase(String documentId) {
+    return StreamBuilder(
+      stream: _fireStore
+          .collection('Students')
+          .doc(documentId)
+          .collection('Courses')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+        if (snapshot.hasData) {
+          final documents = snapshot.data.docs;
+          List<WidgetContainers> courseWidgets = [];
+          for (var field in documents) {
+            List fieldDataArray = field.get('subject');
+
+            final courseWidget = WidgetContainers(
+              width: 250,
+              onTap: () {
+                //Navigator.pushNamed(context, '/subject');
+                checkUserRoleFromFirebase();
+              },
+              child: ListDesign(
+                drText: '${fieldDataArray.elementAt(0)}',
+                courseText: '${fieldDataArray.elementAt(1)}',
+                yearSemster: '${fieldDataArray.elementAt(2)}',
+              ),
+            );
+            courseWidgets.add(courseWidget);
+          }
+          return ListView(
+            scrollDirection: Axis.horizontal,
+            children: courseWidgets,
+          );
+        }
+        return WidgetContainers(
+          width: 250,
+          onTap: () {},
+          child: ListDesign(
+            drText: 'LOADING',
+            courseText: 'LOADING',
+            yearSemster: 'LOADING',
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -50,7 +108,8 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                   ),
                   Column(
                     children: [
-                      GetUserName('${loggedInUSer.email}'),
+                      GetStudentUsernameFromFirebase('${loggedInUSer.email}'),
+                      //getUsernameFromFirebase('${loggedInUSer.email}'),
                       Text(
                         'Have a nice day !',
                         style: TextStyle(
@@ -72,86 +131,33 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                 ],
               ),
             ),
-            // Expanded(
-            //   child: WidgetContainers(
-            //     width: 200,
-            //     onTap: () {},
-            //     child: Center(
-            //       child: Text(
-            //         'Attendance',
-            //         style: kHSSMainButtonsTextStyle,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Expanded(
-            //   child: WidgetContainers(
-            //     width: 200,
-            //     onTap: () {},
-            //     child: Center(
-            //       child: Text(
-            //         'Tasks',
-            //         style: kHSSMainButtonsTextStyle,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Expanded(
-            //   child: WidgetContainers(
-            //     width: 200,
-            //     onTap: () {
-            //       Navigator.pushNamed(context, '/note');
-            //     },
-            //     child: Center(
-            //       child: Text(
-            //         'Notes',
-            //         style: kHSSMainButtonsTextStyle,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            Expanded(flex: 3, child: StudentCourses('${loggedInUSer.email}')),
+            Expanded(
+              child: WidgetContainers(
+                width: 200,
+                onTap: () {
+                  Navigator.pushNamed(context, '/note');
+                },
+                child: Center(
+                  child: Text(
+                    'Notes',
+                    style: kHSSMainButtonsTextStyle,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: getStudentCoursesFromFirebase('${loggedInUSer.email}'),
+            ), //StudentCourses('${loggedInUSer.email}')),
           ],
         ),
       ),
     );
   }
-
-  // Widget getUserName() {
-  //   CollectionReference users =
-  //       FirebaseFirestore.instance.collection('Students');
-  //
-  //   return FutureBuilder<DocumentSnapshot>(
-  //     future: users.doc('${loggedInUSer.email}').get(),
-  //     builder:
-  //         (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-  //       if (snapshot.hasError) {
-  //         return Text("Something went wrong");
-  //       }
-  //
-  //       if (snapshot.connectionState == ConnectionState.done) {
-  //         Map<String, dynamic> data = snapshot.data.data();
-  //         return Text(
-  //           "Hello, ${data['name']}",
-  //           style: TextStyle(
-  //             fontSize: 25,
-  //           ),
-  //         );
-  //       }
-  //
-  //       return Text(
-  //         "loading",
-  //         style: TextStyle(
-  //           fontSize: 25,
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 }
 
-class GetUserName extends StatelessWidget {
-  GetUserName(this.documentId);
+class GetStudentUsernameFromFirebase extends StatelessWidget {
+  GetStudentUsernameFromFirebase(this.documentId);
   final String documentId;
 
   @override
@@ -187,57 +193,57 @@ class GetUserName extends StatelessWidget {
   }
 }
 
-class StudentCourses extends StatelessWidget {
-  StudentCourses(this.documentId);
-  final String documentId;
-  final _fireStore = FirebaseFirestore.instance;
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _fireStore
-          .collection('Students')
-          .doc(documentId)
-          .collection('Courses')
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
-        if (snapshot.hasData) {
-          final documents = snapshot.data.docs;
-          List<WidgetContainers> courseWidgets = [];
-          for (var field in documents) {
-            List fieldDataArray = field.get('subject');
-
-            final courseWidget = WidgetContainers(
-              width: 250,
-              onTap: () {
-                Navigator.pushNamed(context, '/subject');
-              },
-              child: ListDesign(
-                drText: '${fieldDataArray.elementAt(0)}',
-                courseText: '${fieldDataArray.elementAt(1)}',
-                yearSemster: '${fieldDataArray.elementAt(2)}',
-              ),
-            );
-            courseWidgets.add(courseWidget);
-          }
-          return ListView(
-            scrollDirection: Axis.horizontal,
-            children: courseWidgets,
-          );
-        }
-        return WidgetContainers(
-          width: 250,
-          onTap: () {},
-          child: ListDesign(
-            drText: 'LOADING',
-            courseText: 'LOADING',
-            yearSemster: 'LOADING',
-          ),
-        );
-      },
-    );
-  }
-}
+// class StudentCourses extends StatelessWidget {
+//   StudentCourses(this.documentId);
+//   final String documentId;
+//   final _fireStore = FirebaseFirestore.instance;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return StreamBuilder(
+//       stream: _fireStore
+//           .collection('Students')
+//           .doc(documentId)
+//           .collection('Courses')
+//           .snapshots(),
+//       builder: (context, snapshot) {
+//         if (snapshot.hasError) {
+//           return Text('Something went wrong');
+//         }
+//         if (snapshot.hasData) {
+//           final documents = snapshot.data.docs;
+//           List<WidgetContainers> courseWidgets = [];
+//           for (var field in documents) {
+//             List fieldDataArray = field.get('subject');
+//
+//             final courseWidget = WidgetContainers(
+//               width: 250,
+//               onTap: () {
+//                 Navigator.pushNamed(context, '/subject');
+//               },
+//               child: ListDesign(
+//                 drText: '${fieldDataArray.elementAt(0)}',
+//                 courseText: '${fieldDataArray.elementAt(1)}',
+//                 yearSemster: '${fieldDataArray.elementAt(2)}',
+//               ),
+//             );
+//             courseWidgets.add(courseWidget);
+//           }
+//           return ListView(
+//             scrollDirection: Axis.horizontal,
+//             children: courseWidgets,
+//           );
+//         }
+//         return WidgetContainers(
+//           width: 250,
+//           onTap: () {},
+//           child: ListDesign(
+//             drText: 'LOADING',
+//             courseText: 'LOADING',
+//             yearSemster: 'LOADING',
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

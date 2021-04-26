@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:DGEST/Constins.dart';
-import 'package:DGEST/Student_screens/Student_screen.dart';
+import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:DGEST/Student_screens/Home_student_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:DGEST/Student_screens/Home_student_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -18,7 +18,6 @@ class _SettingScreenState extends State<SettingScreen> {
   final _picker = ImagePicker();
   final _auth = FirebaseAuth.instance;
   bool spineer = false;
-  User loggedInUSer;
   String imageUrl;
 
   @override
@@ -27,31 +26,46 @@ class _SettingScreenState extends State<SettingScreen> {
     getUser();
   }
 
-  void getUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUSer = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Widget getUsernameFromFirebase(String documentId) {
+  //   CollectionReference users =
+  //       FirebaseFirestore.instance.collection('Students');
+  //
+  //   return FutureBuilder<DocumentSnapshot>(
+  //     future: users.doc(documentId).get(),
+  //     builder:
+  //         (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+  //       if (snapshot.hasError) {
+  //         return Text('Something went wrong');
+  //       }
+  //       if (snapshot.connectionState == ConnectionState.done) {
+  //         Map<String, dynamic> data = snapshot.data.data();
+  //         return Text(
+  //           '${data['name']}',
+  //           style: TextStyle(
+  //             fontSize: 25,
+  //           ),
+  //         );
+  //       }
+  //
+  //       return Text(
+  //         'loading',
+  //         style: TextStyle(
+  //           fontSize: 25,
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   void takePhoto(ImageSource source) async {
     final pickedFile = await _picker.getImage(
       source: source,
     );
-    // setState(() {
-    //   _imageFile = pickedFile;
-    // });
 
     var file = File(pickedFile.path);
     final _storage = FirebaseStorage.instance;
     await _storage.ref().child('folderName/imageName').putFile(file);
-    // //men awel hena
-    // // var downloadUrl =
-    // //     await _storage.ref('folderName/imageName').getDownloadURL();
+
     String downloadURL = await FirebaseStorage.instance
         .ref('folderName/imageName')
         .getDownloadURL();
@@ -164,7 +178,8 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                     Column(
                       children: [
-                        GetUserName('${loggedInUSer.email}'),
+                        GetStudentUsernameFromFirebase('${loggedInUSer.email}'),
+                        //getUsernameFromFirebase('${loggedInUSer.email}'),
                         Text(
                           '${loggedInUSer.email}',
                           style: TextStyle(
@@ -179,17 +194,6 @@ class _SettingScreenState extends State<SettingScreen> {
               SizedBox(
                 height: 100.0,
               ),
-              // Expanded(
-              //   child: WidgetContainers(
-              //     onTap: () {},
-              //     child: Center(
-              //       child: Text(
-              //         'information',
-              //         style: kHSSMainButtonsTextStyle,
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Expanded(
                 child: WidgetContainers(
                   onTap: () {},
@@ -205,7 +209,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: WidgetContainers(
                   onTap: () {
                     shareAppButton(context);
-                    //TODO:ht3mel al zorar ale bytl3 al link.
                   },
                   child: Center(
                     child: Text(
@@ -215,22 +218,10 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                 ),
               ),
-              // Expanded(
-              //   child: WidgetContainers(
-              //     onTap: () {},
-              //     child: Center(
-              //       child: Text(
-              //         'help',
-              //         style: kHSSMainButtonsTextStyle,
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Expanded(
                 child: WidgetContainers(
                   onTap: () {
                     support(context);
-                    //TODO:ht3mel al zorar da ya tarek.
                   },
                   child: Center(
                     child: Text(
@@ -248,7 +239,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     });
                     try {
                       _auth.signOut();
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushNamed(context, '/');
                       setState(() {
                         spineer = false;
                       });

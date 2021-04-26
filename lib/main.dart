@@ -11,6 +11,8 @@ import 'Student_screens/Tasks_student_screen.dart';
 import 'package:DGEST/Student_screens/Notification_student_screen.dart';
 import 'package:DGEST/Student_screens/Subject_student-screen.dart';
 import 'Doctor_screens/Doctor_screen.dart';
+import 'package:DGEST/Doctor_screens/Subject_doctor_screen.dart';
+import 'package:DGEST/Doctor_screens/Attendance_doctor_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +24,9 @@ class DGEST extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: '/login',
+        initialRoute: '/',
         routes: {
-          '/login': (context) => LoginScreen(),
+          '/': (context) => LoginScreen(),
           '/home': (context) => StudentScreen(),
           '/note': (context) => NotesStudentScreen(),
           '/tasks': (context) => TaskStudentScreen(),
@@ -35,6 +37,8 @@ class DGEST extends StatelessWidget {
           '/homedoc': (context) => DoctorScreen(),
           '/settingdoc': (context) => SettingDoctorScreen(),
           '/tasksdoc': (context) => TasksDoctorScreen(),
+          '/subjectdoc': (context) => SubjectDoctorScreen(),
+          '/attendance': (context) => AttendanceDoctorScreen(),
           //TODO: hnzwd al screens f al application.
         },
         debugShowCheckedModeBanner: false,

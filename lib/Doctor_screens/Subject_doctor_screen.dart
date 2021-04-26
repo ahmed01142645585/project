@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
-import 'Tasks_student_screen.dart';
-import 'package:DGEST/Desgin_classes/Desgin.dart';
-import 'package:intl/intl.dart';
 import 'package:DGEST/Constins.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'package:DGEST/Desgin_classes/Desgin.dart';
+import 'package:DGEST/Student_screens/Tasks_student_screen.dart';
 
-class SubjectStudentScreen extends StatefulWidget {
+class SubjectDoctorScreen extends StatefulWidget {
   @override
-  _SubjectStudentScreenState createState() => _SubjectStudentScreenState();
+  _SubjectDoctorScreenState createState() => _SubjectDoctorScreenState();
 }
 
 var formatter = new DateFormat.MMMMd().format(now);
 
-class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
-  @override
-  void initState() {
-    super.initState();
-    getUser();
-  }
-
+class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,67 +137,37 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
               //   ),
               // ),
               WidgetContainers(
-                height: MediaQuery.of(context).size.height / 9,
+                height: MediaQuery.of(context).size.height / 12,
                 child: Center(
                   child: Text('LECTURE', style: kSubjectScreenButtonsTextStyle),
                 ),
               ),
               WidgetContainers(
-                height: MediaQuery.of(context).size.height / 9,
+                height: MediaQuery.of(context).size.height / 12,
                 child: Center(
                   child: Text('SECTION', style: kSubjectScreenButtonsTextStyle),
                 ),
               ),
               WidgetContainers(
-                height: MediaQuery.of(context).size.height / 9,
+                height: MediaQuery.of(context).size.height / 12,
                 child: Center(
                   child: Text('LAB', style: kSubjectScreenButtonsTextStyle),
                 ),
+              ),
+              WidgetContainers(
+                height: MediaQuery.of(context).size.height / 12,
+                child: Center(
+                  child:
+                      Text('Attendance', style: kSubjectScreenButtonsTextStyle),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/attendance');
+                },
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class GetUserName extends StatelessWidget {
-  GetUserName(this.documentId);
-  final String documentId;
-
-  final _fireStore = FirebaseFirestore.instance;
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _fireStore
-          .collection('Students')
-          .doc(documentId)
-          .collection('Courses')
-          .doc('O0SwAYY5hqe1jUItPR4t')
-          .get(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
-        if (snapshot.hasData) {
-          final data = snapshot.data.data();
-          List field = data['subject'];
-          return Text(
-            '${field.elementAt(1)}',
-            style: TextStyle(
-              fontSize: 25,
-            ),
-          );
-        }
-
-        return Text(
-          'loading',
-          style: TextStyle(
-            fontSize: 25,
-          ),
-        );
-      },
     );
   }
 }

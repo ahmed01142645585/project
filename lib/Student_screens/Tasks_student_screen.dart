@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:DGEST/Student_screens/Student_screen.dart';
+import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:intl/intl.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:DGEST/Constins.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskStudentScreen extends StatefulWidget {
@@ -9,30 +9,15 @@ class TaskStudentScreen extends StatefulWidget {
   _TaskStudentScreenState createState() => _TaskStudentScreenState();
 }
 
-var selectedCard = '1';
-DateTime now = DateTime.now();
 var formatter = new DateFormat.yMMMMEEEEd().format(now);
 
 class _TaskStudentScreenState extends State<TaskStudentScreen> {
-  final _auth = FirebaseAuth.instance;
   final _fireStore = FirebaseFirestore.instance;
-  User loggedInUSer;
 
   @override
   void initState() {
     super.initState();
     getUser();
-  }
-
-  void getUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUSer = user;
-      }
-    } catch (e) {
-      print(e);
-    }
   }
 
   @override

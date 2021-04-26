@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'Home_doctor_screen.dart';
+import 'Setting_doctor_screen.dart';
+import 'Tasks_doctor_screen.dart';
 
 class DoctorScreen extends StatefulWidget {
   @override
@@ -6,8 +9,53 @@ class DoctorScreen extends StatefulWidget {
 }
 
 class _DoctorScreenState extends State<DoctorScreen> {
+  int selectedIndex = 0;
+  List<Widget> pages;
+  Widget currentPage;
+  final PageStorageBucket bucket = PageStorageBucket();
+
+  @override
+  void initState() {
+    Widget home = HomeDoctorScreen();
+    Widget task = TasksDoctorScreen();
+    Widget setting = SettingDoctorScreen();
+    pages = [home, task, setting];
+    currentPage = home;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: PageStorage(bucket: bucket, child: currentPage),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        //backgroundColor: Colors.transparent,
+        selectedItemColor: Color(0xFF06D6A0),
+        unselectedItemColor: Colors.white,
+        iconSize: 30.0,
+        currentIndex: selectedIndex,
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+            currentPage = pages[index];
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment),
+            label: 'Tasks',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+      ),
+    );
   }
 }

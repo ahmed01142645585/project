@@ -1,13 +1,13 @@
-import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:DGEST/Constins.dart';
-import 'package:DGEST/Student_screens/Home_student_screen.dart';
+import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:io';
+import 'package:DGEST/Doctor_screens/Home_doctor_screen.dart';
 
 class SettingDoctorScreen extends StatefulWidget {
   @override
@@ -164,7 +164,8 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
                     ),
                     Column(
                       children: [
-                        GetUserName('${loggedInUSer.email}'),
+                        //GetUserName('${loggedInUSer.email}'),
+                        GetDoctorUsernameFromFirebase('${loggedInUSer.email}'),
                         Text(
                           '${loggedInUSer.email}',
                           style: TextStyle(
@@ -224,7 +225,7 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
                     });
                     try {
                       _auth.signOut();
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushNamed(context, '/');
                       setState(() {
                         spineer = false;
                       });

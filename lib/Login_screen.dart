@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:DGEST/Desgin_classes/Desgin.dart';
+import 'Constins.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:DGEST/Student_screens/Student_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-
-import 'Constins.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -16,9 +16,31 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreen extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
+  final _fireStore = FirebaseFirestore.instance;
   String email;
   String password;
   bool spinner = false;
+
+  void checkUserRoleFromFirebase() {
+    getUser();
+    _fireStore.collection('UserRoles').doc('${loggedInUSer.email}').get().then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          //print('${documentSnapshot.data()['role']}');
+          var fieldRoleData = documentSnapshot.data()['role'];
+          if (fieldRoleData == 'student') {
+            Navigator.pushNamed(context, '/home');
+          } else if (fieldRoleData == 'doctor') {
+            Navigator.pushNamed(context, '/homedoc');
+          } else {
+            print('Error');
+          }
+        } else {
+          print('Document does not exist on the database');
+        }
+      },
+    );
+  }
 
   void contactUsButton(BuildContext context) {
     showDialog(
@@ -72,22 +94,10 @@ class _LoginScreen extends State<LoginScreen> {
                   ],
                 ),
               ),
-              // Text("phone number :-"
-              //     "\n01142645585"
-              //     "\nhot line :-"
-              //     "\n16049"
-              //     "\naddress :-"
-              //     "\nring road katamiya-cairo"
-              //     "\nfacebook page:-"
-              //     "\nmodern academy official page"),
-              // contentTextStyle: TextStyle(
-              //   fontSize: 20,
-              // ),
               backgroundColor: Color(0xFF06D6A0),
               actions: []);
         });
   }
-  //TODO:ht3mel hena ya tarek al zorar bt3 contact us ale hytl3 ll user al m3lomat 3n al gm3a.
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +170,7 @@ class _LoginScreen extends State<LoginScreen> {
                               await _auth.signInWithEmailAndPassword(
                                   email: email, password: password);
                           if (oldUser != null) {
-                            Navigator.pushNamed(context, '/home');
+                            checkUserRoleFromFirebase();
                           }
                           setState(() {
                             spinner = false;
@@ -170,10 +180,6 @@ class _LoginScreen extends State<LoginScreen> {
                         }
                       },
                     ),
-                    // Text(
-                    //   'Forget Password ?',
-                    //   style: TextStyle(color: Colors.white),
-                    // ),
                     SizedBox(
                       height: 140.0,
                     ),
@@ -186,7 +192,6 @@ class _LoginScreen extends State<LoginScreen> {
                       buttonPadding: EdgeInsets.symmetric(horizontal: 50.0),
                       onPress: () {
                         contactUsButton(context);
-                        //TODO: htndh al function hena ya tarek.
                       },
                     ),
                   ],

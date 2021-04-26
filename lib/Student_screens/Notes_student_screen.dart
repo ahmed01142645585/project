@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:DGEST/Student_screens/Student_screen.dart';
+import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:DGEST/Constins.dart';
 
 class NotesStudentScreen extends StatefulWidget {

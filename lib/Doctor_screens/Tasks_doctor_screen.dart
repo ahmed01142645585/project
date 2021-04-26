@@ -1,5 +1,5 @@
-import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:DGEST/Desgin_classes/Desgin.dart';
 
 class TasksDoctorScreen extends StatefulWidget {
   @override
