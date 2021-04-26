@@ -122,27 +122,19 @@ class _SettingScreenState extends State<SettingScreen> {
                   children: <TextSpan>[
                     TextSpan(
                       text: "Hot Line :-\n",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: supportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "16049\n",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
+                      style: supportButtonTitleTextStyle,
                     ),
                     TextSpan(
                       text: "Facebook Page:-\n",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: supportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "modern academy official page\n",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
+                      style: supportButtonTitleTextStyle,
                     ),
                   ],
                 ),

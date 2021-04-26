@@ -5,6 +5,8 @@ import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+import 'Constins.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -37,51 +39,35 @@ class _LoginScreen extends State<LoginScreen> {
                   children: <TextSpan>[
                     TextSpan(
                       text: "Phone Number :-\n",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: supportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "01142645585\n",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
+                      style: supportButtonTitleTextStyle,
                     ),
                     TextSpan(
                       text: "Hot Line :-\n",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: supportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "16049\n",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
+                      style: supportButtonTitleTextStyle,
                     ),
                     TextSpan(
                       text: "Address :-\n",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: supportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "ring road katamiya - Cairo\n",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
+                      style: supportButtonTitleTextStyle,
                     ),
                     TextSpan(
                       text: "Facebook Page:-\n",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: supportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "modern academy official page\n",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
+                      style: supportButtonTitleTextStyle,
                     ),
                   ],
                 ),
