@@ -32,6 +32,8 @@ class _LoginScreen extends State<LoginScreen> {
             Navigator.pushNamed(context, '/home');
           } else if (fieldRoleData == 'doctor') {
             Navigator.pushNamed(context, '/homedoc');
+          } else if (fieldRoleData == 'admin') {
+            Navigator.pushNamed(context, '/homeadmin');
           } else {
             print('Error');
           }

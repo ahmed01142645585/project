@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
+import 'package:DGEST/Student_screens/Setting_student_screen.dart';
 
 class HomeStudentScreen extends StatefulWidget {
   @override
@@ -11,10 +12,14 @@ class HomeStudentScreen extends StatefulWidget {
 
 class _HomeStudentScreenState extends State<HomeStudentScreen> {
   final _fireStore = FirebaseFirestore.instance;
+  String imageUrl;
+  String fieldPhotoURL;
+
   @override
   void initState() {
     super.initState();
     getUser();
+    readPhoto();
   }
 
   //TODO:hn8yr mkan de 3shan m3mola f 2 screens bzbt.
@@ -37,6 +42,21 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
       } else {
         print('Document does not exist on the database');
       }
+    });
+  }
+
+  void readPhoto() async {
+    await _fireStore
+        .collection('Students')
+        .doc('${loggedInUSer.email}')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        fieldPhotoURL = documentSnapshot.data()['photo'];
+      }
+    });
+    setState(() {
+      imageUrl = fieldPhotoURL;
     });
   }
 
@@ -102,9 +122,18 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage("images/default_profile.jpg"),
+                  Container(
+                    height: 65.0,
+                    width: 65.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50.0),
+                      image: DecorationImage(
+                        image: imageUrl != null
+                            ? NetworkImage(imageUrl)
+                            : AssetImage("images/default_profile.jpg"),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                   Column(
                     children: [

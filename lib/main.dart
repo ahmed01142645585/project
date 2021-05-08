@@ -13,6 +13,8 @@ import 'package:DGEST/Student_screens/Subject_student-screen.dart';
 import 'Doctor_screens/Doctor_screen.dart';
 import 'package:DGEST/Doctor_screens/Subject_doctor_screen.dart';
 import 'package:DGEST/Doctor_screens/Attendance_doctor_screen.dart';
+import 'package:DGEST/Admin_screens/Admin_screen.dart';
+import 'package:DGEST/Admin_screens/Newuser_admin_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +41,9 @@ class DGEST extends StatelessWidget {
           '/tasksdoc': (context) => TasksDoctorScreen(),
           '/subjectdoc': (context) => SubjectDoctorScreen(),
           '/attendance': (context) => AttendanceDoctorScreen(),
+          //admin
+          '/homeadmin': (context) => AdminScreen(),
+          '/adminnu': (context) => NewUserAdminScreen(),
           //TODO: hnzwd al screens f al application.
         },
         debugShowCheckedModeBanner: false,

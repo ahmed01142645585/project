@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:DGEST/Student_screens/Home_student_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -17,13 +18,17 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final _picker = ImagePicker();
   final _auth = FirebaseAuth.instance;
+  final _fireStore = FirebaseFirestore.instance;
+  final _storage = FirebaseStorage.instance;
   bool spineer = false;
   String imageUrl;
+  String fieldPhotoURL;
 
   @override
   void initState() {
     super.initState();
     getUser();
+    readPhoto();
   }
 
   // Widget getUsernameFromFirebase(String documentId) {
@@ -57,22 +62,45 @@ class _SettingScreenState extends State<SettingScreen> {
   //   );
   // }
 
-  void takePhoto(ImageSource source) async {
+  void readPhoto() async {
+    await _fireStore
+        .collection('Students')
+        .doc('${loggedInUSer.email}')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        fieldPhotoURL = documentSnapshot.data()['photo'];
+      }
+    });
+    setState(() {
+      imageUrl = fieldPhotoURL;
+    });
+  }
+
+  void takeAndUploadPhoto(ImageSource source) async {
     final pickedFile = await _picker.getImage(
       source: source,
     );
-
     var file = File(pickedFile.path);
-    final _storage = FirebaseStorage.instance;
-    await _storage.ref().child('folderName/imageName').putFile(file);
+
+    await _storage
+        .ref()
+        .child('ImagesProfile/${loggedInUSer.email}_photo')
+        .putFile(file);
 
     String downloadURL = await FirebaseStorage.instance
-        .ref('folderName/imageName')
+        .ref('ImagesProfile/${loggedInUSer.email}_photo')
         .getDownloadURL();
-    print(downloadURL);
+
+    //print(downloadURL);
     setState(() {
       imageUrl = downloadURL;
     });
+
+    _fireStore
+        .collection('Students')
+        .doc('${loggedInUSer.email}')
+        .update({'photo': downloadURL});
   }
 
   void shareAppButton(BuildContext context) {
@@ -297,7 +325,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
               child: Icon(
                 Icons.camera_alt,
-                color: Colors.teal,
+                color: Color(0xFF06D6A0),
                 size: 30,
               ),
             ),
@@ -335,12 +363,12 @@ class _SettingScreenState extends State<SettingScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  takePhoto(ImageSource.camera);
+                  takeAndUploadPhoto(ImageSource.camera);
                   Navigator.pop(context, true);
                 },
                 label: Text(
                   "Camera",
-                  style: TextStyle(color: Colors.teal),
+                  style: TextStyle(color: Color(0xFF06D6A0)),
                 ),
               ),
               SizedBox(
@@ -352,12 +380,12 @@ class _SettingScreenState extends State<SettingScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  takePhoto(ImageSource.gallery);
+                  takeAndUploadPhoto(ImageSource.gallery);
                   Navigator.pop(context, true);
                 },
                 label: Text(
                   "Gallery",
-                  style: TextStyle(color: Colors.teal),
+                  style: TextStyle(color: Color(0xFF06D6A0)),
                 ),
               ),
             ],
