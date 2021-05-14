@@ -6,6 +6,8 @@ import 'package:DGEST/Constins.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SubjectStudentScreen extends StatefulWidget {
+  String courseID;
+  SubjectStudentScreen({@required this.courseID});
   @override
   _SubjectStudentScreenState createState() => _SubjectStudentScreenState();
 }
@@ -23,8 +25,11 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //title: GetUserName('${loggedInUSer.email}'),
-        //centerTitle: true,
+        title: Text(
+          '${widget.courseID}',
+          style: TextStyle(fontSize: 20.0),
+        ),
+        centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.white,
@@ -146,21 +151,22 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
               WidgetContainers(
                 height: MediaQuery.of(context).size.height / 9,
                 child: Center(
-                  child: Text('LECTURE', style: kSubjectScreenButtonsTextStyle),
+                  child:
+                      Text('PDF Files', style: kSubjectScreenButtonsTextStyle),
                 ),
               ),
-              WidgetContainers(
-                height: MediaQuery.of(context).size.height / 9,
-                child: Center(
-                  child: Text('SECTION', style: kSubjectScreenButtonsTextStyle),
-                ),
-              ),
-              WidgetContainers(
-                height: MediaQuery.of(context).size.height / 9,
-                child: Center(
-                  child: Text('LAB', style: kSubjectScreenButtonsTextStyle),
-                ),
-              ),
+              // WidgetContainers(
+              //   height: MediaQuery.of(context).size.height / 9,
+              //   child: Center(
+              //     child: Text('SECTION', style: kSubjectScreenButtonsTextStyle),
+              //   ),
+              // ),
+              // WidgetContainers(
+              //   height: MediaQuery.of(context).size.height / 9,
+              //   child: Center(
+              //     child: Text('LAB', style: kSubjectScreenButtonsTextStyle),
+              //   ),
+              // ),
             ],
           ),
         ),

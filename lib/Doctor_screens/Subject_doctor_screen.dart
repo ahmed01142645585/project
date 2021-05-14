@@ -4,7 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:DGEST/Student_screens/Tasks_student_screen.dart';
 
+import 'Tasks_doctor_screen.dart';
+
 class SubjectDoctorScreen extends StatefulWidget {
+  String courseID;
+  SubjectDoctorScreen({@required this.courseID});
   @override
   _SubjectDoctorScreenState createState() => _SubjectDoctorScreenState();
 }
@@ -16,8 +20,11 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //title: GetUserName('${loggedInUSer.email}'),
-        //centerTitle: true,
+        title: Text(
+          '${widget.courseID}',
+          style: TextStyle(fontSize: 20.0),
+        ),
+        centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.white,
@@ -139,21 +146,33 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
               WidgetContainers(
                 height: MediaQuery.of(context).size.height / 12,
                 child: Center(
-                  child: Text('LECTURE', style: kSubjectScreenButtonsTextStyle),
+                  child:
+                      Text('PDF Files', style: kSubjectScreenButtonsTextStyle),
                 ),
+                onTap: () {
+                  //Navigator.pushNamed(context, '/tasksdoc');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TasksDoctorScreen(
+                        courseID: widget.courseID,
+                      ),
+                    ),
+                  );
+                },
               ),
-              WidgetContainers(
-                height: MediaQuery.of(context).size.height / 12,
-                child: Center(
-                  child: Text('SECTION', style: kSubjectScreenButtonsTextStyle),
-                ),
-              ),
-              WidgetContainers(
-                height: MediaQuery.of(context).size.height / 12,
-                child: Center(
-                  child: Text('LAB', style: kSubjectScreenButtonsTextStyle),
-                ),
-              ),
+              // WidgetContainers(
+              //   height: MediaQuery.of(context).size.height / 12,
+              //   child: Center(
+              //     child: Text('SECTION', style: kSubjectScreenButtonsTextStyle),
+              //   ),
+              // ),
+              // WidgetContainers(
+              //   height: MediaQuery.of(context).size.height / 12,
+              //   child: Center(
+              //     child: Text('LAB', style: kSubjectScreenButtonsTextStyle),
+              //   ),
+              // ),
               WidgetContainers(
                 height: MediaQuery.of(context).size.height / 12,
                 child: Center(

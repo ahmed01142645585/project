@@ -15,6 +15,7 @@ import 'package:DGEST/Doctor_screens/Subject_doctor_screen.dart';
 import 'package:DGEST/Doctor_screens/Attendance_doctor_screen.dart';
 import 'package:DGEST/Admin_screens/Admin_screen.dart';
 import 'package:DGEST/Admin_screens/Newuser_admin_screen.dart';
+import 'package:DGEST/Admin_screens/Setting_admin_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +45,7 @@ class DGEST extends StatelessWidget {
           //admin
           '/homeadmin': (context) => AdminScreen(),
           '/adminnu': (context) => NewUserAdminScreen(),
+          '/adminsett': (context) => SettingAdminScreen(),
           //TODO: hnzwd al screens f al application.
         },
         debugShowCheckedModeBanner: false,

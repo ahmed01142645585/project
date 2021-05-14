@@ -1,21 +1,21 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:DGEST/Student_screens/Home_student_screen.dart';
+import 'package:DGEST/Admin_screens/Home_admin_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class SettingScreen extends StatefulWidget {
+class SettingAdminScreen extends StatefulWidget {
   @override
-  _SettingScreenState createState() => _SettingScreenState();
+  _SettingAdminScreenState createState() => _SettingAdminScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen> {
+class _SettingAdminScreenState extends State<SettingAdminScreen> {
   final _picker = ImagePicker();
   final _auth = FirebaseAuth.instance;
   final _fireStore = FirebaseFirestore.instance;
@@ -65,7 +65,7 @@ class _SettingScreenState extends State<SettingScreen> {
   void readPhoto() async {
     // by3mel read ll sora mn al url ale 3nd al student b3d m5lst al write kolha
     await _fireStore
-        .collection('Students')
+        .collection('Admins')
         .doc('${loggedInUSer.email}')
         .get()
         .then((DocumentSnapshot documentSnapshot) {
@@ -100,7 +100,7 @@ class _SettingScreenState extends State<SettingScreen> {
     });
     //byrf3 al url bt3 al sora f al student
     _fireStore
-        .collection('Students')
+        .collection('Admins')
         .doc('${loggedInUSer.email}')
         .update({'photo': downloadURL});
   }
@@ -147,47 +147,46 @@ class _SettingScreenState extends State<SettingScreen> {
         });
   }
 
-  void support(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: Center(
-                child: Text(
-                  "Support",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
-              ),
-              content: RichText(
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: "Hot Line :-\n",
-                      style: supportButtonHeadTitleTextStyle,
-                    ),
-                    TextSpan(
-                      text: "16049\n",
-                      style: supportButtonTitleTextStyle,
-                    ),
-                    TextSpan(
-                      text: "Facebook Page:-\n",
-                      style: supportButtonHeadTitleTextStyle,
-                    ),
-                    TextSpan(
-                      text: "modern academy official page\n",
-                      style: supportButtonTitleTextStyle,
-                    ),
-                  ],
-                ),
-              ),
-              backgroundColor: Color(0xFF06D6A0),
-              actions: []);
-        });
-  }
-
+  // void support(BuildContext context) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //             title: Center(
+  //               child: Text(
+  //                 "Support",
+  //                 style: TextStyle(
+  //                   fontWeight: FontWeight.bold,
+  //                   fontSize: 25,
+  //                 ),
+  //               ),
+  //             ),
+  //             content: RichText(
+  //               text: TextSpan(
+  //                 children: <TextSpan>[
+  //                   TextSpan(
+  //                     text: "Hot Line :-\n",
+  //                     style: supportButtonHeadTitleTextStyle,
+  //                   ),
+  //                   TextSpan(
+  //                     text: "16049\n",
+  //                     style: supportButtonTitleTextStyle,
+  //                   ),
+  //                   TextSpan(
+  //                     text: "Facebook Page:-\n",
+  //                     style: supportButtonHeadTitleTextStyle,
+  //                   ),
+  //                   TextSpan(
+  //                     text: "modern academy official page\n",
+  //                     style: supportButtonTitleTextStyle,
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             backgroundColor: Color(0xFF06D6A0),
+  //             actions: []);
+  //       });
+  // }
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -208,7 +207,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                     Column(
                       children: [
-                        GetStudentUsernameFromFirebase('${loggedInUSer.email}'),
+                        GetAdminUsernameFromFirebase('${loggedInUSer.email}'),
                         //getUsernameFromFirebase('${loggedInUSer.email}'),
                         Text(
                           '${loggedInUSer.email}',
@@ -248,19 +247,19 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                 ),
               ),
-              Expanded(
-                child: WidgetContainers(
-                  onTap: () {
-                    support(context);
-                  },
-                  child: Center(
-                    child: Text(
-                      'Support',
-                      style: kHSSMainButtonsTextStyle,
-                    ),
-                  ),
-                ),
-              ),
+              // Expanded(
+              //   child: WidgetContainers(
+              //     onTap: () {
+              //       support(context);
+              //     },
+              //     child: Center(
+              //       child: Text(
+              //         'Support',
+              //         style: kHSSMainButtonsTextStyle,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Expanded(
                 child: WidgetContainers(
                   onTap: () {

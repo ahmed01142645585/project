@@ -9,8 +9,6 @@ class HomeAdminScreen extends StatefulWidget {
 }
 
 class _HomeAdminScreenState extends State<HomeAdminScreen> {
-  final _fireStore = FirebaseFirestore.instance;
-
   @override
   void initState() {
     super.initState();
@@ -36,7 +34,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                   ),
                   Column(
                     children: [
-                      GetDoctorUsernameFromFirebase('${loggedInUSer.email}'),
+                      GetAdminUsernameFromFirebase('${loggedInUSer.email}'),
                       Text(
                         'Have a nice day !',
                         style: TextStyle(
@@ -95,8 +93,8 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
   }
 }
 
-class GetDoctorUsernameFromFirebase extends StatelessWidget {
-  GetDoctorUsernameFromFirebase(this.documentId);
+class GetAdminUsernameFromFirebase extends StatelessWidget {
+  GetAdminUsernameFromFirebase(this.documentId);
   final String documentId;
 
   @override

@@ -17,9 +17,9 @@ class _DoctorScreenState extends State<DoctorScreen> {
   @override
   void initState() {
     Widget home = HomeDoctorScreen();
-    Widget task = TasksDoctorScreen();
+    //Widget task = TasksDoctorScreen();
     Widget setting = SettingDoctorScreen();
-    pages = [home, task, setting];
+    pages = [home, setting];
     currentPage = home;
     super.initState();
   }

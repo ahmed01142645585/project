@@ -1,9 +1,9 @@
+import 'package:DGEST/Student_screens/Subject_student-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
-import 'package:DGEST/Student_screens/Setting_student_screen.dart';
 
 class HomeStudentScreen extends StatefulWidget {
   @override
@@ -14,6 +14,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
   final _fireStore = FirebaseFirestore.instance;
   String imageUrl;
   String fieldPhotoURL;
+  var send;
 
   @override
   void initState() {
@@ -23,7 +24,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
   }
 
   //TODO:hn8yr mkan de 3shan m3mola f 2 screens bzbt.
-  void checkUserRoleFromFirebase() {
+  void checkUserRoleFromFirebase(String courseID) {
     _fireStore
         .collection('UserRoles')
         .doc('${loggedInUSer.email}')
@@ -33,7 +34,15 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
         //print('${documentSnapshot.data()['role']}');
         var fieldRoleData = documentSnapshot.data()['role'];
         if (fieldRoleData == 'student') {
-          Navigator.pushNamed(context, '/subject');
+          //Navigator.pushNamed(context, '/subject');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SubjectStudentScreen(
+                courseID: courseID,
+              ),
+            ),
+          );
         } else if (fieldRoleData == 'doctor') {
           Navigator.pushNamed(context, '/subjectdoc');
         } else {
@@ -60,13 +69,26 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
     });
   }
 
+  void GETID(String documentId) async {
+    send = _fireStore
+        .collection('Students')
+        .doc(documentId)
+        .collection('Courses')
+        .get()
+        .then((QuerySnapshot snapshot) => {
+              snapshot.docs.forEach((element) {
+                element.reference.id;
+              })
+            });
+  }
+
   Widget getStudentCoursesFromFirebase(String documentId) {
-    return StreamBuilder(
-      stream: _fireStore
+    return FutureBuilder(
+      future: _fireStore
           .collection('Students')
           .doc(documentId)
           .collection('Courses')
-          .snapshots(),
+          .get(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Something went wrong');
@@ -76,12 +98,11 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
           List<WidgetContainers> courseWidgets = [];
           for (var field in documents) {
             List fieldDataArray = field.get('subject');
-
             final courseWidget = WidgetContainers(
               width: 250,
-              onTap: () {
+              onTap: () async {
                 //Navigator.pushNamed(context, '/subject');
-                checkUserRoleFromFirebase();
+                checkUserRoleFromFirebase(fieldDataArray.elementAt(1));
               },
               child: ListDesign(
                 drText: '${fieldDataArray.elementAt(0)}',

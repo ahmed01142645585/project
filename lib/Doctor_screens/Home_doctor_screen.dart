@@ -3,6 +3,8 @@ import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'Subject_doctor_screen.dart';
+
 class HomeDoctorScreen extends StatefulWidget {
   @override
   _HomeDoctorScreenState createState() => _HomeDoctorScreenState();
@@ -17,7 +19,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
     getUser();
   }
 
-  void checkUserRoleFromFirebase() {
+  void checkUserRoleFromFirebase(String courseID) {
     _fireStore
         .collection('UserRoles')
         .doc('${loggedInUSer.email}')
@@ -29,7 +31,15 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
         if (fieldRoleData == 'student') {
           Navigator.pushNamed(context, '/subject');
         } else if (fieldRoleData == 'doctor') {
-          Navigator.pushNamed(context, '/subjectdoc');
+          //Navigator.pushNamed(context, '/subjectdoc');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SubjectDoctorScreen(
+                courseID: courseID,
+              ),
+            ),
+          );
         } else {
           print('Error');
         }
@@ -60,7 +70,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
               width: 250,
               onTap: () {
                 //Navigator.pushNamed(context, '/subject');
-                checkUserRoleFromFirebase();
+                checkUserRoleFromFirebase(fieldDataArray.elementAt(0));
               },
               child: ListDesign(
                 drText: '',

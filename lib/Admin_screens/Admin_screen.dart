@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:DGEST/Admin_screens/Home_admin_screen.dart';
+import 'package:DGEST/Admin_screens/Setting_admin_screen.dart';
 
 class AdminScreen extends StatefulWidget {
   @override
@@ -15,8 +16,8 @@ class _AdminScreenState extends State<AdminScreen> {
   @override
   void initState() {
     Widget home = HomeAdminScreen();
-
-    pages = [home];
+    Widget setting = SettingAdminScreen();
+    pages = [home, setting];
     currentPage = home;
     super.initState();
   }

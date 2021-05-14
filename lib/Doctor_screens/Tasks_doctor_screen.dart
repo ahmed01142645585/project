@@ -8,12 +8,15 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:DGEST/Constins.dart';
 
 class TasksDoctorScreen extends StatefulWidget {
+  String courseID;
+  TasksDoctorScreen({@required this.courseID});
   @override
   _TasksDoctorScreenState createState() => _TasksDoctorScreenState();
 }
 
 class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
-  @override
+  final _fireStore = FirebaseFirestore.instance;
+
   // // Future<String> uploadPdfToStorage(File pdfFile) async {
   // //   try {
   // //     Reference ref = FirebaseStorage.instance
@@ -74,7 +77,7 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
   //   }
   // }
   //final mainReference = FirebaseDatabase.instance.reference().child('Database');
-  final _fireStore = FirebaseFirestore.instance;
+
   Future getPdfAndUpload() async {
     var rng = new Random();
     String randomName = "";
@@ -84,7 +87,7 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
     }
     File file =
         await FilePicker.getFile(type: FileType.CUSTOM, fileExtension: 'pdf');
-    String fileName = '${randomName}.pdf';
+    String fileName = '$randomName.pdf';
     print(fileName);
     print('${file.readAsBytesSync()}');
     await FirebaseStorage.instance
@@ -93,12 +96,32 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
         .putData(file.readAsBytesSync());
     String url = await FirebaseStorage.instance.ref(fileName).getDownloadURL();
     print(url);
-    _fireStore
-        .collection('Doctors')
-        .doc('${loggedInUSer.email}')
-        .update({'pdf': url});
-    //documentFileUpload(url);
-    //savePdf(file.readAsBytesSync(), fileName);
+
+    // _fireStore
+    //     .collection('Doctors')
+    //     .doc('${loggedInUSer.email}')
+    //     .update({'pdf': url});
+
+    _fireStore.collection('Students').get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        _fireStore
+            .collection('Students')
+            .doc(result.id)
+            .collection('Courses')
+            .get()
+            .then((querySnapshot) {
+          querySnapshot.docs.forEach((result) {
+            //print(result.data());
+            _fireStore
+                .collection('Students')
+                .doc(result.id)
+                .collection('Courses')
+                .doc('${widget.courseID}')
+                .update({'pdf': url});
+          });
+        });
+      });
+    });
   }
 
   // Future savePdf(List<int> asset, String name) async {
@@ -118,7 +141,7 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
   //       .doc('${loggedInUSer.email}')
   //       .update({'pdf': downloadURL});
   // }
-
+  @override
   Widget build(BuildContext context) {
     //   return Scaffold(
     //     appBar: AppBar(
@@ -145,6 +168,7 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
     //     ),
     //   );
     // }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF06D6A0),
@@ -214,6 +238,15 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
                 //           : Container(),
                 // ),
 
+                WidgetContainers(
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: ListView(
+                      children: [Text('GOOD JOB TAREK 0 TASKS')],
+                    ),
+                  ),
+                ),
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
@@ -221,8 +254,8 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
                     shape: MaterialStateProperty.all<OutlinedBorder>(
                         StadiumBorder()),
                   ),
-                  onPressed: () {
-                    getPdfAndUpload();
+                  onPressed: () async {
+                    await getPdfAndUpload();
                     final messageBar = SnackBar(
                       behavior: SnackBarBehavior.floating,
                       margin: EdgeInsets.only(
@@ -238,6 +271,7 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
                       ),
                       duration: Duration(seconds: 3),
                     );
+                    ScaffoldMessenger.of(context).showSnackBar(messageBar);
                   },
                   child: Text("Upload New PDF"),
                 ),
