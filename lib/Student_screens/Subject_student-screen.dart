@@ -154,6 +154,9 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
                   child:
                       Text('PDF Files', style: kSubjectScreenButtonsTextStyle),
                 ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/studentpdf');
+                },
               ),
               // WidgetContainers(
               //   height: MediaQuery.of(context).size.height / 9,
