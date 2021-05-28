@@ -6,7 +6,7 @@ import 'package:DGEST/Constins.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SubjectStudentScreen extends StatefulWidget {
-  String courseID;
+  final String courseID;
   SubjectStudentScreen({@required this.courseID});
   @override
   _SubjectStudentScreenState createState() => _SubjectStudentScreenState();

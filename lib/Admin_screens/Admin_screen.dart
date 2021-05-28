@@ -44,10 +44,10 @@ class _AdminScreenState extends State<AdminScreen> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Tasks',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.assignment),
+          //   label: 'Tasks',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',

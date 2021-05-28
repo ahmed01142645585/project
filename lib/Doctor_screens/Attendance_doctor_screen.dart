@@ -11,7 +11,7 @@ class _AttendanceDoctorScreenState extends State<AttendanceDoctorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Week 1 Compiler Section'),
+        title: Text('Week 1 Compiler Theory'),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),

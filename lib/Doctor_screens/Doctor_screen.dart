@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Home_doctor_screen.dart';
 import 'Setting_doctor_screen.dart';
-import 'Tasks_doctor_screen.dart';
 
 class DoctorScreen extends StatefulWidget {
   @override
@@ -46,10 +45,10 @@ class _DoctorScreenState extends State<DoctorScreen> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Tasks',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.assignment),
+          //   label: 'Tasks',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',

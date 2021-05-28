@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:DGEST/Constins.dart';
+import 'package:flutter/services.dart';
 
 class TasksDoctorScreen extends StatefulWidget {
-  String courseID;
+  final String courseID;
   TasksDoctorScreen({@required this.courseID});
   @override
   _TasksDoctorScreenState createState() => _TasksDoctorScreenState();
@@ -79,6 +79,7 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
   //final mainReference = FirebaseDatabase.instance.reference().child('Database');
 
   Future getPdfAndUpload() async {
+    String a7a;
     var rng = new Random();
     String randomName = "";
     for (var i = 0; i < 20; i++) {
@@ -87,7 +88,7 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
     }
     File file =
         await FilePicker.getFile(type: FileType.CUSTOM, fileExtension: 'pdf');
-    String fileName = '$randomName.pdf';
+    String fileName = 'PDF_Files/$randomName.pdf';
     print(fileName);
     print('${file.readAsBytesSync()}');
     await FirebaseStorage.instance
@@ -110,14 +111,25 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
             .collection('Courses')
             .get()
             .then((querySnapshot) {
-          querySnapshot.docs.forEach((result) {
+          querySnapshot.docs.forEach((document) {
+            if (document.id == widget.courseID) {
+              _fireStore
+                  .collection('Students')
+                  .doc(result.id)
+                  .collection('Courses')
+                  .doc(document.id)
+                  .update({'pdf': url});
+              // a7a = document.get('pdf');
+            }
+            //print(a7a);
+
             //print(result.data());
-            _fireStore
-                .collection('Students')
-                .doc(result.id)
-                .collection('Courses')
-                .doc('${widget.courseID}')
-                .update({'pdf': url});
+            // _fireStore
+            //     .collection('Students')
+            //     .doc(result.id)
+            //     .collection('Courses')
+            //     .doc('${widget.courseID}')
+            //     .update({'pdf': url});
           });
         });
       });
@@ -243,7 +255,12 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: ListView(
-                      children: [Text('GOOD JOB TAREK 0 TASKS')],
+                      children: [
+                        Text(
+                          'PDF',
+                          style: TextStyle(fontSize: 20.0),
+                        )
+                      ],
                     ),
                   ),
                 ),

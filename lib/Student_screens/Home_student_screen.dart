@@ -69,7 +69,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
     });
   }
 
-  void GETID(String documentId) async {
+  void getID(String documentId) async {
     send = _fireStore
         .collection('Students')
         .doc(documentId)

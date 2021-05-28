@@ -7,7 +7,7 @@ import 'package:DGEST/Student_screens/Tasks_student_screen.dart';
 import 'Tasks_doctor_screen.dart';
 
 class SubjectDoctorScreen extends StatefulWidget {
-  String courseID;
+  final String courseID;
   SubjectDoctorScreen({@required this.courseID});
   @override
   _SubjectDoctorScreenState createState() => _SubjectDoctorScreenState();
