@@ -1,8 +1,9 @@
+
 import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PDFStudentScreen extends StatefulWidget {
   @override
@@ -38,16 +39,14 @@ class _PDFStudentScreenState extends State<PDFStudentScreen> {
             String fieldDataArray = field.get('url');
             final courseWidget = ElevatedButton(
               onPressed: () async {
-                await FlutterDownloader.enqueue(
-                  url: '$fieldDataArray',
-                  savedDir:
-                      'the path of directory where you want to save downloaded files',
-                  showNotification:
-                      true, // show download progress in status bar (for Android)
-                  openFileFromNotification:
-                      true, // click on notification to open downloaded file (for Android)
-                );
-              },
+                  String url = '$fieldDataArray';
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                }
+                },
+
               child: Text('$fieldDataArray'),
             );
             courseWidgets.add(courseWidget);

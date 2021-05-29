@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:DGEST/Login_screen.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:DGEST/Student_screens/Notes_student_screen.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'Doctor_screens/Setting_doctor_screen.dart';
 import 'Doctor_screens/Tasks_doctor_screen.dart';
 import 'Student_screens/Setting_student_screen.dart';
@@ -22,7 +21,6 @@ import 'Student_screens/PDF_student_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FlutterDownloader.initialize();
   runApp(DGEST());
 }
 

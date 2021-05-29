@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:DGEST/Doctor_screens/Attendance_doctor_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
@@ -117,8 +118,8 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
                   .collection('Students')
                   .doc(result.id)
                   .collection('Courses')
-                  .doc(document.id)
-                  .update({'pdf': url});
+                  .doc(document.id).collection('PDF').add({'url':url});
+                  //.update({'pdf': url});
               // a7a = document.get('pdf');
             }
             //print(a7a);
@@ -130,7 +131,8 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
             //     .collection('Courses')
             //     .doc('${widget.courseID}')
             //     .update({'pdf': url});
-          });
+          } //hena h3ml el if
+              );
         });
       });
     });
@@ -203,6 +205,12 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
                 SizedBox(
                   height: 20.0,
                 ),
+                // ListView(
+                //   children: [
+                //     AttendanceWidget('PDF', 'Week 1'),
+                //     AttendanceWidget('PDF', 'Week 2'),
+                //   ],
+                // ),
                 // Builder(
                 //   builder: (BuildContext context) => _loadingPath
                 //       ? Padding(
@@ -286,7 +294,7 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      duration: Duration(seconds: 3),
+                      duration: Duration(seconds: 10),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(messageBar);
                   },
