@@ -1,21 +1,21 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:DGEST/Doctor_screens/Attendance_doctor_screen.dart';
+import 'package:DGEST/Constins.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class TasksDoctorScreen extends StatefulWidget {
+class PDFDoctorScreen extends StatefulWidget {
   final String courseID;
-  TasksDoctorScreen({@required this.courseID});
+  PDFDoctorScreen({@required this.courseID});
   @override
-  _TasksDoctorScreenState createState() => _TasksDoctorScreenState();
+  _PDFDoctorScreenState createState() => _PDFDoctorScreenState();
 }
 
-class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
+class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
   final _fireStore = FirebaseFirestore.instance;
 
   // // Future<String> uploadPdfToStorage(File pdfFile) async {
@@ -80,7 +80,6 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
   //final mainReference = FirebaseDatabase.instance.reference().child('Database');
 
   Future getPdfAndUpload() async {
-    String a7a;
     var rng = new Random();
     String randomName = "";
     for (var i = 0; i < 20; i++) {
@@ -104,6 +103,14 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
     //     .doc('${loggedInUSer.email}')
     //     .update({'pdf': url});
 
+    _fireStore
+        .collection('Doctors')
+        .doc('${loggedInUSer.email}')
+        .collection('Courses')
+        .doc('${widget.courseID}')
+        .collection('PDF')
+        .add({'url': url, 'name': randomName});
+
     _fireStore.collection('Students').get().then((querySnapshot) {
       querySnapshot.docs.forEach((result) {
         _fireStore
@@ -118,12 +125,11 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
                   .collection('Students')
                   .doc(result.id)
                   .collection('Courses')
-                  .doc(document.id).collection('PDF').add({'url':url});
-                  //.update({'pdf': url});
-              // a7a = document.get('pdf');
+                  .doc(document.id)
+                  .collection('PDF')
+                  .add({'url': url, 'name': randomName});
+              //.update({'pdf': url});
             }
-            //print(a7a);
-
             //print(result.data());
             // _fireStore
             //     .collection('Students')
@@ -131,11 +137,63 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
             //     .collection('Courses')
             //     .doc('${widget.courseID}')
             //     .update({'pdf': url});
-          } //hena h3ml el if
-              );
+          });
         });
       });
     });
+  }
+
+  Widget pdfUrl(String documentId) {
+    return StreamBuilder(
+      stream: _fireStore
+          .collection('Doctors')
+          .doc(documentId)
+          .collection('Courses')
+          .doc('${widget.courseID}')
+          .collection('PDF')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+        if (snapshot.hasData) {
+          final documents = snapshot.data.docs;
+          List<Column> courseWidgets = [];
+          for (var field in documents) {
+            String fieldDataArray = field.get('url');
+            final courseWidget = Column(
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xFF06D6A0)),
+                    //elevation: MaterialStateProperty.all(0),
+                  ),
+                  onPressed: () async {
+                    String url = '$fieldDataArray';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                  child: Text('$fieldDataArray'),
+                ),
+                SizedBox(
+                  height: 10.0,
+                )
+              ],
+            );
+
+            courseWidgets.add(courseWidget);
+          }
+          return ListView(
+            children: courseWidgets,
+          );
+        }
+        return Text('LOADING...');
+      },
+    );
   }
 
   // Future savePdf(List<int> asset, String name) async {
@@ -262,14 +320,7 @@ class _TasksDoctorScreenState extends State<TasksDoctorScreen> {
                   height: MediaQuery.of(context).size.height / 2,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: ListView(
-                      children: [
-                        Text(
-                          'PDF',
-                          style: TextStyle(fontSize: 20.0),
-                        )
-                      ],
-                    ),
+                    child: pdfUrl(loggedInUSer.email),
                   ),
                 ),
                 ElevatedButton(

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:DGEST/Student_screens/Tasks_student_screen.dart';
 
-import 'Tasks_doctor_screen.dart';
+import 'PDF_doctor_screen.dart';
 
 class SubjectDoctorScreen extends StatefulWidget {
   final String courseID;
@@ -154,7 +154,7 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TasksDoctorScreen(
+                      builder: (context) => PDFDoctorScreen(
                         courseID: widget.courseID,
                       ),
                     ),

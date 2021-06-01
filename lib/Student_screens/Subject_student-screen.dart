@@ -1,3 +1,4 @@
+import 'package:DGEST/Student_screens/PDF_student_screen.dart';
 import 'package:flutter/material.dart';
 import 'Tasks_student_screen.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
@@ -155,7 +156,14 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
                       Text('PDF Files', style: kSubjectScreenButtonsTextStyle),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/studentpdf');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PDFStudentScreen(
+                        courseID: widget.courseID,
+                      ),
+                    ),
+                  );
                 },
               ),
               // WidgetContainers(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:DGEST/Constins.dart';
@@ -16,42 +17,77 @@ class SettingDoctorScreen extends StatefulWidget {
 
 class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
   final _auth = FirebaseAuth.instance;
+  final _fireStore = FirebaseFirestore.instance;
+  final _storage = FirebaseStorage.instance;
   bool spineer = false;
   User loggedInUSer;
   String imageUrl;
   final _picker = ImagePicker();
+  String fieldPhotoURL;
+
   @override
   void initState() {
     super.initState();
     getUser();
   }
 
-  void getUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUSer = user;
+  void readPhoto() async {
+    // by3mel read ll sora mn al url ale 3nd al student b3d m5lst al write kolha
+    await _fireStore
+        .collection('Doctors')
+        .doc('${loggedInUSer.email}')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        fieldPhotoURL = documentSnapshot.data()['photo'];
       }
-    } catch (e) {
-      print(e);
-    }
+    });
+    // by3mel al sora daymn tfdl mwgoda mhma 8yrt al screens
+    setState(() {
+      imageUrl = fieldPhotoURL;
+    });
   }
 
-  void takePhoto(ImageSource source) async {
+  void takeAndUploadPhoto(ImageSource source) async {
     final pickedFile = await _picker.getImage(
       source: source,
     );
     var file = File(pickedFile.path);
-    final _storage = FirebaseStorage.instance;
-    await _storage.ref().child('folderName/imageName').putFile(file);
+    //byrf3 al sora f al storage
+    await _storage
+        .ref()
+        .child('ImagesProfile/${loggedInUSer.email}_photo')
+        .putFile(file);
+    //bygeb al url bt3 al sora ale f al storage
     String downloadURL = await FirebaseStorage.instance
-        .ref('folderName/imageName')
+        .ref('ImagesProfile/${loggedInUSer.email}_photo')
         .getDownloadURL();
-    print(downloadURL);
+    //by3mel update ll sora f al aplliccation
+    //print(downloadURL);
     setState(() {
       imageUrl = downloadURL;
     });
+    //byrf3 al url bt3 al sora f al student
+    _fireStore
+        .collection('Doctors')
+        .doc('${loggedInUSer.email}')
+        .update({'photo': downloadURL});
   }
+  // void takePhoto(ImageSource source) async {
+  //   final pickedFile = await _picker.getImage(
+  //     source: source,
+  //   );
+  //   var file = File(pickedFile.path);
+  //   final _storage = FirebaseStorage.instance;
+  //   await _storage.ref().child('folderName/imageName').putFile(file);
+  //   String downloadURL = await FirebaseStorage.instance
+  //       .ref('folderName/imageName')
+  //       .getDownloadURL();
+  //   print(downloadURL);
+  //   setState(() {
+  //     imageUrl = downloadURL;
+  //   });
+  // }
 
   void shareAppButton(BuildContext context) {
     showDialog(
@@ -299,7 +335,8 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
-                                    takePhoto(ImageSource.camera);
+                                    //takePhoto(ImageSource.camera);
+                                    takeAndUploadPhoto(ImageSource.camera);
                                     Navigator.pop(context, true);
                                   },
                                   label: Text(
@@ -316,7 +353,8 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
-                                    takePhoto(ImageSource.gallery);
+                                    //takePhoto(ImageSource.gallery);
+                                    takeAndUploadPhoto(ImageSource.gallery);
                                     Navigator.pop(context, true);
                                   },
                                   label: Text(

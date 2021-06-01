@@ -5,7 +5,7 @@ import 'package:DGEST/Login_screen.dart';
 import 'package:DGEST/Student_screens/Student_screen.dart';
 import 'package:DGEST/Student_screens/Notes_student_screen.dart';
 import 'Doctor_screens/Setting_doctor_screen.dart';
-import 'Doctor_screens/Tasks_doctor_screen.dart';
+import 'Doctor_screens/PDF_doctor_screen.dart';
 import 'Student_screens/Setting_student_screen.dart';
 import 'Student_screens/Tasks_student_screen.dart';
 import 'package:DGEST/Student_screens/Notification_student_screen.dart';
@@ -37,17 +37,18 @@ class DGEST extends StatelessWidget {
           '/notification': (context) => NotificationStudentScreen(),
           '/subject': (context) => SubjectStudentScreen(),
           '/setting': (context) => SettingScreen(),
+          '/studentpdf': (context) => PDFStudentScreen(),
           //doc
           '/homedoc': (context) => DoctorScreen(),
           '/settingdoc': (context) => SettingDoctorScreen(),
-          '/tasksdoc': (context) => TasksDoctorScreen(),
+          '/tasksdoc': (context) => PDFDoctorScreen(),
           '/subjectdoc': (context) => SubjectDoctorScreen(),
           '/attendance': (context) => AttendanceDoctorScreen(),
           //admin
           '/homeadmin': (context) => AdminScreen(),
           '/adminnu': (context) => NewUserAdminScreen(),
           '/adminsett': (context) => SettingAdminScreen(),
-          '/studentpdf': (context) => PDFStudentScreen(),
+
           //TODO: hnzwd al screens f al application.
         },
         debugShowCheckedModeBanner: false,
