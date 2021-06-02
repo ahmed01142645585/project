@@ -20,7 +20,6 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
   final _fireStore = FirebaseFirestore.instance;
   final _storage = FirebaseStorage.instance;
   bool spineer = false;
-  User loggedInUSer;
   String imageUrl;
   final _picker = ImagePicker();
   String fieldPhotoURL;
@@ -29,6 +28,7 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
   void initState() {
     super.initState();
     getUser();
+    readPhoto();
   }
 
   void readPhoto() async {

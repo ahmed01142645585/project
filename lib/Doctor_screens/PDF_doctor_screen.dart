@@ -161,6 +161,7 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
           List<Column> courseWidgets = [];
           for (var field in documents) {
             String fieldDataArray = field.get('url');
+            String pdfName =field.get('name');
             final courseWidget = Column(
               children: [
                 ElevatedButton(
@@ -177,14 +178,13 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
                       throw 'Could not launch $url';
                     }
                   },
-                  child: Text('$fieldDataArray'),
+                  child: Text('$pdfName'),
                 ),
                 SizedBox(
                   height: 10.0,
                 )
               ],
             );
-
             courseWidgets.add(courseWidget);
           }
           return ListView(
