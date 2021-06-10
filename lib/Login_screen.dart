@@ -1,6 +1,8 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
+import 'package:flutter/services.dart';
 import 'Constins.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,9 +19,42 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreen extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   final _fireStore = FirebaseFirestore.instance;
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   String email;
   String password;
   bool spinner = false;
+  String token = '';
+
+  @override
+  void initState() {
+    getToken();
+
+    firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            alert: true, badge: true, provisional: true, sound: true));
+
+    firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        //_showItemDialog(message);
+      },
+      //onBackgroundMessage: myBackgroundMessageHandler,
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        //_navigateToItemDetail(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        //_navigateToItemDetail(message);
+      },
+    );
+
+    super.initState();
+  }
+
+  void getToken() async {
+    token = await firebaseMessaging.getToken();
+  }
 
   void checkUserRoleFromFirebase() {
     getUser();
@@ -196,6 +231,11 @@ class _LoginScreen extends State<LoginScreen> {
                         contactUsButton(context);
                       },
                     ),
+                    ButtonLogIn(
+                        buttonText: 'TOKEN',
+                        onPress: () {
+                          print('$token');
+                        }),
                   ],
                 ),
               ],
@@ -208,10 +248,15 @@ class _LoginScreen extends State<LoginScreen> {
 }
 
 class TextFiledLogIn extends StatelessWidget {
-  TextFiledLogIn({@required this.hintText, this.hideText, this.onChange});
+  TextFiledLogIn(
+      {@required this.hintText,
+      this.hideText,
+      this.onChange,
+      this.inputFormat});
   final String hintText;
   final bool hideText;
   final Function onChange;
+  final List inputFormat;
 
   @override
   Widget build(BuildContext context) {
@@ -219,6 +264,7 @@ class TextFiledLogIn extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
       child: TextField(
         obscureText: hideText,
+        inputFormatters: inputFormat,
         keyboardType: TextInputType.emailAddress,
         style: TextStyle(color: Colors.black),
         onChanged: onChange,

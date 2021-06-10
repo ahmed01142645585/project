@@ -3,6 +3,8 @@ import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:DGEST/Login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'addstudent_admin_screen.dart';
 //import 'package:rflutter_alert/rflutter_alert.dart';
 
 class NewUserAdminScreen extends StatefulWidget {
@@ -107,10 +109,6 @@ class _NewUserAdminScreenState extends State<NewUserAdminScreen> {
                           child: Text('doctor'),
                           value: 'doctor',
                         ),
-                        DropdownMenuItem(
-                          child: Text('admin'),
-                          value: 'admin',
-                        ),
                       ],
                       onChanged: (value) {
                         setState(() {
@@ -156,6 +154,18 @@ class _NewUserAdminScreenState extends State<NewUserAdminScreen> {
                           //   style: alertStyle,
                           //   title: "New User Added Successfully.",
                           // ).show();
+                          if (newValue == 'student') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddNewStudentAdminScreen(
+                                  studentEmail: theEmail,
+                                ),
+                              ),
+                            );
+                          } else {
+                            print('a7a');
+                          }
                         }
                       } on FirebaseAuthException catch (e) {
                         print(e);

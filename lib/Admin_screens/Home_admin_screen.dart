@@ -73,10 +73,12 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
             Expanded(
               child: WidgetContainers(
                 width: 200,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/deleteadmin');
+                },
                 child: Center(
                   child: Text(
-                    'Add New Student',
+                    'Delete User',
                     style: kHSSMainButtonsTextStyle,
                   ),
                 ),

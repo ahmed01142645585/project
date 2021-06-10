@@ -17,6 +17,7 @@ import 'package:DGEST/Admin_screens/Admin_screen.dart';
 import 'package:DGEST/Admin_screens/Newuser_admin_screen.dart';
 import 'package:DGEST/Admin_screens/Setting_admin_screen.dart';
 import 'Student_screens/PDF_student_screen.dart';
+import 'package:DGEST/Admin_screens/Delete_User_admin_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +49,7 @@ class DGEST extends StatelessWidget {
           '/homeadmin': (context) => AdminScreen(),
           '/adminnu': (context) => NewUserAdminScreen(),
           '/adminsett': (context) => SettingAdminScreen(),
+          '/deleteadmin': (context) => DeleteUserAdminScreen(),
 
           //TODO: hnzwd al screens f al application.
         },

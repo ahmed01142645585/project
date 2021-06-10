@@ -12,6 +12,8 @@ class HomeDoctorScreen extends StatefulWidget {
 
 class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
   final _fireStore = FirebaseFirestore.instance;
+  String fieldPhotoURL;
+  String imageUrl;
 
   @override
   void initState() {
@@ -46,6 +48,21 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
       } else {
         print('Document does not exist on the database');
       }
+    });
+  }
+
+  void readPhoto() async {
+    await _fireStore
+        .collection('Students')
+        .doc('${loggedInUSer.email}')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        fieldPhotoURL = documentSnapshot.data()['photo'];
+      }
+    });
+    setState(() {
+      imageUrl = fieldPhotoURL;
     });
   }
 
@@ -111,9 +128,18 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage("images/default_profile.jpg"),
+                  Container(
+                    height: 65.0,
+                    width: 65.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50.0),
+                      image: DecorationImage(
+                        image: imageUrl != null
+                            ? NetworkImage(imageUrl)
+                            : AssetImage("images/default_profile.jpg"),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                   Column(
                     children: [
