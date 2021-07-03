@@ -53,7 +53,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
 
   void readPhoto() async {
     await _fireStore
-        .collection('Students')
+        .collection('Doctors')
         .doc('${loggedInUSer.email}')
         .get()
         .then((DocumentSnapshot documentSnapshot) {
@@ -66,7 +66,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
     });
   }
 
-  Widget getStudentCoursesFromFirebase(String documentId) {
+  Widget getDoctorCoursesFromFirebase(String documentId) {
     return StreamBuilder(
       stream: _fireStore
           .collection('Doctors')
@@ -90,9 +90,9 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                 checkUserRoleFromFirebase(fieldDataArray.elementAt(0));
               },
               child: ListDesign(
-                drText: '',
-                courseText: '${fieldDataArray.elementAt(0)}',
-                yearSemster: '${fieldDataArray.elementAt(1)}',
+                drText: '${fieldDataArray.elementAt(0)}',
+                courseText: '${fieldDataArray.elementAt(1)}',
+                yearSemster: 'Level ${fieldDataArray.elementAt(2).toString()}',
               ),
             );
             courseWidgets.add(courseWidget);
@@ -126,7 +126,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 65.0,
@@ -141,6 +141,9 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
                   Column(
                     children: [
                       GetDoctorUsernameFromFirebase('${loggedInUSer.email}'),
@@ -151,16 +154,6 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                         ),
                       )
                     ],
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      size: 45.0,
-                      color: Colors.black54,
-                    ),
-                    onPressed: () {
-                      print('search icon is pressed!');
-                    },
                   ),
                 ],
               ),
@@ -179,7 +172,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
             // ),
             Expanded(
               flex: 3,
-              child: getStudentCoursesFromFirebase('${loggedInUSer.email}'),
+              child: getDoctorCoursesFromFirebase('${loggedInUSer.email}'),
             ), //StudentCourses('${loggedInUSer.email}')),
           ],
         ),

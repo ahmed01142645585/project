@@ -3,6 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Login_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+import '../Constins.dart';
 
 class AddNewStudentAdminScreen extends StatefulWidget {
   final String studentEmail;
@@ -20,126 +23,204 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
   String studentAddress;
   String studentPhone;
   int studentGPA;
-  String subjectChoice1 = 'Compiler Theory';
-  String subjectChoice2 = 'Compiler Theory';
-  String subjectChoice3 = 'Compiler Theory';
-  String subjectChoice4 = 'Compiler Theory';
-  String subjectChoice5 = 'Compiler Theory';
-  String subjectChoice6 = 'Compiler Theory';
-
+  String subjectChoice1 = 'None';
+  String subjectChoice2 = 'None';
+  String subjectChoice3 = 'None';
+  String subjectChoice4 = 'None';
+  String subjectChoice5 = 'None';
+  String subjectChoice6 = 'None';
   List<DropdownMenuItem<String>> subjects = [
     DropdownMenuItem(
-      child: Text('Compiler Theory'),
-      value: 'Compiler Theory',
-    ),
-    DropdownMenuItem(
-      child: Text('Expert System'),
-      value: 'Expert System',
-    ),
-    DropdownMenuItem(
-      child: Text('Computer Network'),
-      value: 'Computer Network',
-    ),
-    DropdownMenuItem(
-      child: Text('Image Processing'),
-      value: 'Image Processing',
-    ),
-    DropdownMenuItem(
-      child: Text('Modeling & Simulation'),
-      value: 'Modeling & Simulation',
-    ),
-    DropdownMenuItem(
-      child: Text('Artifical Intelliegence'),
-      value: 'Artifical Intelliegence',
-    ),
-    DropdownMenuItem(
-      child: Text('Computer Graphic'),
-      value: 'Computer Graphic',
-    ),
-    DropdownMenuItem(
-      child: Text('Formal Language'),
-      value: 'Formal Language',
-    ),
-    DropdownMenuItem(
-      child: Text('Logic Programming'),
-      value: 'Logic Programming',
-    ),
-    DropdownMenuItem(
-      child: Text('Software Engineering'),
-      value: 'Software Engineering',
-    ),
-    DropdownMenuItem(
-      child: Text('System Analysis'),
-      value: 'System Analysis',
-    ),
-    DropdownMenuItem(
-      child: Text('Distributed Computing'),
-      value: 'Distributed Computing',
-    ),
-    DropdownMenuItem(
-      child: Text('Neural Networks'),
-      value: 'Neural Networks',
-    ),
-    DropdownMenuItem(
-      child: Text('Data Structure'),
-      value: 'Data Structure',
-    ),
-    DropdownMenuItem(
-      child: Text('Object Oriented Programming'),
-      value: 'Object Oriented Programming',
+      child: Text('None'),
+      value: 'None',
     ),
   ];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCourses();
+  }
+
+  void getCourses() async {
+    await _fireStore.collection('Courses').get().then(
+      (querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          subjects.add(
+            DropdownMenuItem(
+              child: Text('${element.data()['name']}'),
+              value: element.data()['name'],
+            ),
+          );
+        });
+      },
+    );
+  }
+
   void addNewSubjectsForStudents(String sub1, String sub2, String sub3,
       String sub4, String sub5, String sub6) {
-    _fireStore
-        .collection('Students')
-        .doc('${widget.studentEmail}')
-        .collection('Courses')
-        .doc('$sub1')
-        .set({
-      'subject': ['Lamiaa', sub1, 'First Year']
-    });
-    _fireStore
-        .collection('Students')
-        .doc('${widget.studentEmail}')
-        .collection('Courses')
-        .doc('$sub2')
-        .set({
-      'subject': ['Lamiaa', sub2, 'First Year']
-    });
-    _fireStore
-        .collection('Students')
-        .doc('${widget.studentEmail}')
-        .collection('Courses')
-        .doc('$sub3')
-        .set({
-      'subject': ['Lamiaa', sub3, 'First Year']
-    });
-    _fireStore
-        .collection('Students')
-        .doc('${widget.studentEmail}')
-        .collection('Courses')
-        .doc('$sub4')
-        .set({
-      'subject': ['Lamiaa', sub4, 'First Year']
-    });
-    _fireStore
-        .collection('Students')
-        .doc('${widget.studentEmail}')
-        .collection('Courses')
-        .doc('$sub5')
-        .set({
-      'subject': ['Lamiaa', sub5, 'First Year']
-    });
-    _fireStore
-        .collection('Students')
-        .doc('${widget.studentEmail}')
-        .collection('Courses')
-        .doc('$sub6')
-        .set({
-      'subject': ['Lamiaa', sub6, 'First Year']
-    });
+    if (sub1 != sub2 &&
+        sub1 != sub3 &&
+        sub1 != sub4 &&
+        sub1 != sub5 &&
+        sub1 != sub6 &&
+        sub2 != sub1 &&
+        sub2 != sub3 &&
+        sub2 != sub4 &&
+        sub2 != sub5 &&
+        sub2 != sub6 &&
+        sub3 != sub1 &&
+        sub3 != sub2 &&
+        sub3 != sub4 &&
+        sub3 != sub5 &&
+        sub3 != sub6 &&
+        sub4 != sub1 &&
+        sub4 != sub2 &&
+        sub4 != sub3 &&
+        sub4 != sub5 &&
+        sub4 != sub6 &&
+        sub5 != sub1 &&
+        sub5 != sub2 &&
+        sub5 != sub3 &&
+        sub5 != sub4 &&
+        sub5 != sub6 &&
+        sub6 != sub1 &&
+        sub6 != sub2 &&
+        sub6 != sub3 &&
+        sub6 != sub4 &&
+        sub6 != sub5) {
+      if (sub1 != 'None') {
+        _fireStore.collection('Courses').get().then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            if (sub1 == element.data()['name']) {
+              int subjectLevel = element.data()['level'];
+              String subjectDoctor = element.data()['doctor'];
+              _fireStore
+                  .collection('Students')
+                  .doc('${widget.studentEmail}')
+                  .collection('Courses')
+                  .doc('$sub1')
+                  .set({
+                'subject': [subjectDoctor, sub1, subjectLevel]
+              });
+            }
+          });
+        });
+      }
+      if (sub2 != 'None') {
+        _fireStore.collection('Courses').get().then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            if (sub2 == element.data()['name']) {
+              int subjectLevel = element.data()['level'];
+              String subjectDoctor = element.data()['doctor'];
+              _fireStore
+                  .collection('Students')
+                  .doc('${widget.studentEmail}')
+                  .collection('Courses')
+                  .doc('$sub2')
+                  .set({
+                'subject': [subjectDoctor, sub2, subjectLevel]
+              });
+            }
+          });
+        });
+      }
+      if (sub3 != 'None') {
+        _fireStore.collection('Courses').get().then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            if (sub3 == element.data()['name']) {
+              int subjectLevel = element.data()['level'];
+              String subjectDoctor = element.data()['doctor'];
+              _fireStore
+                  .collection('Students')
+                  .doc('${widget.studentEmail}')
+                  .collection('Courses')
+                  .doc('$sub3')
+                  .set({
+                'subject': [subjectDoctor, sub3, subjectLevel]
+              });
+            }
+          });
+        });
+      }
+      if (sub4 != 'None') {
+        _fireStore.collection('Courses').get().then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            if (sub4 == element.data()['name']) {
+              int subjectLevel = element.data()['level'];
+              String subjectDoctor = element.data()['doctor'];
+              _fireStore
+                  .collection('Students')
+                  .doc('${widget.studentEmail}')
+                  .collection('Courses')
+                  .doc('$sub4')
+                  .set({
+                'subject': [subjectDoctor, sub4, subjectLevel]
+              });
+            }
+          });
+        });
+      }
+      if (sub5 != 'None') {
+        _fireStore.collection('Courses').get().then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            if (sub5 == element.data()['name']) {
+              int subjectLevel = element.data()['level'];
+              String subjectDoctor = element.data()['doctor'];
+              _fireStore
+                  .collection('Students')
+                  .doc('${widget.studentEmail}')
+                  .collection('Courses')
+                  .doc('$sub5')
+                  .set({
+                'subject': [subjectDoctor, sub5, subjectLevel]
+              });
+            }
+          });
+        });
+      }
+      if (sub6 != 'None') {
+        _fireStore.collection('Courses').get().then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            if (sub6 == element.data()['name']) {
+              int subjectLevel = element.data()['level'];
+              String subjectDoctor = element.data()['doctor'];
+              _fireStore
+                  .collection('Students')
+                  .doc('${widget.studentEmail}')
+                  .collection('Courses')
+                  .doc('$sub6')
+                  .set({
+                'subject': [subjectDoctor, sub6, subjectLevel]
+              });
+            }
+          });
+        });
+      }
+      final messageBar = SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(bottom: 50.0, left: 20.0, right: 20.0),
+        backgroundColor: Color(0xFF06D6A0),
+        content: Text(
+          'Student Data Added Successfully',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 25.0,
+            color: Colors.black,
+          ),
+        ),
+        duration: Duration(seconds: 5),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(messageBar);
+    } else {
+      Alert(
+        context: context,
+        style: alertStyle,
+        title:
+            'You have Duplicate a Subject. \n Please check the subjects and try again.',
+      ).show();
+    }
   }
 
   @override
@@ -333,44 +414,46 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                   },
                 ),
               ),
-              ButtonLogIn(
-                buttonText: 'Add Student',
-                onPress: () {
-                  _fireStore
-                      .collection('Students')
-                      .doc('${widget.studentEmail}')
-                      .set({
-                    'name': studentName,
-                    'address': studentAddress,
-                    'gpa': studentGPA,
-                    'id': studentID,
-                    'level': studentLevel,
-                    'phone': studentPhone
-                  });
-                  addNewSubjectsForStudents(
-                      subjectChoice1,
-                      subjectChoice2,
-                      subjectChoice3,
-                      subjectChoice4,
-                      subjectChoice5,
-                      subjectChoice6);
-                  final messageBar = SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    margin:
-                        EdgeInsets.only(bottom: 50.0, left: 20.0, right: 20.0),
-                    backgroundColor: Color(0xFF06D6A0),
-                    content: Text(
-                      'Student Data Added Successfully',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        color: Colors.black,
-                      ),
-                    ),
-                    duration: Duration(seconds: 3),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(messageBar);
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 75.0),
+                child: ButtonLogIn(
+                  buttonText: 'Add Student',
+                  onPress: () {
+                    if (studentName != null &&
+                        studentAddress != null &&
+                        studentGPA != null &&
+                        studentID != null &&
+                        studentLevel != null &&
+                        studentPhone != null) {
+                      _fireStore
+                          .collection('Students')
+                          .doc('${widget.studentEmail}')
+                          .set({
+                        'name': studentName,
+                        'address': studentAddress,
+                        'gpa': studentGPA,
+                        'id': studentID,
+                        'level': studentLevel,
+                        'phone': studentPhone,
+                        'photo': ''
+                      });
+                      addNewSubjectsForStudents(
+                          subjectChoice1,
+                          subjectChoice2,
+                          subjectChoice3,
+                          subjectChoice4,
+                          subjectChoice5,
+                          subjectChoice6);
+                    } else {
+                      Alert(
+                        context: context,
+                        style: alertStyle,
+                        title:
+                            'Please make sure that the Data is added correctly.',
+                      ).show();
+                    }
+                  },
+                ),
               ),
             ],
           ),

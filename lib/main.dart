@@ -14,10 +14,11 @@ import 'Doctor_screens/Doctor_screen.dart';
 import 'package:DGEST/Doctor_screens/Subject_doctor_screen.dart';
 import 'package:DGEST/Doctor_screens/Attendance_doctor_screen.dart';
 import 'package:DGEST/Admin_screens/Admin_screen.dart';
-import 'package:DGEST/Admin_screens/Newuser_admin_screen.dart';
+import 'package:DGEST/Admin_screens/New_user_admin_screen.dart';
 import 'package:DGEST/Admin_screens/Setting_admin_screen.dart';
 import 'Student_screens/PDF_student_screen.dart';
 import 'package:DGEST/Admin_screens/Delete_User_admin_screen.dart';
+import 'package:DGEST/Admin_screens/add_course_admin_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,7 +51,7 @@ class DGEST extends StatelessWidget {
           '/adminnu': (context) => NewUserAdminScreen(),
           '/adminsett': (context) => SettingAdminScreen(),
           '/deleteadmin': (context) => DeleteUserAdminScreen(),
-
+          '/addcourse': (context) => AddCourseAdminScreen(),
           //TODO: hnzwd al screens f al application.
         },
         debugShowCheckedModeBanner: false,

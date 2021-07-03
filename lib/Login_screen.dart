@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:flutter/services.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'Constins.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,6 +25,23 @@ class _LoginScreen extends State<LoginScreen> {
   String password;
   bool spinner = false;
   String token = '';
+
+  // var alertStyle = AlertStyle(
+  //   backgroundColor: Color(0xFF06D6A0),
+  //   animationType: AnimationType.grow,
+  //   isCloseButton: true,
+  //   //isOverlayTapDismiss: false,
+  //   descTextAlign: TextAlign.start,
+  //   isButtonVisible: false,
+  //   alertAlignment: Alignment.center,
+  //   animationDuration: Duration(milliseconds: 200),
+  //   // alertBorder: RoundedRectangleBorder(
+  //   //   borderRadius: BorderRadius.circular(50.0),
+  //   // ),
+  //   titleStyle: TextStyle(
+  //     color: Colors.black,
+  //   ),
+  // );
 
   @override
   void initState() {
@@ -212,8 +230,16 @@ class _LoginScreen extends State<LoginScreen> {
                           setState(() {
                             spinner = false;
                           });
-                        } catch (e) {
-                          print(e);
+                        } on FirebaseAuthException catch (e) {
+                          //print(e);
+                          Alert(
+                            context: context,
+                            style: alertStyle,
+                            title: "$e",
+                          ).show();
+                          setState(() {
+                            spinner = false;
+                          });
                         }
                       },
                     ),
@@ -231,11 +257,11 @@ class _LoginScreen extends State<LoginScreen> {
                         contactUsButton(context);
                       },
                     ),
-                    ButtonLogIn(
-                        buttonText: 'TOKEN',
-                        onPress: () {
-                          print('$token');
-                        }),
+                    // ButtonLogIn(
+                    //     buttonText: 'TOKEN',
+                    //     onPress: () {
+                    //       print('$token');
+                    //     }),
                   ],
                 ),
               ],

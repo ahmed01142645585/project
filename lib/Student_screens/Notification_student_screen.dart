@@ -80,20 +80,10 @@ class _NotificationStudentScreenState extends State<NotificationStudentScreen> {
                       notfText: 'New assignment in Compiler is added',
                       timeAgo: '7 hours ago',
                     ),
-                    Divider(
-                      height: 10,
-                      thickness: 3.0,
-                      color: Colors.black45,
-                    ),
                     NotificationsStyle(
                       notfText:
                           'The Mid-Term result for Computer Network is available now',
                       timeAgo: '2 days ago',
-                    ),
-                    Divider(
-                      height: 10,
-                      thickness: 3.0,
-                      color: Colors.black45,
                     ),
                   ],
                 ),
@@ -113,38 +103,35 @@ class NotificationsStyle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Container(
+      width: MediaQuery.of(context).size.width / 2,
+      child: Column(
         children: [
-          CircleAvatar(
-            radius: 45.0,
-            backgroundColor: Colors.white,
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width / 2,
-            child: Column(
-              children: [
-                Text(
-                  notfText,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
-                  timeAgo,
-                ),
-              ],
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              notfText,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22.0,
+                color: Colors.black,
+              ),
             ),
           ),
-          IconButton(
-              icon: Icon(
-                Icons.menu,
-                size: 35.0,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5.0),
+            child: Text(
+              timeAgo,
+              style: TextStyle(
+                fontSize: 18.0,
               ),
-              onPressed: () {}),
+            ),
+          ),
+          Divider(
+            height: 10,
+            thickness: 3.0,
+            color: Colors.black45,
+          ),
         ],
       ),
     );

@@ -38,7 +38,7 @@ class _PDFStudentScreenState extends State<PDFStudentScreen> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFF06D6A0)),
+                        MaterialStateProperty.all<Color>(Colors.black54),
                     //elevation: MaterialStateProperty.all(0),
                   ),
                   onPressed: () async {

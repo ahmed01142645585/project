@@ -74,6 +74,20 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
               child: WidgetContainers(
                 width: 200,
                 onTap: () {
+                  Navigator.pushNamed(context, '/addcourse');
+                },
+                child: Center(
+                  child: Text(
+                    'Add New Course',
+                    style: kHSSMainButtonsTextStyle,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: WidgetContainers(
+                width: 200,
+                onTap: () {
                   Navigator.pushNamed(context, '/deleteadmin');
                 },
                 child: Center(

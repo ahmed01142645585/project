@@ -107,7 +107,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
               child: ListDesign(
                 drText: '${fieldDataArray.elementAt(0)}',
                 courseText: '${fieldDataArray.elementAt(1)}',
-                yearSemster: '${fieldDataArray.elementAt(2)}',
+                yearSemster: 'Level ${fieldDataArray.elementAt(2).toString()}',
               ),
             );
             courseWidgets.add(courseWidget);
@@ -141,7 +141,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 65.0,
@@ -156,6 +156,9 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
                   Column(
                     children: [
                       GetStudentUsernameFromFirebase('${loggedInUSer.email}'),
@@ -168,33 +171,33 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                       )
                     ],
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      size: 45.0,
-                      color: Colors.black54,
-                    ),
-                    onPressed: () {
-                      print('search icon is pressed!');
-                    },
-                  ),
+                  // IconButton(
+                  //   icon: Icon(
+                  //     Icons.search,
+                  //     size: 45.0,
+                  //     color: Colors.black54,
+                  //   ),
+                  //   onPressed: () {
+                  //     print('search icon is pressed!');
+                  //   },
+                  // ),
                 ],
               ),
             ),
-            Expanded(
-              child: WidgetContainers(
-                width: 200,
-                onTap: () {
-                  Navigator.pushNamed(context, '/note');
-                },
-                child: Center(
-                  child: Text(
-                    'Notes',
-                    style: kHSSMainButtonsTextStyle,
-                  ),
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: WidgetContainers(
+            //     width: 200,
+            //     onTap: () {
+            //       Navigator.pushNamed(context, '/note');
+            //     },
+            //     child: Center(
+            //       child: Text(
+            //         'Notes',
+            //         style: kHSSMainButtonsTextStyle,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Expanded(
               flex: 3,
               child: getStudentCoursesFromFirebase('${loggedInUSer.email}'),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 final _auth = FirebaseAuth.instance;
 User loggedInUSer;
@@ -16,6 +17,23 @@ void getUser() async {
     print(e);
   }
 }
+
+var alertStyle = AlertStyle(
+  backgroundColor: Color(0xFF06D6A0),
+  animationType: AnimationType.grow,
+  isCloseButton: true,
+  //isOverlayTapDismiss: false,
+  descTextAlign: TextAlign.start,
+  isButtonVisible: false,
+  alertAlignment: Alignment.center,
+  animationDuration: Duration(milliseconds: 200),
+  // alertBorder: RoundedRectangleBorder(
+  //   borderRadius: BorderRadius.circular(50.0),
+  // ),
+  titleStyle: TextStyle(
+    color: Colors.black,
+  ),
+);
 
 const kHSSMainButtonsTextStyle =
     TextStyle(fontFamily: 'Lobster', fontSize: 25.0, color: Colors.black54);

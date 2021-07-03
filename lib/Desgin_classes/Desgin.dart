@@ -15,18 +15,13 @@ class ListDesign extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            CircleAvatar(
-              backgroundImage: AssetImage('images/default_profile.jpg'),
-              radius: 30.0,
-            ),
-            Text(
-              drText,
-              style: kHSSMainListTextStyle,
-            ),
-          ],
+        CircleAvatar(
+          backgroundImage: AssetImage('images/default_profile.jpg'),
+          radius: 30.0,
+        ),
+        Text(
+          drText,
+          style: kHSSMainListTextStyle,
         ),
         Text(
           courseText,
@@ -65,6 +60,29 @@ class WidgetContainers extends StatelessWidget {
     );
   }
 }
+
+// class SnackBarMessages extends StatelessWidget {
+//   SnackBarMessages({@required this.barTitle});
+//   final String barTitle;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return SnackBar(
+//       behavior: SnackBarBehavior.floating,
+//       margin: EdgeInsets.only(bottom: 50.0, left: 20.0, right: 20.0),
+//       backgroundColor: Color(0xFF06D6A0),
+//       content: Text(
+//         barTitle,
+//         textAlign: TextAlign.center,
+//         style: TextStyle(
+//           fontSize: 25.0,
+//           color: Colors.black,
+//         ),
+//       ),
+//       duration: Duration(seconds: 3),
+//     );
+//   }
+// }
 
 class BackgroundImage extends StatelessWidget {
   BackgroundImage({@required this.image, @required this.child});
