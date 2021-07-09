@@ -1,10 +1,8 @@
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:DGEST/Login_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
 import '../Constins.dart';
 
 class AddNewStudentAdminScreen extends StatefulWidget {
@@ -201,7 +199,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
       final messageBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.only(bottom: 50.0, left: 20.0, right: 20.0),
-        backgroundColor: Color(0xFF06D6A0),
+        backgroundColor: kAdminColor,
         content: Text(
           'Student Data Added Successfully',
           textAlign: TextAlign.center,
@@ -227,10 +225,15 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Student'),
+        backgroundColor: kAdminColor,
+        centerTitle: true,
+        title: Text(
+          'Add Student',
+          style: kAppBarTextStyle,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -238,7 +241,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
         elevation: 0.0,
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B2.jpeg',
         child: SafeArea(
           child: ListView(
             children: [
@@ -248,19 +251,19 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
               Text(
                 'Enter Student Information',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 25.0, color: Colors.black),
+                style: kTextNoBackground,
               ),
               SizedBox(
                 height: 15.0,
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Name',
                 onChange: (value) {
                   studentName = value;
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'ID',
                 inputFormat: <TextInputFormatter>[
@@ -270,7 +273,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                   studentID = int.parse(value);
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Level',
                 inputFormat: <TextInputFormatter>[
@@ -280,21 +283,21 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                   studentLevel = int.parse(value);
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Address',
                 onChange: (value) {
                   studentAddress = value;
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Phone',
                 onChange: (value) {
                   studentPhone = value;
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'GPA',
                 inputFormat: <TextInputFormatter>[
@@ -310,13 +313,13 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
               Text(
                 'Add Student Courses',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20.0, color: Colors.black),
+                style: kTextNoBackground,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -333,7 +336,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -350,7 +353,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -367,7 +370,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -384,7 +387,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -401,7 +404,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -414,9 +417,13 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                   },
                 ),
               ),
+              SizedBox(
+                height: 30.0,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 75.0),
-                child: ButtonLogIn(
+                child: ButtonsForDGEST(
+                  buttonColor: kAdminColor,
                   buttonText: 'Add Student',
                   onPress: () {
                     if (studentName != null &&
@@ -435,7 +442,8 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                         'id': studentID,
                         'level': studentLevel,
                         'phone': studentPhone,
-                        'photo': ''
+                        'photo':
+                            'https://firebasestorage.googleapis.com/v0/b/dgest-39c26.appspot.com/o/ImagesProfile%2Fdefault_photo.jpg?alt=media&token=3870fd5b-7700-4976-b1c1-e69ecd720f67'
                       });
                       addNewSubjectsForStudents(
                           subjectChoice1,
@@ -444,6 +452,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                           subjectChoice4,
                           subjectChoice5,
                           subjectChoice6);
+                      Navigator.pop(context);
                     } else {
                       Alert(
                         context: context,

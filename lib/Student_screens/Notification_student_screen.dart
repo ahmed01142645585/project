@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
+
+import '../Constins.dart';
 //import 'package:firebase_messaging/firebase_messaging.dart';
 
 class NotificationStudentScreen extends StatefulWidget {
@@ -33,7 +35,7 @@ class _NotificationStudentScreenState extends State<NotificationStudentScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundImage(
-      image: 'images/sora5a.jpeg',
+      image: 'images/B1.jpeg',
       child: SafeArea(
         child: Column(
           children: [
@@ -43,16 +45,17 @@ class _NotificationStudentScreenState extends State<NotificationStudentScreen> {
               child: Center(
                 child: ColorizeAnimatedTextKit(
                   colors: [
-                    Colors.green,
-                    Colors.yellow,
-                    Colors.red,
+                    kLoginColor,
+                    kStudentColor,
+                    kAdminColor,
+                    kDoctorColor
                   ],
                   speed: Duration(milliseconds: 300),
                   repeatForever: true,
                   text: ['DGEST'],
                   textStyle: TextStyle(
-                    fontFamily: 'PressStart2P',
-                    fontSize: 60.0,
+                    fontFamily: 'ZenTokyoZoo',
+                    fontSize: 80.0,
                     color: Color(0xFFecf8f8),
                   ),
                 ),
@@ -77,13 +80,12 @@ class _NotificationStudentScreenState extends State<NotificationStudentScreen> {
                     //   color: Colors.black45,
                     // ),
                     NotificationsStyle(
-                      notfText: 'New assignment in Compiler is added',
-                      timeAgo: '7 hours ago',
+                      notfText: 'New PDF is Uploaded in Image Processing!',
+                      timeAgo: '12 Days ago',
                     ),
                     NotificationsStyle(
-                      notfText:
-                          'The Mid-Term result for Computer Network is available now',
-                      timeAgo: '2 days ago',
+                      notfText: 'New Assignment Added in Compiler Theory!',
+                      timeAgo: '12 Days ago',
                     ),
                   ],
                 ),
@@ -109,14 +111,8 @@ class NotificationsStyle extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Text(
-              notfText,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 22.0,
-                color: Colors.black,
-              ),
-            ),
+            child: Text(notfText,
+                textAlign: TextAlign.center, style: kTextNoBackground),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 5.0),
@@ -130,7 +126,7 @@ class NotificationsStyle extends StatelessWidget {
           Divider(
             height: 10,
             thickness: 3.0,
-            color: Colors.black45,
+            color: Colors.black,
           ),
         ],
       ),

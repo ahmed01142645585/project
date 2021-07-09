@@ -108,7 +108,7 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
         .doc('${loggedInUSer.email}')
         .collection('Courses')
         .doc('${widget.courseID}')
-        .collection('PDF')
+        .collection('week$selectedCard')
         .add({'url': url, 'name': randomName});
 
     _fireStore.collection('Students').get().then((querySnapshot) {
@@ -126,7 +126,7 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
                   .doc(result.id)
                   .collection('Courses')
                   .doc(document.id)
-                  .collection('PDF')
+                  .collection('week$selectedCard')
                   .add({'url': url, 'name': randomName});
               //.update({'pdf': url});
             }
@@ -150,7 +150,7 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
           .doc(documentId)
           .collection('Courses')
           .doc('${widget.courseID}')
-          .collection('PDF')
+          .collection('week$selectedCard')
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -161,13 +161,13 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
           List<Column> courseWidgets = [];
           for (var field in documents) {
             String fieldDataArray = field.get('url');
-            String pdfName =field.get('name');
+            String pdfName = field.get('name');
             final courseWidget = Column(
               children: [
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFF06D6A0)),
+                        MaterialStateProperty.all<Color>(Colors.black54),
                     //elevation: MaterialStateProperty.all(0),
                   ),
                   onPressed: () async {
@@ -243,18 +243,22 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF06D6A0),
-        title: Text("Upload PDF"),
+        backgroundColor: kDoctorColor,
+        title: Text(
+          "Upload PDF",
+          style: kAppBarTextStyle,
+        ),
+        centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B4.jpeg',
         child: SafeArea(
           child: Container(
             child: Center(
@@ -317,6 +321,7 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
                 // ),
 
                 WidgetContainers(
+                  widgetColor: kDoctorColor,
                   height: MediaQuery.of(context).size.height / 2,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -326,7 +331,7 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFF06D6A0)),
+                        MaterialStateProperty.all<Color>(kDoctorColor),
                     shape: MaterialStateProperty.all<OutlinedBorder>(
                         StadiumBorder()),
                   ),
@@ -336,7 +341,7 @@ class _PDFDoctorScreenState extends State<PDFDoctorScreen> {
                       behavior: SnackBarBehavior.floating,
                       margin: EdgeInsets.only(
                           bottom: 50.0, left: 20.0, right: 20.0),
-                      backgroundColor: Color(0xFF06D6A0),
+                      backgroundColor: kDoctorColor,
                       content: Text(
                         'You Uploaded PDF File',
                         textAlign: TextAlign.center,

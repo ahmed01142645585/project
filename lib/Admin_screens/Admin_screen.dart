@@ -1,3 +1,4 @@
+import 'package:DGEST/Constins.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Admin_screens/Home_admin_screen.dart';
 import 'package:DGEST/Admin_screens/Setting_admin_screen.dart';
@@ -29,7 +30,7 @@ class _AdminScreenState extends State<AdminScreen> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         //backgroundColor: Colors.transparent,
-        selectedItemColor: Color(0xFF06D6A0),
+        selectedItemColor: kAdminColor,
         unselectedItemColor: Colors.white,
         iconSize: 30.0,
         currentIndex: selectedIndex,

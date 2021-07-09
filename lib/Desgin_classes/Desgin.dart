@@ -21,15 +21,15 @@ class ListDesign extends StatelessWidget {
         ),
         Text(
           drText,
-          style: kHSSMainListTextStyle,
+          style: kTextStyle,
         ),
         Text(
           courseText,
-          style: kHSSMainListTextStyle,
+          style: kTextStyle,
         ),
         Text(
           yearSemster,
-          style: kHSSMainListTextStyle,
+          style: kTextStyle,
         )
       ],
     );
@@ -37,11 +37,17 @@ class ListDesign extends StatelessWidget {
 }
 
 class WidgetContainers extends StatelessWidget {
-  WidgetContainers({this.width, this.onTap, this.child, this.height});
+  WidgetContainers(
+      {@required this.widgetColor,
+      this.width,
+      this.onTap,
+      this.child,
+      this.height});
   final double width;
   final Function onTap;
   final Widget child;
   final double height;
+  final Color widgetColor;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +59,7 @@ class WidgetContainers extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Color(0xFF06D6A0),
+          color: widgetColor,
           borderRadius: BorderRadius.circular(50.0),
         ),
       ),
@@ -97,6 +103,74 @@ class BackgroundImage extends StatelessWidget {
         image: DecorationImage(
           image: AssetImage(image),
           fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonsForDGEST extends StatelessWidget {
+  ButtonsForDGEST(
+      {@required this.buttonText,
+      @required this.buttonColor,
+      this.buttonPadding,
+      @required this.onPress});
+  final String buttonText;
+  final EdgeInsetsGeometry buttonPadding;
+  final Function onPress;
+  final Color buttonColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(buttonColor),
+            shape: MaterialStateProperty.all<OutlinedBorder>(StadiumBorder()),
+            padding:
+                MaterialStateProperty.all<EdgeInsetsGeometry>(buttonPadding)),
+        onPressed: onPress,
+        child: Text(
+          buttonText,
+          style: kAppBarTextStyle,
+        ),
+      ),
+    );
+  }
+}
+
+class TextFieldForDGEST extends StatelessWidget {
+  TextFieldForDGEST(
+      {@required this.hintText,
+      this.hideText,
+      this.onChange,
+      this.inputFormat});
+  final String hintText;
+  final bool hideText;
+  final Function onChange;
+  final List inputFormat;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
+      child: TextField(
+        obscureText: hideText,
+        inputFormatters: inputFormat,
+        keyboardType: TextInputType.emailAddress,
+        style: TextStyle(color: Colors.black),
+        onChanged: onChange,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+          ),
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey),
+          filled: true,
+          fillColor: Colors.white,
         ),
       ),
     );

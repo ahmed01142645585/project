@@ -1,3 +1,4 @@
+import 'package:DGEST/Constins.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Student_screens/Tasks_student_screen.dart';
 import 'package:DGEST/Student_screens/Home_student_screen.dart';
@@ -33,7 +34,7 @@ class _StudentScreenState extends State<StudentScreen> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         //backgroundColor: Colors.transparent,
-        selectedItemColor: Color(0xFF06D6A0),
+        selectedItemColor: kStudentColor,
         unselectedItemColor: Colors.white,
         iconSize: 30.0,
         currentIndex: selectedIndex,

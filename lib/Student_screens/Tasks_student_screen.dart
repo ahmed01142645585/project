@@ -23,7 +23,7 @@ class _TaskStudentScreenState extends State<TaskStudentScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundImage(
-      image: 'images/sora5a.jpeg',
+      image: 'images/B1.jpeg',
       child: SafeArea(
         child: Column(
           children: [
@@ -32,10 +32,7 @@ class _TaskStudentScreenState extends State<TaskStudentScreen> {
               child: Center(
                 child: Text(
                   '$formatter',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -61,16 +58,16 @@ class _TaskStudentScreenState extends State<TaskStudentScreen> {
                       List<WidgetContainers> courseWidgets = [];
                       for (var field in documents) {
                         final subjectTask = field.get('subject');
-                        final locationTask = field.get('location');
                         final weekTask = field.get('week');
 
                         final courseWidget = WidgetContainers(
+                          widgetColor: kStudentColor,
                           height: 100,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '$subjectTask - $locationTask - week $weekTask',
+                                '$subjectTask - week $weekTask',
                                 style: TextStyle(
                                     fontSize: 20.0, color: Colors.black),
                               ),
@@ -94,12 +91,13 @@ class _TaskStudentScreenState extends State<TaskStudentScreen> {
                       );
                     }
                     return WidgetContainers(
+                      widgetColor: kStudentColor,
                       height: 100,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'LOADING - LOADING - LOADING',
+                            'LOADING - LOADING',
                             style:
                                 TextStyle(fontSize: 20.0, color: Colors.black),
                           ),
@@ -237,9 +235,10 @@ class _TaskStudentScreenState extends State<TaskStudentScreen> {
 }
 
 class TasksWeekList extends StatelessWidget {
-  TasksWeekList({this.weekNumber, this.onTap});
+  TasksWeekList({@required this.taskColor, this.weekNumber, this.onTap});
   final String weekNumber;
   final Function onTap;
+  final Color taskColor;
 
   @override
   Widget build(BuildContext context) {
@@ -252,7 +251,7 @@ class TasksWeekList extends StatelessWidget {
         //curve: Curves.easeIn,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
-          color: weekNumber == selectedCard ? Color(0xFF06D6A0) : Colors.white,
+          color: weekNumber == selectedCard ? taskColor : Colors.white,
           border: Border.all(
               color: Colors.black54, style: BorderStyle.solid, width: 4.0),
         ),
@@ -262,6 +261,7 @@ class TasksWeekList extends StatelessWidget {
             Text(
               'Week',
               style: TextStyle(
+                fontFamily: 'Lobster',
                 fontSize: 20,
                 color: weekNumber == selectedCard ? Colors.white : Colors.black,
               ),

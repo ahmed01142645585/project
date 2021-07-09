@@ -9,16 +9,36 @@ class HomeAdminScreen extends StatefulWidget {
 }
 
 class _HomeAdminScreenState extends State<HomeAdminScreen> {
+  final _fireStore = FirebaseFirestore.instance;
+  String imageUrl;
+  String fieldPhotoURL;
+
   @override
   void initState() {
     super.initState();
     getUser();
+    readPhoto();
+  }
+
+  void readPhoto() async {
+    await _fireStore
+        .collection('Admins')
+        .doc('${loggedInUSer.email}')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        fieldPhotoURL = documentSnapshot.data()['photo'];
+      }
+    });
+    setState(() {
+      imageUrl = fieldPhotoURL;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BackgroundImage(
-      image: 'images/sora5a.jpeg',
+      image: 'images/B2.jpeg',
       child: SafeArea(
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -26,38 +46,46 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage("images/default_profile.jpg"),
+                  Container(
+                    height: 65.0,
+                    width: 65.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50.0),
+                      image: DecorationImage(
+                        image: imageUrl != null
+                            ? NetworkImage(imageUrl)
+                            : AssetImage("images/default_profile.jpg"),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20.0,
                   ),
                   Column(
                     children: [
                       GetAdminUsernameFromFirebase('${loggedInUSer.email}'),
-                      Text(
-                        'Have a nice day !',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                        ),
-                      )
+                      Text('Have a nice day !', style: kNiceDayTextStyle)
                     ],
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      size: 45.0,
-                      color: Colors.black54,
-                    ),
-                    onPressed: () {
-                      print('search icon is pressed!');
-                    },
-                  ),
+                  // IconButton(
+                  //   icon: Icon(
+                  //     Icons.search,
+                  //     size: 45.0,
+                  //     color: Colors.black54,
+                  //   ),
+                  //   onPressed: () {
+                  //     print('search icon is pressed!');
+                  //   },
+                  // ),
                 ],
               ),
             ),
             Expanded(
               child: WidgetContainers(
+                widgetColor: kAdminColor,
                 width: 200,
                 onTap: () {
                   Navigator.pushNamed(context, '/adminnu');
@@ -65,13 +93,14 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                 child: Center(
                   child: Text(
                     'Add New User',
-                    style: kHSSMainButtonsTextStyle,
+                    style: kTextStyle,
                   ),
                 ),
               ),
             ),
             Expanded(
               child: WidgetContainers(
+                widgetColor: kAdminColor,
                 width: 200,
                 onTap: () {
                   Navigator.pushNamed(context, '/addcourse');
@@ -79,13 +108,29 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                 child: Center(
                   child: Text(
                     'Add New Course',
-                    style: kHSSMainButtonsTextStyle,
+                    style: kTextStyle,
                   ),
                 ),
               ),
             ),
             Expanded(
               child: WidgetContainers(
+                widgetColor: kAdminColor,
+                width: 200,
+                onTap: () {
+                  // Navigator.pushNamed(context, '/adminnu');
+                },
+                child: Center(
+                  child: Text(
+                    'Edit User',
+                    style: kTextStyle,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: WidgetContainers(
+                widgetColor: kAdminColor,
                 width: 200,
                 onTap: () {
                   Navigator.pushNamed(context, '/deleteadmin');
@@ -93,7 +138,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                 child: Center(
                   child: Text(
                     'Delete User',
-                    style: kHSSMainButtonsTextStyle,
+                    style: kTextStyle,
                   ),
                 ),
               ),

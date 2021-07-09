@@ -121,26 +121,35 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
             ),
             content: Text("https://console.firebase.google.com/"),
             contentTextStyle: TextStyle(color: Colors.black, fontSize: 20),
-            backgroundColor: Color(0xFF06D6A0),
+            backgroundColor: kAdminColor,
             actions: [
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 onPressed: () {
                   Clipboard.setData(new ClipboardData(
                       text: "https://console.firebase.google.com/"));
                   Navigator.pop(context, true);
                 },
-                child: Text("copy"),
+                child: Text(
+                  "COPY",
+                  style:
+                      TextStyle(color: kTextStyleColor, fontFamily: 'Lobster'),
+                ),
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 onPressed: () => Navigator.pop(context, true),
-                child: Text("CANCEL"),
+                child: Text(
+                  "CANCEL",
+                  style:
+                      TextStyle(color: kTextStyleColor, fontFamily: 'Lobster'),
+                ),
               ),
             ],
           );
@@ -192,7 +201,7 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
     return ModalProgressHUD(
       inAsyncCall: spineer,
       child: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B2.jpeg',
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -200,10 +209,11 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     imageProfile(),
                     SizedBox(
-                      width: 10.0,
+                      width: 30.0,
                     ),
                     Column(
                       children: [
@@ -225,24 +235,26 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
               ),
               Expanded(
                 child: WidgetContainers(
+                  widgetColor: kAdminColor,
                   onTap: () {},
                   child: Center(
                     child: Text(
                       'Languages',
-                      style: kHSSMainButtonsTextStyle,
+                      style: kTextStyle,
                     ),
                   ),
                 ),
               ),
               Expanded(
                 child: WidgetContainers(
+                  widgetColor: kAdminColor,
                   onTap: () {
                     shareAppButton(context);
                   },
                   child: Center(
                     child: Text(
                       'Share App',
-                      style: kHSSMainButtonsTextStyle,
+                      style: kTextStyle,
                     ),
                   ),
                 ),
@@ -262,6 +274,7 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
               // ),
               Expanded(
                 child: WidgetContainers(
+                  widgetColor: kAdminColor,
                   onTap: () {
                     setState(() {
                       spineer = true;
@@ -279,7 +292,7 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
                   child: Center(
                     child: Text(
                       'Sign out',
-                      style: kHSSMainButtonsTextStyle,
+                      style: kTextStyle,
                     ),
                   ),
                 ),
@@ -326,7 +339,7 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
               },
               child: Icon(
                 Icons.camera_alt,
-                color: Color(0xFF06D6A0),
+                color: kAdminColor,
                 size: 30,
               ),
             ),
@@ -369,7 +382,7 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
                 },
                 label: Text(
                   "Camera",
-                  style: TextStyle(color: Color(0xFF06D6A0)),
+                  style: TextStyle(color: kAdminColor),
                 ),
               ),
               SizedBox(
@@ -386,7 +399,7 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
                 },
                 label: Text(
                   "Gallery",
-                  style: TextStyle(color: Color(0xFF06D6A0)),
+                  style: TextStyle(color: kAdminColor),
                 ),
               ),
             ],

@@ -121,26 +121,35 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             content: Text("https://console.firebase.google.com/"),
             contentTextStyle: TextStyle(color: Colors.black, fontSize: 20),
-            backgroundColor: Color(0xFF06D6A0),
+            backgroundColor: kStudentColor,
             actions: [
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 onPressed: () {
                   Clipboard.setData(new ClipboardData(
                       text: "https://console.firebase.google.com/"));
                   Navigator.pop(context, true);
                 },
-                child: Text("copy"),
+                child: Text(
+                  "COPY",
+                  style:
+                      TextStyle(color: kTextStyleColor, fontFamily: 'Lobster'),
+                ),
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 onPressed: () => Navigator.pop(context, true),
-                child: Text("CANCEL"),
+                child: Text(
+                  "CANCEL",
+                  style:
+                      TextStyle(color: kTextStyleColor, fontFamily: 'Lobster'),
+                ),
               ),
             ],
           );
@@ -166,130 +175,26 @@ class _SettingScreenState extends State<SettingScreen> {
                   children: <TextSpan>[
                     TextSpan(
                       text: "Hot Line :-\n",
-                      style: supportButtonHeadTitleTextStyle,
+                      style: kSupportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "16049\n",
-                      style: supportButtonTitleTextStyle,
+                      style: kSupportButtonTitleTextStyle,
                     ),
                     TextSpan(
                       text: "Facebook Page:-\n",
-                      style: supportButtonHeadTitleTextStyle,
+                      style: kSupportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "modern academy official page\n",
-                      style: supportButtonTitleTextStyle,
+                      style: kSupportButtonTitleTextStyle,
                     ),
                   ],
                 ),
               ),
-              backgroundColor: Color(0xFF06D6A0),
+              backgroundColor: kStudentColor,
               actions: []);
         });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ModalProgressHUD(
-      inAsyncCall: spineer,
-      child: BackgroundImage(
-        image: 'images/sora5a.jpeg',
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  children: [
-                    imageProfile(),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    Column(
-                      children: [
-                        GetStudentUsernameFromFirebase('${loggedInUSer.email}'),
-                        //getUsernameFromFirebase('${loggedInUSer.email}'),
-                        Text(
-                          '${loggedInUSer.email}',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 100.0,
-              ),
-              Expanded(
-                child: WidgetContainers(
-                  onTap: () {},
-                  child: Center(
-                    child: Text(
-                      'Languages',
-                      style: kHSSMainButtonsTextStyle,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: WidgetContainers(
-                  onTap: () {
-                    shareAppButton(context);
-                  },
-                  child: Center(
-                    child: Text(
-                      'Share App',
-                      style: kHSSMainButtonsTextStyle,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: WidgetContainers(
-                  onTap: () {
-                    support(context);
-                  },
-                  child: Center(
-                    child: Text(
-                      'Support',
-                      style: kHSSMainButtonsTextStyle,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: WidgetContainers(
-                  onTap: () {
-                    setState(() {
-                      spineer = true;
-                    });
-                    try {
-                      _auth.signOut();
-                      Navigator.pushNamed(context, '/');
-                      setState(() {
-                        spineer = false;
-                      });
-                    } catch (e) {
-                      print(e);
-                    }
-                  },
-                  child: Center(
-                    child: Text(
-                      'Sign out',
-                      style: kHSSMainButtonsTextStyle,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Widget imageProfile() {
@@ -327,7 +232,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
               child: Icon(
                 Icons.camera_alt,
-                color: Color(0xFF06D6A0),
+                color: kStudentColor,
                 size: 30,
               ),
             ),
@@ -370,7 +275,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 },
                 label: Text(
                   "Camera",
-                  style: TextStyle(color: Color(0xFF06D6A0)),
+                  style: TextStyle(color: kStudentColor),
                 ),
               ),
               SizedBox(
@@ -387,12 +292,120 @@ class _SettingScreenState extends State<SettingScreen> {
                 },
                 label: Text(
                   "Gallery",
-                  style: TextStyle(color: Color(0xFF06D6A0)),
+                  style: TextStyle(color: kStudentColor),
                 ),
               ),
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ModalProgressHUD(
+      inAsyncCall: spineer,
+      child: BackgroundImage(
+        image: 'images/B1.jpeg',
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  children: [
+                    imageProfile(),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Column(
+                      children: [
+                        GetStudentUsernameFromFirebase('${loggedInUSer.email}'),
+                        //getUsernameFromFirebase('${loggedInUSer.email}'),
+                        Text(
+                          '${loggedInUSer.email}',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 100.0,
+              ),
+              Expanded(
+                child: WidgetContainers(
+                  widgetColor: kStudentColor,
+                  onTap: () {},
+                  child: Center(
+                    child: Text(
+                      'Languages',
+                      style: kTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: WidgetContainers(
+                  widgetColor: kStudentColor,
+                  onTap: () {
+                    shareAppButton(context);
+                  },
+                  child: Center(
+                    child: Text(
+                      'Share App',
+                      style: kTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: WidgetContainers(
+                  widgetColor: kStudentColor,
+                  onTap: () {
+                    support(context);
+                  },
+                  child: Center(
+                    child: Text(
+                      'Support',
+                      style: kTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: WidgetContainers(
+                  widgetColor: kStudentColor,
+                  onTap: () {
+                    setState(() {
+                      spineer = true;
+                    });
+                    try {
+                      _auth.signOut();
+                      Navigator.pushNamed(context, '/');
+                      setState(() {
+                        spineer = false;
+                      });
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                  child: Center(
+                    child: Text(
+                      'Sign out',
+                      style: kTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

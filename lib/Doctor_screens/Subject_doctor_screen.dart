@@ -1,9 +1,9 @@
+import 'package:DGEST/Doctor_screens/Attendance_doctor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Constins.dart';
 import 'package:intl/intl.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:DGEST/Student_screens/Tasks_student_screen.dart';
-
 import 'PDF_doctor_screen.dart';
 
 class SubjectDoctorScreen extends StatefulWidget {
@@ -20,14 +20,15 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kDoctorColor,
         title: Text(
           '${widget.courseID}',
-          style: TextStyle(fontSize: 20.0),
+          style: kAppBarTextStyle,
         ),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -35,11 +36,12 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
         elevation: 0.0,
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B4.jpeg',
         child: SafeArea(
           child: Column(
             children: [
               WidgetContainers(
+                widgetColor: kDoctorColor,
                 height: MediaQuery.of(context).size.height / 3,
                 child: Column(
                   children: [
@@ -61,6 +63,7 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
                             scrollDirection: Axis.horizontal,
                             children: <Widget>[
                               TasksWeekList(
+                                taskColor: kDoctorColor,
                                 weekNumber: '1',
                                 onTap: () {
                                   setState(() {
@@ -69,6 +72,7 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
                                 },
                               ),
                               TasksWeekList(
+                                taskColor: kDoctorColor,
                                 weekNumber: '2',
                                 onTap: () {
                                   setState(() {
@@ -77,6 +81,7 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
                                 },
                               ),
                               TasksWeekList(
+                                taskColor: kDoctorColor,
                                 weekNumber: '3',
                                 onTap: () {
                                   setState(() {
@@ -84,30 +89,30 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
                                   });
                                 },
                               ),
-                              TasksWeekList(
-                                weekNumber: '4',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '4';
-                                  });
-                                },
-                              ),
-                              TasksWeekList(
-                                weekNumber: '5',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '5';
-                                  });
-                                },
-                              ),
-                              TasksWeekList(
-                                weekNumber: '6',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '6';
-                                  });
-                                },
-                              ),
+                              // TasksWeekList(
+                              //   weekNumber: '4',
+                              //   onTap: () {
+                              //     setState(() {
+                              //       selectedCard = '4';
+                              //     });
+                              //   },
+                              // ),
+                              // TasksWeekList(
+                              //   weekNumber: '5',
+                              //   onTap: () {
+                              //     setState(() {
+                              //       selectedCard = '5';
+                              //     });
+                              //   },
+                              // ),
+                              // TasksWeekList(
+                              //   weekNumber: '6',
+                              //   onTap: () {
+                              //     setState(() {
+                              //       selectedCard = '6';
+                              //     });
+                              //   },
+                              // ),
                             ],
                           ),
                         ),
@@ -144,10 +149,10 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
               //   ),
               // ),
               WidgetContainers(
+                widgetColor: kDoctorColor,
                 height: MediaQuery.of(context).size.height / 12,
                 child: Center(
-                  child:
-                      Text('PDF Files', style: kSubjectScreenButtonsTextStyle),
+                  child: Text('PDF Files', style: kTextStyle),
                 ),
                 onTap: () {
                   //Navigator.pushNamed(context, '/tasksdoc');
@@ -174,13 +179,20 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
               //   ),
               // ),
               WidgetContainers(
+                widgetColor: kDoctorColor,
                 height: MediaQuery.of(context).size.height / 12,
                 child: Center(
-                  child:
-                      Text('Attendance', style: kSubjectScreenButtonsTextStyle),
+                  child: Text('Attendance', style: kTextStyle),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/attendance');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AttendanceDoctorScreen(
+                        courseName: widget.courseID,
+                      ),
+                    ),
+                  );
                 },
               ),
             ],

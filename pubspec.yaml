@@ -60,9 +60,9 @@ flutter:
     fonts:
     - asset: fonts/Lobster-Regular.ttf
 
-  - family: PressStart2P
+  - family: ZenTokyoZoo
     fonts:
-      - asset: fonts/PressStart2P-Regular.ttf
+      - asset: fonts/ZenTokyoZoo-Regular.ttf
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

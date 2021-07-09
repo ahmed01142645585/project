@@ -1,21 +1,102 @@
 import 'package:flutter/material.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import '../Constins.dart';
 
 class AttendanceDoctorScreen extends StatefulWidget {
+  final String courseName;
+  AttendanceDoctorScreen({@required this.courseName});
   @override
   _AttendanceDoctorScreenState createState() => _AttendanceDoctorScreenState();
 }
 
+var formatter = new DateFormat('EEEEE', 'en_US').format(now);
+
 class _AttendanceDoctorScreenState extends State<AttendanceDoctorScreen> {
+  final _fireStore = FirebaseFirestore.instance;
+
+  Widget readAttendance() {
+    return FutureBuilder(
+      future: _fireStore
+          .collection('Attendance')
+          .doc('lecture attendance')
+          .collection('week$selectedCard')
+          .doc('Thursday')
+          .collection('${widget.courseName}')
+          .get(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+        if (snapshot.hasData) {
+          final documents = snapshot.data.docs;
+          List<AttendanceWidget> courseWidgets = [];
+          for (var field in documents) {
+            //String hallNumber = field.get('Hall');
+            String studentEmail = field.get('Email');
+            Timestamp studentArrive = field.get('Arrive');
+            Timestamp studentLeave = field.get('Leave');
+            DateTime arrive = studentArrive.toDate();
+            DateTime leave = studentLeave.toDate();
+            var geh = DateFormat.Hm().format(arrive);
+            var mshe = DateFormat.Hm().format(leave);
+            final courseWidget = AttendanceWidget(
+                studentName: '$studentEmail', studentTime: '$geh - $mshe');
+            courseWidgets.add(courseWidget);
+          }
+          return ListView(
+            children: courseWidgets,
+          );
+        }
+        return AttendanceWidget(
+            studentName: 'LOADING', studentTime: 'LOADING - LOADING');
+      },
+    );
+  }
+
+  // void readAttendance() {
+  //   _fireStore
+  //       .collection('Attendance')
+  //       .doc('lecture attendance')
+  //       .collection('week1')
+  //       .doc('Thurday')
+  //       .collection('Computer Graphic')
+  //       .get();
+  // }
+  // Column(
+  // children: [
+  // WidgetContainers(
+  // widgetColor: kDoctorColor,
+  // height: 50.0,
+  // child: Row(
+  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  // children: [
+  // Text(
+  // 'Hall: $hallNumber',
+  // style: TextStyle(fontSize: 20.0),
+  // ),
+  // Text(
+  // 'Day: $formatter',
+  // style: TextStyle(fontSize: 20.0),
+  // )
+  // ],
+  // ),
+  // ),
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Week 1 Compiler Theory'),
+        backgroundColor: kDoctorColor,
+        title: Text(
+          '${widget.courseName}',
+          style: kAppBarTextStyle,
+        ),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -23,44 +104,68 @@ class _AttendanceDoctorScreenState extends State<AttendanceDoctorScreen> {
         elevation: 0.0,
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B4.jpeg',
         child: SafeArea(
-          child: WidgetContainers(
-            //width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: ListView(
-                children: [
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                ],
+          child: Column(
+            children: [
+              WidgetContainers(
+                widgetColor: kDoctorColor,
+                height: 50.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Hall: 1',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    Text(
+                      'Day: $formatter',
+                      style: TextStyle(fontSize: 20.0),
+                    )
+                  ],
+                ),
               ),
-            ),
+              WidgetContainers(
+                widgetColor: kDoctorColor,
+                //width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height - 200,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: readAttendance(),
+                  // child: ListView(
+                  //   children: [
+                  //     // AttendanceWidget('ahmedsarmad@gmail.com', '9:15 - 10:40'),
+                  //     // AttendanceWidget('ahmedtarek@gmail.com', '9:00 - 10:20'),
+                  //     // AttendanceWidget('gehadmagdy@gmail.com', '9:12 - 10:36'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                  //   ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -70,7 +175,7 @@ class _AttendanceDoctorScreenState extends State<AttendanceDoctorScreen> {
 
 //TODO: ana 3mlt al class fdl ba2a nst3melh bdl ale mktob kter fo2 da.
 class AttendanceWidget extends StatelessWidget {
-  AttendanceWidget(this.studentName, this.studentTime);
+  AttendanceWidget({this.studentName, this.studentTime});
   final String studentName;
   final String studentTime;
 
@@ -78,7 +183,7 @@ class AttendanceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
+        Column(
           children: [
             Text(
               studentName,

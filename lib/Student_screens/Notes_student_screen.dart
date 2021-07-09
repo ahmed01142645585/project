@@ -37,6 +37,7 @@ class _NotesStudentScreenState extends State<NotesStudentScreen> {
               // ),
               Expanded(
                 child: WidgetContainers(
+                  widgetColor: kStudentColor,
                   child: Padding(
                     padding: EdgeInsets.all(20.0),
                     child: ListView(
@@ -69,7 +70,7 @@ class _NotesStudentScreenState extends State<NotesStudentScreen> {
                 children: [
                   Text(
                     'Add new Note',
-                    style: kHSSMainListTextStyle,
+                    style: kTextStyle,
                   ),
                   SizedBox(
                     width: 15.0,

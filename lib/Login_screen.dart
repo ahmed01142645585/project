@@ -2,7 +2,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
-import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'Constins.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,27 +25,9 @@ class _LoginScreen extends State<LoginScreen> {
   bool spinner = false;
   String token = '';
 
-  // var alertStyle = AlertStyle(
-  //   backgroundColor: Color(0xFF06D6A0),
-  //   animationType: AnimationType.grow,
-  //   isCloseButton: true,
-  //   //isOverlayTapDismiss: false,
-  //   descTextAlign: TextAlign.start,
-  //   isButtonVisible: false,
-  //   alertAlignment: Alignment.center,
-  //   animationDuration: Duration(milliseconds: 200),
-  //   // alertBorder: RoundedRectangleBorder(
-  //   //   borderRadius: BorderRadius.circular(50.0),
-  //   // ),
-  //   titleStyle: TextStyle(
-  //     color: Colors.black,
-  //   ),
-  // );
-
   @override
   void initState() {
     getToken();
-
     firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(
             alert: true, badge: true, provisional: true, sound: true));
@@ -66,7 +47,6 @@ class _LoginScreen extends State<LoginScreen> {
         //_navigateToItemDetail(message);
       },
     );
-
     super.initState();
   }
 
@@ -116,40 +96,40 @@ class _LoginScreen extends State<LoginScreen> {
                   children: <TextSpan>[
                     TextSpan(
                       text: "Phone Number :-\n",
-                      style: supportButtonHeadTitleTextStyle,
+                      style: kSupportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "01142645585\n",
-                      style: supportButtonTitleTextStyle,
+                      style: kSupportButtonTitleTextStyle,
                     ),
                     TextSpan(
                       text: "Hot Line :-\n",
-                      style: supportButtonHeadTitleTextStyle,
+                      style: kSupportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "16049\n",
-                      style: supportButtonTitleTextStyle,
+                      style: kSupportButtonTitleTextStyle,
                     ),
                     TextSpan(
                       text: "Address :-\n",
-                      style: supportButtonHeadTitleTextStyle,
+                      style: kSupportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "ring road katamiya - Cairo\n",
-                      style: supportButtonTitleTextStyle,
+                      style: kSupportButtonTitleTextStyle,
                     ),
                     TextSpan(
                       text: "Facebook Page:-\n",
-                      style: supportButtonHeadTitleTextStyle,
+                      style: kSupportButtonHeadTitleTextStyle,
                     ),
                     TextSpan(
                       text: "modern academy official page\n",
-                      style: supportButtonTitleTextStyle,
+                      style: kSupportButtonTitleTextStyle,
                     ),
                   ],
                 ),
               ),
-              backgroundColor: Color(0xFF06D6A0),
+              backgroundColor: kLoginColor,
               actions: []);
         });
   }
@@ -160,7 +140,7 @@ class _LoginScreen extends State<LoginScreen> {
       body: ModalProgressHUD(
         inAsyncCall: spinner,
         child: BackgroundImage(
-          image: 'images/sora5.jpeg',
+          image: 'images/B3.jpeg',
           child: SafeArea(
             child: ListView(
               children: [
@@ -171,16 +151,17 @@ class _LoginScreen extends State<LoginScreen> {
                     ),
                     ColorizeAnimatedTextKit(
                       colors: [
-                        Colors.green,
-                        Colors.yellow,
-                        Colors.red,
+                        kLoginColor,
+                        kStudentColor,
+                        kAdminColor,
+                        kDoctorColor
                       ],
                       repeatForever: true,
                       speed: Duration(milliseconds: 300),
                       text: ['DGEST'],
                       textStyle: TextStyle(
-                        fontFamily: 'PressStart2P',
-                        fontSize: 60.0,
+                        fontFamily: 'ZenTokyoZoo',
+                        fontSize: 80.0,
                         color: Color(0xFFecf8f8),
                       ),
                     ),
@@ -196,14 +177,14 @@ class _LoginScreen extends State<LoginScreen> {
                     SizedBox(
                       height: 50.0,
                     ),
-                    TextFiledLogIn(
+                    TextFieldForDGEST(
                       hintText: 'Username',
                       hideText: false,
                       onChange: (value) {
                         email = value;
                       },
                     ),
-                    TextFiledLogIn(
+                    TextFieldForDGEST(
                       hintText: 'Password',
                       hideText: true,
                       onChange: (value) {
@@ -213,7 +194,8 @@ class _LoginScreen extends State<LoginScreen> {
                     SizedBox(
                       height: 20.0,
                     ),
-                    ButtonLogIn(
+                    ButtonsForDGEST(
+                      buttonColor: kLoginColor,
                       buttonText: 'Sign In',
                       buttonPadding: EdgeInsets.symmetric(horizontal: 100.0),
                       onPress: () async {
@@ -244,13 +226,14 @@ class _LoginScreen extends State<LoginScreen> {
                       },
                     ),
                     SizedBox(
-                      height: 140.0,
+                      height: 110.0,
                     ),
                     Text(
                       'Don\'t have an account ?',
-                      style: TextStyle(color: Colors.white),
+                      style: kNiceDayTextStyle,
                     ),
-                    ButtonLogIn(
+                    ButtonsForDGEST(
+                      buttonColor: kLoginColor,
                       buttonText: 'Contact Us',
                       buttonPadding: EdgeInsets.symmetric(horizontal: 50.0),
                       onPress: () {
@@ -267,71 +250,6 @@ class _LoginScreen extends State<LoginScreen> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class TextFiledLogIn extends StatelessWidget {
-  TextFiledLogIn(
-      {@required this.hintText,
-      this.hideText,
-      this.onChange,
-      this.inputFormat});
-  final String hintText;
-  final bool hideText;
-  final Function onChange;
-  final List inputFormat;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5.0),
-      child: TextField(
-        obscureText: hideText,
-        inputFormatters: inputFormat,
-        keyboardType: TextInputType.emailAddress,
-        style: TextStyle(color: Colors.black),
-        onChanged: onChange,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10.0),
-            ),
-          ),
-          hintText: hintText,
-          hintStyle: TextStyle(color: Colors.grey),
-          filled: true,
-          fillColor: Colors.white,
-        ),
-      ),
-    );
-  }
-}
-
-class ButtonLogIn extends StatelessWidget {
-  ButtonLogIn(
-      {@required this.buttonText, this.buttonPadding, @required this.onPress});
-  final String buttonText;
-  final EdgeInsetsGeometry buttonPadding;
-  final Function onPress;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all<Color>(Color(0xFF06D6A0)),
-            shape: MaterialStateProperty.all<OutlinedBorder>(StadiumBorder()),
-            padding:
-                MaterialStateProperty.all<EdgeInsetsGeometry>(buttonPadding)),
-        onPressed: onPress,
-        child: Text(
-          buttonText,
-          style: TextStyle(fontSize: 20, color: Colors.black54),
         ),
       ),
     );

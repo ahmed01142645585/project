@@ -105,26 +105,35 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
             ),
             content: Text("https://console.firebase.google.com/"),
             contentTextStyle: TextStyle(color: Colors.black, fontSize: 20),
-            backgroundColor: Color(0xFF06D6A0),
+            backgroundColor: kDoctorColor,
             actions: [
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 onPressed: () {
                   Clipboard.setData(new ClipboardData(
                       text: "https://console.firebase.google.com/"));
                   Navigator.pop(context, true);
                 },
-                child: Text("copy"),
+                child: Text(
+                  "COPY",
+                  style:
+                      TextStyle(color: kTextStyleColor, fontFamily: 'Lobster'),
+                ),
               ),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 onPressed: () => Navigator.pop(context, true),
-                child: Text("CANCEL"),
+                child: Text(
+                  "CANCEL",
+                  style:
+                      TextStyle(color: kTextStyleColor, fontFamily: 'Lobster'),
+                ),
               ),
             ],
           );
@@ -175,7 +184,7 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
                   ],
                 ),
               ),
-              backgroundColor: Color(0xFF06D6A0),
+              backgroundColor: kDoctorColor,
               actions: []);
         });
   }
@@ -185,7 +194,7 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
     return ModalProgressHUD(
       inAsyncCall: spineer,
       child: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B4.jpeg',
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -193,10 +202,11 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     imageProfile(),
                     SizedBox(
-                      width: 10.0,
+                      width: 30.0,
                     ),
                     Column(
                       children: [
@@ -218,43 +228,47 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
               ),
               Expanded(
                 child: WidgetContainers(
+                  widgetColor: kDoctorColor,
                   onTap: () {},
                   child: Center(
                     child: Text(
                       'Languages',
-                      style: kHSSMainButtonsTextStyle,
+                      style: kTextStyle,
                     ),
                   ),
                 ),
               ),
               Expanded(
                 child: WidgetContainers(
+                  widgetColor: kDoctorColor,
                   onTap: () {
                     shareAppButton(context);
                   },
                   child: Center(
                     child: Text(
                       'Share App',
-                      style: kHSSMainButtonsTextStyle,
+                      style: kTextStyle,
                     ),
                   ),
                 ),
               ),
               Expanded(
                 child: WidgetContainers(
+                  widgetColor: kDoctorColor,
                   onTap: () {
                     support(context);
                   },
                   child: Center(
                     child: Text(
                       'Support',
-                      style: kHSSMainButtonsTextStyle,
+                      style: kTextStyle,
                     ),
                   ),
                 ),
               ),
               Expanded(
                 child: WidgetContainers(
+                  widgetColor: kDoctorColor,
                   onTap: () {
                     setState(() {
                       spineer = true;
@@ -272,7 +286,7 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
                   child: Center(
                     child: Text(
                       'Sign out',
-                      style: kHSSMainButtonsTextStyle,
+                      style: kTextStyle,
                     ),
                   ),
                 ),
@@ -341,7 +355,7 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
                                   },
                                   label: Text(
                                     "Camera",
-                                    style: TextStyle(color: Colors.teal),
+                                    style: TextStyle(color: kDoctorColor),
                                   ),
                                 ),
                                 SizedBox(
@@ -359,7 +373,7 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
                                   },
                                   label: Text(
                                     "Gallery",
-                                    style: TextStyle(color: Colors.teal),
+                                    style: TextStyle(color: kDoctorColor),
                                   ),
                                 ),
                               ],
@@ -371,7 +385,7 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
               },
               child: Icon(
                 Icons.camera_alt,
-                color: Colors.teal,
+                color: kDoctorColor,
                 size: 30,
               ),
             ),

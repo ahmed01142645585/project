@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../Constins.dart';
-import '../Login_screen.dart';
 
 class AddNewDoctorAdminScreen extends StatefulWidget {
   final String doctorEmail;
@@ -217,14 +216,11 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
       final messageBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.only(bottom: 50.0, left: 20.0, right: 20.0),
-        backgroundColor: Color(0xFF06D6A0),
+        backgroundColor: kAdminColor,
         content: Text(
           'Doctor Data Added Successfully',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 25.0,
-            color: Colors.black,
-          ),
+          style: kTextNoBackground,
         ),
         duration: Duration(seconds: 5),
       );
@@ -243,10 +239,15 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Doctor'),
+        backgroundColor: kAdminColor,
+        centerTitle: true,
+        title: Text(
+          'Add Doctor',
+          style: kAppBarTextStyle,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -254,7 +255,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
         elevation: 0.0,
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B2.jpeg',
         child: SafeArea(
           child: ListView(
             children: [
@@ -264,19 +265,19 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
               Text(
                 'Enter Doctor Information',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 25.0, color: Colors.black),
+                style: kTextNoBackground,
               ),
               SizedBox(
                 height: 15.0,
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Name',
                 onChange: (value) {
                   doctorName = value;
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'ID',
                 inputFormat: <TextInputFormatter>[
@@ -296,14 +297,14 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
               //     studentLevel = int.parse(value);
               //   },
               // ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Address',
                 onChange: (value) {
                   doctorAddress = value;
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Phone',
                 onChange: (value) {
@@ -326,13 +327,13 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
               Text(
                 'Add Doctor Courses',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20.0, color: Colors.black),
+                style: kTextNoBackground,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -349,7 +350,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -366,7 +367,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -383,7 +384,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -400,7 +401,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -417,7 +418,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: DropdownButton(
                   style: TextStyle(fontSize: 25.0),
-                  dropdownColor: Color(0xFF06D6A0),
+                  dropdownColor: kAdminColor,
                   //icon: Icon(Icons.add),
                   isExpanded: true,
                   iconSize: 25.0,
@@ -430,9 +431,13 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
                   },
                 ),
               ),
+              SizedBox(
+                height: 30.0,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 75.0),
-                child: ButtonLogIn(
+                child: ButtonsForDGEST(
+                  buttonColor: kAdminColor,
                   buttonText: 'Add Doctor',
                   onPress: () {
                     if (doctorName != null &&
@@ -447,7 +452,8 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
                         'address': doctorAddress,
                         'id': doctorID,
                         'phone': doctorPhone,
-                        'photo': ''
+                        'photo':
+                            'https://firebasestorage.googleapis.com/v0/b/dgest-39c26.appspot.com/o/ImagesProfile%2Fdefault_photo.jpg?alt=media&token=3870fd5b-7700-4976-b1c1-e69ecd720f67'
                       });
                       addNewSubjectsForDoctors(
                           subjectChoice1,

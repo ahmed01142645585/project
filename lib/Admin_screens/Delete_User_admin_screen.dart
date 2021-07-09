@@ -2,7 +2,8 @@ import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../Login_screen.dart';
+
+import '../Constins.dart';
 
 class DeleteUserAdminScreen extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class DeleteUserAdminScreen extends StatefulWidget {
 
 class _DeleteUserAdminScreenState extends State<DeleteUserAdminScreen> {
   final _fireStore = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
   String email;
   String password;
 
@@ -19,10 +20,15 @@ class _DeleteUserAdminScreenState extends State<DeleteUserAdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Delete User'),
+        backgroundColor: kAdminColor,
+        centerTitle: true,
+        title: Text(
+          'Delete User',
+          style: kAppBarTextStyle,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -30,28 +36,26 @@ class _DeleteUserAdminScreenState extends State<DeleteUserAdminScreen> {
         elevation: 0.0,
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B2.jpeg',
         child: SafeArea(
           child: Column(
             children: [
               SizedBox(
                 height: 50.0,
               ),
-              Text(
-                'Enter User Information to Delete',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black,
-                ),
+              Text('Enter User Information to Delete',
+                  style: kTextNoBackground),
+              SizedBox(
+                height: 15.0,
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hintText: 'Email',
                 hideText: false,
                 onChange: (value) {
                   email = value;
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hintText: 'Password',
                 hideText: true,
                 onChange: (value) {
@@ -59,9 +63,10 @@ class _DeleteUserAdminScreenState extends State<DeleteUserAdminScreen> {
                 },
               ),
               SizedBox(
-                height: 50.0,
+                height: 40.0,
               ),
-              ButtonLogIn(
+              ButtonsForDGEST(
+                  buttonColor: kAdminColor,
                   buttonText: 'Delete User',
                   onPress: () async {
                     _fireStore.collection('Students').doc('$email').delete();

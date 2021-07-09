@@ -19,6 +19,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
   void initState() {
     super.initState();
     getUser();
+    readPhoto();
   }
 
   void checkUserRoleFromFirebase(String courseID) {
@@ -84,10 +85,11 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
             List fieldDataArray = field.get('subject');
 
             final courseWidget = WidgetContainers(
+              widgetColor: kDoctorColor,
               width: 250,
               onTap: () {
                 //Navigator.pushNamed(context, '/subject');
-                checkUserRoleFromFirebase(fieldDataArray.elementAt(0));
+                checkUserRoleFromFirebase(fieldDataArray.elementAt(1));
               },
               child: ListDesign(
                 drText: '${fieldDataArray.elementAt(0)}',
@@ -103,6 +105,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
           );
         }
         return WidgetContainers(
+          widgetColor: kDoctorColor,
           width: 250,
           onTap: () {},
           child: ListDesign(
@@ -118,7 +121,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundImage(
-      image: 'images/sora5a.jpeg',
+      image: 'images/B4.jpeg',
       child: SafeArea(
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -149,9 +152,7 @@ class _HomeDoctorScreenState extends State<HomeDoctorScreen> {
                       GetDoctorUsernameFromFirebase('${loggedInUSer.email}'),
                       Text(
                         'Have a nice day !',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                        ),
+                        style: kNiceDayTextStyle,
                       )
                     ],
                   ),

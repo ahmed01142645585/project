@@ -4,7 +4,6 @@ import 'Tasks_student_screen.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:intl/intl.dart';
 import 'package:DGEST/Constins.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SubjectStudentScreen extends StatefulWidget {
   final String courseID;
@@ -26,14 +25,15 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kStudentColor,
         title: Text(
           '${widget.courseID}',
-          style: TextStyle(fontSize: 20.0),
+          style: kAppBarTextStyle,
         ),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -41,11 +41,12 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
         elevation: 0.0,
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B1.jpeg',
         child: SafeArea(
           child: Column(
             children: [
               WidgetContainers(
+                widgetColor: kStudentColor,
                 height: MediaQuery.of(context).size.height / 3,
                 child: Column(
                   children: [
@@ -67,6 +68,7 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
                             scrollDirection: Axis.horizontal,
                             children: <Widget>[
                               TasksWeekList(
+                                taskColor: kStudentColor,
                                 weekNumber: '1',
                                 onTap: () {
                                   setState(() {
@@ -75,6 +77,7 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
                                 },
                               ),
                               TasksWeekList(
+                                taskColor: kStudentColor,
                                 weekNumber: '2',
                                 onTap: () {
                                   setState(() {
@@ -83,6 +86,7 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
                                 },
                               ),
                               TasksWeekList(
+                                taskColor: kStudentColor,
                                 weekNumber: '3',
                                 onTap: () {
                                   setState(() {
@@ -90,30 +94,30 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
                                   });
                                 },
                               ),
-                              TasksWeekList(
-                                weekNumber: '4',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '4';
-                                  });
-                                },
-                              ),
-                              TasksWeekList(
-                                weekNumber: '5',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '5';
-                                  });
-                                },
-                              ),
-                              TasksWeekList(
-                                weekNumber: '6',
-                                onTap: () {
-                                  setState(() {
-                                    selectedCard = '6';
-                                  });
-                                },
-                              ),
+                              // TasksWeekList(
+                              //   weekNumber: '4',
+                              //   onTap: () {
+                              //     setState(() {
+                              //       selectedCard = '4';
+                              //     });
+                              //   },
+                              // ),
+                              // TasksWeekList(
+                              //   weekNumber: '5',
+                              //   onTap: () {
+                              //     setState(() {
+                              //       selectedCard = '5';
+                              //     });
+                              //   },
+                              // ),
+                              // TasksWeekList(
+                              //   weekNumber: '6',
+                              //   onTap: () {
+                              //     setState(() {
+                              //       selectedCard = '6';
+                              //     });
+                              //   },
+                              // ),
                             ],
                           ),
                         ),
@@ -150,10 +154,10 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
               //   ),
               // ),
               WidgetContainers(
+                widgetColor: kStudentColor,
                 height: MediaQuery.of(context).size.height / 9,
                 child: Center(
-                  child:
-                      Text('PDF Files', style: kSubjectScreenButtonsTextStyle),
+                  child: Text('PDF Files', style: kTextStyle),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -182,46 +186,6 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class GetUserName extends StatelessWidget {
-  GetUserName(this.documentId);
-  final String documentId;
-
-  final _fireStore = FirebaseFirestore.instance;
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _fireStore
-          .collection('Students')
-          .doc(documentId)
-          .collection('Courses')
-          .doc('O0SwAYY5hqe1jUItPR4t')
-          .get(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
-        if (snapshot.hasData) {
-          final data = snapshot.data.data();
-          List field = data['subject'];
-          return Text(
-            '${field.elementAt(1)}',
-            style: TextStyle(
-              fontSize: 25,
-            ),
-          );
-        }
-
-        return Text(
-          'loading',
-          style: TextStyle(
-            fontSize: 25,
-          ),
-        );
-      },
     );
   }
 }

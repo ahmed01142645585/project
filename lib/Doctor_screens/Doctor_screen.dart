@@ -1,3 +1,4 @@
+import 'package:DGEST/Constins.dart';
 import 'package:flutter/material.dart';
 import 'Home_doctor_screen.dart';
 import 'Setting_doctor_screen.dart';
@@ -30,7 +31,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         //backgroundColor: Colors.transparent,
-        selectedItemColor: Color(0xFF06D6A0),
+        selectedItemColor: kDoctorColor,
         unselectedItemColor: Colors.white,
         iconSize: 30.0,
         currentIndex: selectedIndex,

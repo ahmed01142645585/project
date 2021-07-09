@@ -21,7 +21,7 @@ class _PDFStudentScreenState extends State<PDFStudentScreen> {
           .doc(documentId)
           .collection('Courses')
           .doc('${widget.courseID}')
-          .collection('PDF')
+          .collection('week$selectedCard')
           .get(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -56,7 +56,6 @@ class _PDFStudentScreenState extends State<PDFStudentScreen> {
                 )
               ],
             );
-
             courseWidgets.add(courseWidget);
           }
           return ListView(
@@ -72,18 +71,22 @@ class _PDFStudentScreenState extends State<PDFStudentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF06D6A0),
-        title: Text("PDF Files"),
+        centerTitle: true,
+        backgroundColor: kStudentColor,
+        title: Text(
+          "PDF Files",
+          style: kAppBarTextStyle,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B1.jpeg',
         child: SafeArea(
           child: Container(
             child: Center(
@@ -93,6 +96,7 @@ class _PDFStudentScreenState extends State<PDFStudentScreen> {
                   height: 20.0,
                 ),
                 WidgetContainers(
+                  widgetColor: kStudentColor,
                   height: MediaQuery.of(context).size.height - 150,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),

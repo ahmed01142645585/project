@@ -14,7 +14,6 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
   final _fireStore = FirebaseFirestore.instance;
   String imageUrl;
   String fieldPhotoURL;
-  var send;
 
   @override
   void initState() {
@@ -69,18 +68,18 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
     });
   }
 
-  void getID(String documentId) async {
-    send = _fireStore
-        .collection('Students')
-        .doc(documentId)
-        .collection('Courses')
-        .get()
-        .then((QuerySnapshot snapshot) => {
-              snapshot.docs.forEach((element) {
-                element.reference.id;
-              })
-            });
-  }
+  // void getID(String documentId) async {
+  //   send = _fireStore
+  //       .collection('Students')
+  //       .doc(documentId)
+  //       .collection('Courses')
+  //       .get()
+  //       .then((QuerySnapshot snapshot) => {
+  //             snapshot.docs.forEach((element) {
+  //               element.reference.id;
+  //             })
+  //           });
+  // }
 
   Widget getStudentCoursesFromFirebase(String documentId) {
     return FutureBuilder(
@@ -99,9 +98,9 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
           for (var field in documents) {
             List fieldDataArray = field.get('subject');
             final courseWidget = WidgetContainers(
+              widgetColor: kStudentColor,
               width: 250,
               onTap: () async {
-                //Navigator.pushNamed(context, '/subject');
                 checkUserRoleFromFirebase(fieldDataArray.elementAt(1));
               },
               child: ListDesign(
@@ -118,6 +117,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
           );
         }
         return WidgetContainers(
+          widgetColor: kStudentColor,
           width: 250,
           onTap: () {},
           child: ListDesign(
@@ -133,7 +133,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundImage(
-      image: 'images/sora5a.jpeg',
+      image: 'images/B1.jpeg',
       child: SafeArea(
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -165,9 +165,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
                       //getUsernameFromFirebase('${loggedInUSer.email}'),
                       Text(
                         'Have a nice day !',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                        ),
+                        style: kNiceDayTextStyle,
                       )
                     ],
                   ),

@@ -2,7 +2,6 @@ import 'package:DGEST/Admin_screens/add_doctor_admin_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
-import 'package:DGEST/Login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -35,14 +34,71 @@ class _NewUserAdminScreenState extends State<NewUserAdminScreen> {
     return Future.sync(() => userCredential);
   }
 
+  void registerNewUserAndAddData() {
+    try {
+      final newUser = register(theEmail, thePassword);
+      if (newUser != null) {
+        _fireStore
+            .collection('UserRoles')
+            .doc('$theEmail')
+            .set({'role': '$newValue'});
+      }
+      final messageBar = SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(bottom: 50.0, left: 20.0, right: 20.0),
+        backgroundColor: kAdminColor,
+        content: Text(
+          'User Added Successfully',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 25.0,
+            color: Colors.black,
+          ),
+        ),
+        duration: Duration(seconds: 5),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(messageBar);
+      if (newValue == 'student') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddNewStudentAdminScreen(
+              studentEmail: theEmail,
+            ),
+          ),
+        );
+      } else if (newValue == 'doctor') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  AddNewDoctorAdminScreen(doctorEmail: theEmail)),
+        );
+      } else {
+        print('Error.');
+      }
+    } on FirebaseAuthException catch (e) {
+      Alert(
+        context: context,
+        style: alertStyle,
+        title: "$e",
+      ).show();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New User'),
+        centerTitle: true,
+        backgroundColor: kAdminColor,
+        title: Text(
+          'Add New User',
+          style: kAppBarTextStyle,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -50,7 +106,7 @@ class _NewUserAdminScreenState extends State<NewUserAdminScreen> {
         elevation: 0.0,
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B2.jpeg',
         child: SafeArea(
           child: ListView(
             children: [
@@ -60,21 +116,15 @@ class _NewUserAdminScreenState extends State<NewUserAdminScreen> {
                   SizedBox(
                     height: 50.0,
                   ),
-                  Text(
-                    'Enter New User Information',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                  TextFiledLogIn(
+                  Text('Enter New User Information', style: kTextNoBackground),
+                  TextFieldForDGEST(
                     hintText: 'Email',
                     hideText: false,
                     onChange: (value) {
                       theEmail = value;
                     },
                   ),
-                  TextFiledLogIn(
+                  TextFieldForDGEST(
                     hintText: 'Password',
                     hideText: true,
                     onChange: (value) {
@@ -86,16 +136,13 @@ class _NewUserAdminScreenState extends State<NewUserAdminScreen> {
                   ),
                   Text(
                     'Select New User Role',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                    ),
+                    style: kTextNoBackground,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 100.0),
                     child: DropdownButton(
                       style: TextStyle(fontSize: 25.0),
-                      dropdownColor: Color(0xFF06D6A0),
+                      dropdownColor: kAdminColor,
                       icon: Icon(Icons.arrow_drop_down_circle),
                       isExpanded: true,
                       iconSize: 25.0,
@@ -120,61 +167,13 @@ class _NewUserAdminScreenState extends State<NewUserAdminScreen> {
                   SizedBox(
                     height: 100.0,
                   ),
-                  ButtonLogIn(
+                  ButtonsForDGEST(
+                    buttonColor: kAdminColor,
                     buttonText: 'Add User',
-                    onPress: () async {
-                      try {
-                        final newUser = register(theEmail, thePassword);
-                        if (newUser != null) {
-                          _fireStore
-                              .collection('UserRoles')
-                              .doc('$theEmail')
-                              .set({'role': '$newValue'});
-                        }
-                        final messageBar = SnackBar(
-                          behavior: SnackBarBehavior.floating,
-                          margin: EdgeInsets.only(
-                              bottom: 50.0, left: 20.0, right: 20.0),
-                          backgroundColor: Color(0xFF06D6A0),
-                          content: Text(
-                            'User Added Successfully',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 25.0,
-                              color: Colors.black,
-                            ),
-                          ),
-                          duration: Duration(seconds: 3),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(messageBar);
-                        if (newValue == 'student') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddNewStudentAdminScreen(
-                                studentEmail: theEmail,
-                              ),
-                            ),
-                          );
-                        } else if (newValue == 'doctor') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddNewDoctorAdminScreen(
-                                    doctorEmail: theEmail)),
-                          );
-                        } else {
-                          print('Error.');
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        Alert(
-                          context: context,
-                          style: alertStyle,
-                          title: "$e",
-                        ).show();
-                      }
-                    },
                     buttonPadding: EdgeInsets.symmetric(horizontal: 100.0),
+                    onPress: () {
+                      registerNewUserAndAddData();
+                    },
                   )
                 ],
               ),

@@ -1,9 +1,8 @@
+import 'package:DGEST/Constins.dart';
 import 'package:DGEST/Desgin_classes/Desgin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../Login_screen.dart';
 
 class AddCourseAdminScreen extends StatefulWidget {
   @override
@@ -20,10 +19,15 @@ class _AddCourseAdminScreenState extends State<AddCourseAdminScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Course'),
+        backgroundColor: kAdminColor,
+        centerTitle: true,
+        title: Text(
+          'Add Course',
+          style: kAppBarTextStyle,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -31,7 +35,7 @@ class _AddCourseAdminScreenState extends State<AddCourseAdminScreen> {
         elevation: 0.0,
       ),
       body: BackgroundImage(
-        image: 'images/sora5a.jpeg',
+        image: 'images/B2.jpeg',
         child: SafeArea(
           child: ListView(
             children: [
@@ -41,26 +45,26 @@ class _AddCourseAdminScreenState extends State<AddCourseAdminScreen> {
               Text(
                 'Enter Course Information',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 25.0, color: Colors.black),
+                style: kTextNoBackground,
               ),
               SizedBox(
                 height: 15.0,
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Name',
                 onChange: (value) {
                   courseName = value;
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Code',
                 onChange: (value) {
                   courseCode = value;
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Level',
                 inputFormat: <TextInputFormatter>[
@@ -70,7 +74,7 @@ class _AddCourseAdminScreenState extends State<AddCourseAdminScreen> {
                   courseLevel = int.parse(value);
                 },
               ),
-              TextFiledLogIn(
+              TextFieldForDGEST(
                 hideText: false,
                 hintText: 'Hours',
                 inputFormat: <TextInputFormatter>[
@@ -82,7 +86,8 @@ class _AddCourseAdminScreenState extends State<AddCourseAdminScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(50.0),
-                child: ButtonLogIn(
+                child: ButtonsForDGEST(
+                    buttonColor: kAdminColor,
                     buttonText: 'Add Course',
                     onPress: () {
                       _fireStore
@@ -98,7 +103,7 @@ class _AddCourseAdminScreenState extends State<AddCourseAdminScreen> {
                         behavior: SnackBarBehavior.floating,
                         margin: EdgeInsets.only(
                             bottom: 50.0, left: 20.0, right: 20.0),
-                        backgroundColor: Color(0xFF06D6A0),
+                        backgroundColor: kAdminColor,
                         content: Text(
                           'New Course Added Successfully',
                           textAlign: TextAlign.center,
@@ -107,7 +112,7 @@ class _AddCourseAdminScreenState extends State<AddCourseAdminScreen> {
                             color: Colors.black,
                           ),
                         ),
-                        duration: Duration(seconds: 5),
+                        duration: Duration(seconds: 10),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(messageBar);
                     }),
