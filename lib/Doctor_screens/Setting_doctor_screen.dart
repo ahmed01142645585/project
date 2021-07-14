@@ -205,39 +205,39 @@ class _SettingDoctorScreenState extends State<SettingDoctorScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     imageProfile(),
-                    SizedBox(
-                      width: 30.0,
-                    ),
-                    Column(
-                      children: [
-                        //GetUserName('${loggedInUSer.email}'),
-                        GetDoctorUsernameFromFirebase('${loggedInUSer.email}'),
-                        Text(
-                          '${loggedInUSer.email}',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        )
-                      ],
+                    Expanded(
+                      child: Column(
+                        children: [
+                          //GetUserName('${loggedInUSer.email}'),
+                          GetDoctorUsernameFromFirebase(
+                              '${loggedInUSer.email}'),
+                          Text(
+                            '${loggedInUSer.email}',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 100.0,
+                height: 200.0,
               ),
-              Expanded(
-                child: WidgetContainers(
-                  widgetColor: kDoctorColor,
-                  onTap: () {},
-                  child: Center(
-                    child: Text(
-                      'Languages',
-                      style: kTextStyle,
-                    ),
-                  ),
-                ),
-              ),
+              // Expanded(
+              //   child: WidgetContainers(
+              //     widgetColor: kDoctorColor,
+              //     onTap: () {},
+              //     child: Center(
+              //       child: Text(
+              //         'Languages',
+              //         style: kTextStyle,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Expanded(
                 child: WidgetContainers(
                   widgetColor: kDoctorColor,

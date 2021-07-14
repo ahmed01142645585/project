@@ -47,8 +47,8 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
         querySnapshot.docs.forEach((element) {
           subjects.add(
             DropdownMenuItem(
-              child: Text('${element.data()['name']}'),
-              value: element.data()['name'],
+              child: Text('${element.id}'),
+              value: element.id,
             ),
           );
         });
@@ -91,7 +91,7 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
       if (sub1 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub1 == element.data()['name']) {
+            if (sub1 == element.id) {
               int subjectLevel = element.data()['level'];
               String subjectDoctor = element.data()['doctor'];
               _fireStore
@@ -105,11 +105,13 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
             }
           });
         });
+      } else {
+        print('Error');
       }
       if (sub2 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub2 == element.data()['name']) {
+            if (sub2 == element.id) {
               int subjectLevel = element.data()['level'];
               String subjectDoctor = element.data()['doctor'];
               _fireStore
@@ -123,11 +125,13 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
             }
           });
         });
+      } else {
+        print('Error');
       }
       if (sub3 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub3 == element.data()['name']) {
+            if (sub3 == element.id) {
               int subjectLevel = element.data()['level'];
               String subjectDoctor = element.data()['doctor'];
               _fireStore
@@ -141,11 +145,13 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
             }
           });
         });
+      } else {
+        print('Error');
       }
       if (sub4 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub4 == element.data()['name']) {
+            if (sub4 == element.id) {
               int subjectLevel = element.data()['level'];
               String subjectDoctor = element.data()['doctor'];
               _fireStore
@@ -159,11 +165,13 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
             }
           });
         });
+      } else {
+        print('Error');
       }
       if (sub5 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub5 == element.data()['name']) {
+            if (sub5 == element.id) {
               int subjectLevel = element.data()['level'];
               String subjectDoctor = element.data()['doctor'];
               _fireStore
@@ -177,11 +185,13 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
             }
           });
         });
+      } else {
+        print('Error');
       }
       if (sub6 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub6 == element.data()['name']) {
+            if (sub6 == element.id) {
               int subjectLevel = element.data()['level'];
               String subjectDoctor = element.data()['doctor'];
               _fireStore
@@ -195,6 +205,8 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
             }
           });
         });
+      } else {
+        print('Error');
       }
       final messageBar = SnackBar(
         behavior: SnackBarBehavior.floating,
@@ -452,7 +464,8 @@ class _AddNewStudentAdminScreenState extends State<AddNewStudentAdminScreen> {
                           subjectChoice4,
                           subjectChoice5,
                           subjectChoice6);
-                      Navigator.pop(context);
+
+                      //Navigator.pop(context);
                     } else {
                       Alert(
                         context: context,

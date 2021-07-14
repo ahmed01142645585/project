@@ -317,39 +317,39 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: Row(
                   children: [
                     imageProfile(),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    Column(
-                      children: [
-                        GetStudentUsernameFromFirebase('${loggedInUSer.email}'),
-                        //getUsernameFromFirebase('${loggedInUSer.email}'),
-                        Text(
-                          '${loggedInUSer.email}',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        )
-                      ],
+                    Expanded(
+                      child: Column(
+                        children: [
+                          GetStudentUsernameFromFirebase(
+                              '${loggedInUSer.email}'),
+                          //getUsernameFromFirebase('${loggedInUSer.email}'),
+                          Text(
+                            '${loggedInUSer.email}',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 100.0,
+                height: 200.0,
               ),
-              Expanded(
-                child: WidgetContainers(
-                  widgetColor: kStudentColor,
-                  onTap: () {},
-                  child: Center(
-                    child: Text(
-                      'Languages',
-                      style: kTextStyle,
-                    ),
-                  ),
-                ),
-              ),
+              // Expanded(
+              //   child: WidgetContainers(
+              //     widgetColor: kStudentColor,
+              //     onTap: () {},
+              //     child: Center(
+              //       child: Text(
+              //         'Languages',
+              //         style: kTextStyle,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Expanded(
                 child: WidgetContainers(
                   widgetColor: kStudentColor,

@@ -45,8 +45,8 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
         querySnapshot.docs.forEach((element) {
           subjects.add(
             DropdownMenuItem(
-              child: Text('${element.data()['name']}'),
-              value: element.data()['name'],
+              child: Text('${element.id}'),
+              value: element.id,
             ),
           );
         });
@@ -54,42 +54,43 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
     );
   }
 
-  void addNewSubjectsForDoctors(String sub1, String sub2, String sub3,
-      String sub4, String sub5, String sub6) {
+  void addNewSubjectsForDoctors(
+      String sub1, String sub2, String sub3, String sub4) {
     if (sub1 != sub2 &&
-        sub1 != sub3 &&
-        sub1 != sub4 &&
-        sub1 != sub5 &&
-        sub1 != sub6 &&
-        sub2 != sub1 &&
-        sub2 != sub3 &&
-        sub2 != sub4 &&
-        sub2 != sub5 &&
-        sub2 != sub6 &&
-        sub3 != sub1 &&
-        sub3 != sub2 &&
-        sub3 != sub4 &&
-        sub3 != sub5 &&
-        sub3 != sub6 &&
-        sub4 != sub1 &&
-        sub4 != sub2 &&
-        sub4 != sub3 &&
-        sub4 != sub5 &&
-        sub4 != sub6 &&
-        sub5 != sub1 &&
-        sub5 != sub2 &&
-        sub5 != sub3 &&
-        sub5 != sub4 &&
-        sub5 != sub6 &&
-        sub6 != sub1 &&
-        sub6 != sub2 &&
-        sub6 != sub3 &&
-        sub6 != sub4 &&
-        sub6 != sub5) {
+            sub1 != sub3 &&
+            sub1 != sub4 &&
+            // sub1 != sub5 &&
+            // sub1 != sub6 &&
+            sub2 != sub1 &&
+            sub2 != sub3 &&
+            sub2 != sub4 &&
+            // sub2 != sub5 &&
+            // sub2 != sub6 &&
+            sub3 != sub1 &&
+            sub3 != sub2 &&
+            sub3 != sub4 &&
+            // sub3 != sub5 &&
+            // sub3 != sub6 &&
+            sub4 != sub1 &&
+            sub4 != sub2 &&
+            sub4 != sub3
+        // sub4 != sub5 &&
+        // sub4 != sub6 &&
+        // sub5 != sub1 &&
+        // sub5 != sub2 &&
+        // sub5 != sub3 &&
+        // sub5 != sub4 &&
+        // sub5 != sub6 &&
+        // sub6 != sub1 &&
+        // sub6 != sub2 &&
+        // sub6 != sub3 &&
+        // sub6 != sub4 &&
+        // sub6 != sub5
+        ) {
       if (sub1 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub1 == element.data()['name']) {
+            if (sub1 == element.id) {
               int subjectLevel = element.data()['level'];
               print('${element.id}');
               _fireStore
@@ -111,7 +112,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
       if (sub2 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub2 == element.data()['name']) {
+            if (sub2 == element.id) {
               int subjectLevel = element.data()['level'];
               _fireStore
                   .collection('Doctors')
@@ -132,7 +133,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
       if (sub3 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub3 == element.data()['name']) {
+            if (sub3 == element.id) {
               int subjectLevel = element.data()['level'];
               _fireStore
                   .collection('Doctors')
@@ -153,7 +154,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
       if (sub4 != 'None') {
         _fireStore.collection('Courses').get().then((querySnapshot) {
           querySnapshot.docs.forEach((element) {
-            if (sub4 == element.data()['name']) {
+            if (sub4 == element.id) {
               int subjectLevel = element.data()['level'];
               _fireStore
                   .collection('Doctors')
@@ -171,48 +172,48 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
           });
         });
       }
-      if (sub5 != 'None') {
-        _fireStore.collection('Courses').get().then((querySnapshot) {
-          querySnapshot.docs.forEach((element) {
-            if (sub5 == element.data()['name']) {
-              int subjectLevel = element.data()['level'];
-              _fireStore
-                  .collection('Doctors')
-                  .doc('${widget.doctorEmail}')
-                  .collection('Courses')
-                  .doc('$sub5')
-                  .set({
-                'subject': [doctorName, sub5, subjectLevel]
-              });
-              _fireStore
-                  .collection('Courses')
-                  .doc('${element.id}')
-                  .update({'doctor': doctorName});
-            }
-          });
-        });
-      }
-      if (sub6 != 'None') {
-        _fireStore.collection('Courses').get().then((querySnapshot) {
-          querySnapshot.docs.forEach((element) {
-            if (sub6 == element.data()['name']) {
-              int subjectLevel = element.data()['level'];
-              _fireStore
-                  .collection('Doctors')
-                  .doc('${widget.doctorEmail}')
-                  .collection('Courses')
-                  .doc('$sub6')
-                  .set({
-                'subject': [doctorName, sub6, subjectLevel]
-              });
-              _fireStore
-                  .collection('Courses')
-                  .doc('${element.id}')
-                  .update({'doctor': doctorName});
-            }
-          });
-        });
-      }
+      // if (sub5 != 'None') {
+      //   _fireStore.collection('Courses').get().then((querySnapshot) {
+      //     querySnapshot.docs.forEach((element) {
+      //       if (sub5 == element.data()['name']) {
+      //         int subjectLevel = element.data()['level'];
+      //         _fireStore
+      //             .collection('Doctors')
+      //             .doc('${widget.doctorEmail}')
+      //             .collection('Courses')
+      //             .doc('$sub5')
+      //             .set({
+      //           'subject': [doctorName, sub5, subjectLevel]
+      //         });
+      //         _fireStore
+      //             .collection('Courses')
+      //             .doc('${element.id}')
+      //             .update({'doctor': doctorName});
+      //       }
+      //     });
+      //   });
+      // }
+      // if (sub6 != 'None') {
+      //   _fireStore.collection('Courses').get().then((querySnapshot) {
+      //     querySnapshot.docs.forEach((element) {
+      //       if (sub6 == element.data()['name']) {
+      //         int subjectLevel = element.data()['level'];
+      //         _fireStore
+      //             .collection('Doctors')
+      //             .doc('${widget.doctorEmail}')
+      //             .collection('Courses')
+      //             .doc('$sub6')
+      //             .set({
+      //           'subject': [doctorName, sub6, subjectLevel]
+      //         });
+      //         _fireStore
+      //             .collection('Courses')
+      //             .doc('${element.id}')
+      //             .update({'doctor': doctorName});
+      //       }
+      //     });
+      //   });
+      // }
       final messageBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.only(bottom: 50.0, left: 20.0, right: 20.0),
@@ -226,6 +227,7 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
       );
       ScaffoldMessenger.of(context).showSnackBar(messageBar);
     } else {
+      print('a7a');
       Alert(
         context: context,
         style: alertStyle,
@@ -397,40 +399,40 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: DropdownButton(
-                  style: TextStyle(fontSize: 25.0),
-                  dropdownColor: kAdminColor,
-                  //icon: Icon(Icons.add),
-                  isExpanded: true,
-                  iconSize: 25.0,
-                  value: subjectChoice5,
-                  items: subjects,
-                  onChanged: (value) {
-                    setState(() {
-                      subjectChoice5 = value;
-                    });
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: DropdownButton(
-                  style: TextStyle(fontSize: 25.0),
-                  dropdownColor: kAdminColor,
-                  //icon: Icon(Icons.add),
-                  isExpanded: true,
-                  iconSize: 25.0,
-                  value: subjectChoice6,
-                  items: subjects,
-                  onChanged: (value) {
-                    setState(() {
-                      subjectChoice6 = value;
-                    });
-                  },
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              //   child: DropdownButton(
+              //     style: TextStyle(fontSize: 25.0),
+              //     dropdownColor: kAdminColor,
+              //     //icon: Icon(Icons.add),
+              //     isExpanded: true,
+              //     iconSize: 25.0,
+              //     value: subjectChoice5,
+              //     items: subjects,
+              //     onChanged: (value) {
+              //       setState(() {
+              //         subjectChoice5 = value;
+              //       });
+              //     },
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              //   child: DropdownButton(
+              //     style: TextStyle(fontSize: 25.0),
+              //     dropdownColor: kAdminColor,
+              //     //icon: Icon(Icons.add),
+              //     isExpanded: true,
+              //     iconSize: 25.0,
+              //     value: subjectChoice6,
+              //     items: subjects,
+              //     onChanged: (value) {
+              //       setState(() {
+              //         subjectChoice6 = value;
+              //       });
+              //     },
+              //   ),
+              // ),
               SizedBox(
                 height: 30.0,
               ),
@@ -456,12 +458,14 @@ class _AddNewDoctorAdminScreenState extends State<AddNewDoctorAdminScreen> {
                             'https://firebasestorage.googleapis.com/v0/b/dgest-39c26.appspot.com/o/ImagesProfile%2Fdefault_photo.jpg?alt=media&token=3870fd5b-7700-4976-b1c1-e69ecd720f67'
                       });
                       addNewSubjectsForDoctors(
-                          subjectChoice1,
-                          subjectChoice2,
-                          subjectChoice3,
-                          subjectChoice4,
-                          subjectChoice5,
-                          subjectChoice6);
+                        subjectChoice1,
+                        subjectChoice2,
+                        subjectChoice3,
+                        subjectChoice4,
+                        // subjectChoice5,
+                        // subjectChoice6
+                      );
+                      // Navigator.pop(context);
                     } else {
                       Alert(
                         context: context,

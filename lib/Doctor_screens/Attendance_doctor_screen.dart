@@ -6,7 +6,12 @@ import '../Constins.dart';
 
 class AttendanceDoctorScreen extends StatefulWidget {
   final String courseName;
-  AttendanceDoctorScreen({@required this.courseName});
+  final String courseDay;
+  final int courseHall;
+  AttendanceDoctorScreen(
+      {@required this.courseName,
+      @required this.courseDay,
+      @required this.courseHall});
   @override
   _AttendanceDoctorScreenState createState() => _AttendanceDoctorScreenState();
 }
@@ -22,7 +27,7 @@ class _AttendanceDoctorScreenState extends State<AttendanceDoctorScreen> {
           .collection('Attendance')
           .doc('lecture attendance')
           .collection('week$selectedCard')
-          .doc('Thursday')
+          .doc('${widget.courseDay}')
           .collection('${widget.courseName}')
           .get(),
       builder: (context, snapshot) {
@@ -33,16 +38,15 @@ class _AttendanceDoctorScreenState extends State<AttendanceDoctorScreen> {
           final documents = snapshot.data.docs;
           List<AttendanceWidget> courseWidgets = [];
           for (var field in documents) {
-            //String hallNumber = field.get('Hall');
-            String studentEmail = field.get('Email');
-            Timestamp studentArrive = field.get('Arrive');
-            Timestamp studentLeave = field.get('Leave');
-            DateTime arrive = studentArrive.toDate();
-            DateTime leave = studentLeave.toDate();
-            var geh = DateFormat.Hm().format(arrive);
-            var mshe = DateFormat.Hm().format(leave);
+            String studentEmail = field.get('email');
+            Timestamp studentArrive = field.get('arrive');
+            Timestamp studentLeave = field.get('leave');
+            DateTime arriveTime = studentArrive.toDate();
+            DateTime leaveTime = studentLeave.toDate();
+            var arrive = DateFormat.Hm().format(arriveTime);
+            var leave = DateFormat.Hm().format(leaveTime);
             final courseWidget = AttendanceWidget(
-                studentName: '$studentEmail', studentTime: '$geh - $mshe');
+                studentName: '$studentEmail', studentTime: '$arrive - $leave');
             courseWidgets.add(courseWidget);
           }
           return ListView(
@@ -55,15 +59,33 @@ class _AttendanceDoctorScreenState extends State<AttendanceDoctorScreen> {
     );
   }
 
-  // void readAttendance() {
-  //   _fireStore
-  //       .collection('Attendance')
-  //       .doc('lecture attendance')
-  //       .collection('week1')
-  //       .doc('Thurday')
-  //       .collection('Computer Graphic')
-  //       .get();
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //readAttendanceFull();
+  }
+
+  void readAttendanceFull() {
+    _fireStore
+        .collection('Attendance')
+        .doc('lecture attendance')
+        .collection('week$selectedCard')
+        .get()
+        .then(
+      (querySnapshot) {
+        querySnapshot.docs.forEach((result) {
+          if (result.data()['${widget.courseName}'] == widget.courseName) {
+            result.id;
+          }
+        });
+      },
+    );
+  }
+
+  // .doc('Thurday')
+  // .collection('Computer Graphic')
+  // .get();
   // Column(
   // children: [
   // WidgetContainers(
@@ -115,11 +137,11 @@ class _AttendanceDoctorScreenState extends State<AttendanceDoctorScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Hall: 1',
+                      'Hall: ${widget.courseHall}',
                       style: TextStyle(fontSize: 20.0),
                     ),
                     Text(
-                      'Day: $formatter',
+                      'Day: ${widget.courseDay}',
                       style: TextStyle(fontSize: 20.0),
                     )
                   ],
@@ -130,40 +152,39 @@ class _AttendanceDoctorScreenState extends State<AttendanceDoctorScreen> {
                 //width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height - 200,
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: readAttendance(),
-                  // child: ListView(
-                  //   children: [
-                  //     // AttendanceWidget('ahmedsarmad@gmail.com', '9:15 - 10:40'),
-                  //     // AttendanceWidget('ahmedtarek@gmail.com', '9:00 - 10:20'),
-                  //     // AttendanceWidget('gehadmagdy@gmail.com', '9:12 - 10:36'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
-                  //   ],
-                ),
+                    padding: const EdgeInsets.all(15.0), child: readAttendance()
+                    // child: ListView(
+                    //   children: [
+                    //     // AttendanceWidget('ahmedsarmad@gmail.com', '9:15 - 10:40'),
+                    //     // AttendanceWidget('ahmedtarek@gmail.com', '9:00 - 10:20'),
+                    //     // AttendanceWidget('gehadmagdy@gmail.com', '9:12 - 10:36'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //     // AttendanceWidget('Ahmed Sarmad Ali', 'Time:9:00-11:00'),
+                    //   ],
+                    ),
               ),
             ],
           ),

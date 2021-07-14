@@ -1,4 +1,5 @@
 import 'package:DGEST/Doctor_screens/Attendance_doctor_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:DGEST/Constins.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +17,24 @@ class SubjectDoctorScreen extends StatefulWidget {
 var formatter = new DateFormat.MMMMd().format(now);
 
 class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
+  final _fireStore = FirebaseFirestore.instance;
+  String courseDay;
+  int courseHall;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    readCourseDay();
+  }
+
+  void readCourseDay() async {
+    DocumentSnapshot data =
+        await _fireStore.collection('Courses').doc('${widget.courseID}').get();
+    courseDay = await data.data()['day'];
+    courseHall = await data.data()['hall'];
+    print(courseHall);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,6 +209,8 @@ class _SubjectDoctorScreenState extends State<SubjectDoctorScreen> {
                     MaterialPageRoute(
                       builder: (context) => AttendanceDoctorScreen(
                         courseName: widget.courseID,
+                        courseDay: courseDay,
+                        courseHall: courseHall,
                       ),
                     ),
                   );

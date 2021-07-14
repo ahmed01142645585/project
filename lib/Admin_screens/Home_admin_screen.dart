@@ -118,16 +118,31 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                 widgetColor: kAdminColor,
                 width: 200,
                 onTap: () {
-                  // Navigator.pushNamed(context, '/adminnu');
+                  Navigator.pushNamed(context, '/deletecourse');
                 },
                 child: Center(
                   child: Text(
-                    'Edit User',
+                    'Delete Course',
                     style: kTextStyle,
                   ),
                 ),
               ),
             ),
+            // Expanded(
+            //   child: WidgetContainers(
+            //     widgetColor: kAdminColor,
+            //     width: 200,
+            //     onTap: () {
+            //       // Navigator.pushNamed(context, '/adminnu');
+            //     },
+            //     child: Center(
+            //       child: Text(
+            //         'Edit User',
+            //         style: kTextStyle,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Expanded(
               child: WidgetContainers(
                 widgetColor: kAdminColor,

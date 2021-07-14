@@ -212,39 +212,38 @@ class _SettingAdminScreenState extends State<SettingAdminScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     imageProfile(),
-                    SizedBox(
-                      width: 30.0,
-                    ),
-                    Column(
-                      children: [
-                        GetAdminUsernameFromFirebase('${loggedInUSer.email}'),
-                        //getUsernameFromFirebase('${loggedInUSer.email}'),
-                        Text(
-                          '${loggedInUSer.email}',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        )
-                      ],
+                    Expanded(
+                      child: Column(
+                        children: [
+                          GetAdminUsernameFromFirebase('${loggedInUSer.email}'),
+                          //getUsernameFromFirebase('${loggedInUSer.email}'),
+                          Text(
+                            '${loggedInUSer.email}',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 100.0,
+                height: 200.0,
               ),
-              Expanded(
-                child: WidgetContainers(
-                  widgetColor: kAdminColor,
-                  onTap: () {},
-                  child: Center(
-                    child: Text(
-                      'Languages',
-                      style: kTextStyle,
-                    ),
-                  ),
-                ),
-              ),
+              // Expanded(
+              //   child: WidgetContainers(
+              //     widgetColor: kAdminColor,
+              //     onTap: () {},
+              //     child: Center(
+              //       child: Text(
+              //         'Languages',
+              //         style: kTextStyle,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Expanded(
                 child: WidgetContainers(
                   widgetColor: kAdminColor,
